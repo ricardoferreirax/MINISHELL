@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/15 16:46:28 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:14:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 
 // Base Structs, hand s off dude, no touching these
+// OK
 
 typedef struct	s_OwO;
 
