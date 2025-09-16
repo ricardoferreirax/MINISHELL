@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/16 15:55:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/16 23:48:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ int handle_single_heredoc(t_subcmd *sub, t_mini *mini)
     {
         close(pipe_fd[1]); // close write end
         waitpid(pid, &hdoc_status, 0);
-        if (WIFSIGNALED(hdoc_status) && WTERMSIG(hdoc_status) == SIGINT)  // child killed by SIGINT
-        {
-            sub->in_fd = -1; // abort CTRL + C  
-            return (130);
-        }
-        sub->in_fd = pipe_fd[0]; 
+        // if (WIFSIGNALED(hdoc_status) && WTERMSIG(hdoc_status) == SIGINT)  // child killed by SIGINT
+        // {
+        //     sub->in_fd = -1; // abort CTRL + C  
+        //     return (130);
+        // }
+        // sub->in_fd = pipe_fd[0]; 
     }
     return (0);
 }

@@ -6,9 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:25:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/16 15:25:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:06:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "MiNyanShell.h"
+#include <stdio.h>
 
 void	error_exit(const char *message)
 {
