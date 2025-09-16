@@ -6,11 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:12:09 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/04/14 11:02:36 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/16 11:34:24 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_strings.h"
 
 int	ft_atoi(const char *s)
 {
