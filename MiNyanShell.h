@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/15 17:14:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/16 11:31:26 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-# include "libft/libft.h"
+#include "parsing/parsing.h"
 
 // Base Structs, hand s off dude, no touching these
 // OK
 
-typedef struct	s_OwO;
+typedef struct	s_OwO	t_cmd;
+typedef struct	s_0w0	t_subcmd;
 
 typedef struct s_0w0
 {
@@ -29,15 +30,15 @@ typedef struct s_0w0
 	char		*cmd;
 	char		*infile;
 	char		*outfile;
-	s_0w0		*next;
-	s_OwO		*last;
+	t_subcmd	*next;
+	t_cmd		*last;
 }				t_subcmd;
 
 typedef struct s_OwO
 {
 	bool		pipe;
 	t_subcmd	*head;
-	s_OwO		*next;
+	t_cmd		*next;
 }				t_cmd;
 
 // base structs end
