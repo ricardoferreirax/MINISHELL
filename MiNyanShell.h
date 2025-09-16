@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
 /*   Updated: 2025/09/16 12:39:58 by rmedeiro         ###   ########.fr       */
@@ -14,7 +14,10 @@
 # define MINYANSHELL_H
 
 #include "parsing/parsing.h"
-
+# include "parsing/parsing.h"
+# include "stdio.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 // Base Structs, hand s off dude, no touching these
 // OK
 
@@ -45,10 +48,10 @@ typedef struct s_OwO
 
 typedef struct s_UwU
 {
-	t_cmd		*head;
-	t_cmd		*tail;
-	char		**env;
+	t_cmd				*head;
+	t_cmd				*tail;
+	char				**env;
 
-}				t_mini;
+}						t_mini;
 
 #endif
