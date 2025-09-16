@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 14:30:09 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:07:11 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINYANSHELL_H
 
 # include "parsing/parsing.h"
-# include "stdio.h"
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 // Base Structs, hand s off dude, no touching these

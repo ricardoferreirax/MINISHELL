@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:29 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 14:23:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:31:32 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ int	count_words_ignore_quotes(char *str, char c);
 char	*word_copy_ignorequotes(char **s, char c);
 char	**split_ignore_quotes(char *str, char c);
 char	**ft_split_quotes(char const *s, char c);
-
-
+bool	no_unclosed_quotes(char *str);
 #endif
