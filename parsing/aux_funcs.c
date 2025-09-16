@@ -6,11 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 14:25:53 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:34:04 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <stdbool.h>
 
 int	count_words_ignore_quotes(char *str, char c)
 {
@@ -49,19 +50,17 @@ char	*word_copy_ignorequotes(char **s, char c)
 {
 	char	*dest;
 	int		counter;
-	bool	inquote = false;
-	bool	indquote = false;
+	bool	inquote;
 
+	inquote = false;
 	counter = 0;
 	while ((**s == c) && (**s != '\0'))
 		(*s)++;
-	while ((((**s != c) && (!inquote || !indquote)) && (**s != '\0')))
+	while ((((**s != c) || inquote) && (**s != '\0')))
 	{
 		counter++;
-		if ((**s) == '\'')
+		if ((**s) == '\'' || (**s) == '\"')
 			inquote = !inquote;
-		if ((**s) == '\"')
-			indquote = !indquote;
 		(*s)++;
 	}
 	dest = malloc(sizeof(char) * (counter + 1));
@@ -73,19 +72,40 @@ char	*word_copy_ignorequotes(char **s, char c)
 
 char	**split_ignore_quotes(char *str, char c)
 {
-	int i = 0;
-	char **arr;
-	int wordnbr = count_words_ignore_quotes(str, c);
+	int		i;
+	char	**arr;
+	int		wordnbr;
+
+	i = 0;
+	wordnbr = count_words_ignore_quotes(str, c);
 	arr = malloc(sizeof(char *) * (wordnbr + 1));
 	if (!arr)
 		return (NULL);
 	while (i < wordnbr)
 	{
 		arr[i] = word_copy_ignorequotes(&str, c);
-		if(arr[i] == NULL)
-			return(free_chararr(arr), NULL);
+		if (arr[i] == NULL)
+			return (free_chararr(arr), NULL);
 		i++;
 	}
 	arr[i] = NULL;
-	return(arr);
+	return (arr);
+}
+
+bool	no_unclosed_quotes(char *str)
+{
+	bool inquote = false;
+	bool indquote = false;
+	int i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' && !indquote)
+			inquote = !inquote;
+		if (str[i] == '\"' && !inquote)
+			indquote = !indquote;
+		i++;
+	}
+	if (indquote || inquote)
+		return (false);
+	return(true);
 }
