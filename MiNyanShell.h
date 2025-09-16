@@ -13,6 +13,7 @@
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
+#include "parsing/parsing.h"
 # include "parsing/parsing.h"
 # include "stdio.h"
 # include <readline/history.h>
@@ -20,8 +21,8 @@
 // Base Structs, hand s off dude, no touching these
 // OK
 
-typedef struct s_OwO	t_cmd;
-typedef struct s_0w0	t_subcmd;
+typedef struct	s_OwO	t_cmd;
+typedef struct	s_0w0	t_subcmd;
 
 typedef enum e_token_type
 {
@@ -46,10 +47,10 @@ typedef struct s_0w0
 
 typedef struct s_OwO
 {
-	bool				pipe;
-	t_subcmd			*head;
-	t_cmd				*next;
-}						t_cmd;
+	bool		pipe;
+	t_subcmd	*head;
+	t_cmd		*next;
+}				t_cmd;
 
 // base structs end
 
