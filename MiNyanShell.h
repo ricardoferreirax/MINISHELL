@@ -13,20 +13,29 @@
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-# include "parsing/parsing.h"
 # include <stdio.h>
+# include "stdio.h"
+
 # include <readline/history.h>
 # include <readline/readline.h>
 // Base Structs, hand s off dude, no touching these
 // OK
 
-typedef struct s_OwO	t_cmd;
-typedef struct s_0w0	t_subcmd;
+typedef struct	s_OwO	t_cmd;
+typedef struct	s_0w0	t_subcmd;
+
+typedef enum e_token_type
+{
+	REDIR_INVALID = -1, // Not a redirection token
+	REDIR_IN = 0,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC,
+}						t_redir_type;
 
 typedef struct s_0w0
 {
-	bool				hero_doc;
-	bool				append;
+	t_redir_type		type;
 	char				*delimiter;
 	char				**args;
 	char				*cmd;
@@ -42,6 +51,7 @@ typedef struct s_OwO
 	t_subcmd			*head;
 	t_cmd				*next;
 }						t_cmd;
+
 
 // base structs end
 
