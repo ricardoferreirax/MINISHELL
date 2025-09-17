@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 14:25:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:31:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define MINYANSHELL_H
 
 # include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdbool.h>
 
-# include <readline/history.h>
-# include <readline/readline.h>
+// # include <readline/history.h>
+// # include <readline/readline.h>
 # include "execution/execution.h"
 // Base Structs, hand s off dude, no touching these
 // OK

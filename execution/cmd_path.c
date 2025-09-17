@@ -6,11 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:11:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 00:20:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:27:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "../MiNyanShell.h"
 
 static char	**ft_get_envpath_dirs(char **envp)
 {
