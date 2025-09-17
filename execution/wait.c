@@ -6,19 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 23:02:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/16 23:37:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:09:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiNyanShell.h"
-
-typedef struct s_OwO
-{
-	bool		pipe;
-	t_subcmd	*head;
-	t_cmd		*next;
-    int     last_status;  // maybe adicionar isto PEDRÃO !!! guarda o status do último comando!
-}				t_cmd;
 
 void	mini_wait(t_mini *mini, pid_t last_pid)
 {
