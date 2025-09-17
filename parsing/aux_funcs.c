@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aux_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 17:34:04 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:36:22 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	count_words_ignore_quotes(char *str, char c)
 		return (0);
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' && !indquote)
 			inquote = !inquote;
-		if (str[i] == '\"')
+		if (str[i] == '\"' && !inquote)
 			indquote = !indquote;
-		if (str[i] == c && (!inquote || !indquote))
+		if (str[i] == c && (!inquote && !indquote))
 			inword = false;
 		else if (!inword)
 		{
@@ -51,16 +51,20 @@ char	*word_copy_ignorequotes(char **s, char c)
 	char	*dest;
 	int		counter;
 	bool	inquote;
+	bool	indquote;
 
 	inquote = false;
+	indquote = false;
 	counter = 0;
 	while ((**s == c) && (**s != '\0'))
 		(*s)++;
-	while ((((**s != c) || inquote) && (**s != '\0')))
+	while ((((**s != c) || inquote || indquote) && (**s != '\0')))
 	{
 		counter++;
-		if ((**s) == '\'' || (**s) == '\"')
+		if ((**s) == '\'' && !indquote)
 			inquote = !inquote;
+		else if((**s) == '\"' && !inquote)
+			indquote = !indquote;
 		(*s)++;
 	}
 	dest = malloc(sizeof(char) * (counter + 1));

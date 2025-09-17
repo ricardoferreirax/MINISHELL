@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+         #
+#    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 16:26:27 by pfreire-          #+#    #+#              #
-#    Updated: 2025/09/17 14:46:52 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/09/17 16:21:39 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = minishell
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g
 SRC_FILES =	test_main.c \
-			parsing/aux_funcs.c
+			parsing/aux_funcs.c \
+			parsing/parsing.c
 OBJS = $(SRC_FILES:.c=.o)
 LIBFT = libft/libft.a
 

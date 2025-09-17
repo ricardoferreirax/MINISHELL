@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 13:32:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:18:58 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "parsing/parsing.h"
+
 
 typedef struct s_OwO	t_cmd;
 typedef struct s_0w0	t_subcmd;
@@ -60,5 +61,7 @@ typedef struct s_UwU
 	t_cmd				*tail;
 	char				**env;
 }						t_mini;
+
+t_mini	parser(char *cmd, char **env);
 
 #endif

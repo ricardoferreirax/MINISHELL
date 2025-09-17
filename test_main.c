@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 14:48:58 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:18:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,23 @@ int	main(int argc, char **argv, char **env)
 	int i = 0;
 	char *cmd;
 	// printf("%s\n", argv[i]);
+	cmd = readline("> ");
 	while (argc)
 	{
 		(void) argv;
 		(void) env;
-		cmd = readline("> ");
-		if(!no_unclosed_quotes(cmd))
+		if(!no_unclosed_quotes(cmd) || strcmp(cmd, "exit") == 0)
 			return(ft_printf("OwO: WhAT iS tHIs? *notices open quote*\n"), 69);
-		arr = split_ignore_quotes(cmd, ' ');
+		arr = split_ignore_quotes(cmd, '|');
+		i = 0;
 		while (arr[i] != NULL)
 		{
 			printf("%s / ", arr[i]);
 			i++;
 		}
+		t_mini nyan = parser(cmd, env);
+		(void) nyan;
+		cmd = readline("\nMiNyanShell :3> ");
 	}
 
 	return (0);
