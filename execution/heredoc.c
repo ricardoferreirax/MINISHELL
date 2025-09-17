@@ -6,26 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 13:49:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:23:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-
-typedef struct s_0w0
-{
-	bool		hero_doc;
-	bool		append;
-	char		*delimiter;
-	char		**args;
-	char		*cmd;
-	char		*infile;
-	char		*outfile;
-	t_subcmd	*next;
-	t_cmd		*last;
-    int         in_fd; // secalhar deviamos juntar isto PEDRÃO !!! fd de input (pode ser heredoc, infile ou stdin)
-}				t_subcmd;
-
+#include "../MiNyanShell.h"
 
 static int	remove_newline_and_check(char *line, char *delimiter)
 {

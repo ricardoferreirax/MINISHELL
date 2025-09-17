@@ -6,11 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 14:46:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:28:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "../MiNyanShell.h"
 
 static char	**ft_parse_cmd(char *cmd)
 {
@@ -88,28 +88,28 @@ void	ft_exec_cmd(t_subcmd *sub, char **envp)
 }
 
 // ONLY FOR TESTING
-int main(void)
-{
-	pid_t pid;
-	int status;
+// int main(void)
+// {
+// 	pid_t pid;
+// 	int status;
 	
-	pid = fork();
-	if (pid == 0)
-	{
-		execute_command();
-	}
-	else if (pid > 0)
-	{
-		// Parent process
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			printf("exit code = %d\n", WEXITSTATUS(status));
-		else if (WIFSIGNALED(status))
-			printf("Child terminated by signal = %d\n", WTERMSIG(status));
-	}
-	else
-	{
-		perror("fork failed");
-	}
-	return (0);
-}
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		execute_command();
+// 	}
+// 	else if (pid > 0)
+// 	{
+// 		// Parent process
+// 		waitpid(pid, &status, 0);
+// 		if (WIFEXITED(status))
+// 			printf("exit code = %d\n", WEXITSTATUS(status));
+// 		else if (WIFSIGNALED(status))
+// 			printf("Child terminated by signal = %d\n", WTERMSIG(status));
+// 	}
+// 	else
+// 	{
+// 		perror("fork failed");
+// 	}
+// 	return (0);
+// }
