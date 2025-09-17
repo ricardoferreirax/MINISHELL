@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 00:18:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:46:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static char	**ft_parse_cmd(char *cmd)
 
 static int	check_cmd_access(char *cmd)
 {
-	if (access(cmd_list[0], F_OK) != 0)
+	if (access(cmd, F_OK) != 0)
 		return (127);
-	else if (access(cmd_list[0], X_OK) != 0)
+	else if (access(cmd, X_OK) != 0)
 		return (126);
-	return (0); // Success
+	return (0); // SUCESS
 }
 
 static char	*handle_cmd_path(char **cmd_list, char **envp)
@@ -39,7 +39,7 @@ static char	*handle_cmd_path(char **cmd_list, char **envp)
 	char	*cmd_path;
 	int 	code;
 
-	if (ft_strchr(cmd_list[0], '/'))
+	if (ft_strchr(cmd_list[0], '/'))  // ABSOLUTE OR RELATIVE PATH
 	{
 		code = check_cmd_access(cmd_list[0]);
 		if (code == 126)
@@ -48,7 +48,7 @@ static char	*handle_cmd_path(char **cmd_list, char **envp)
 			return (NULL);
 		cmd_path = ft_strdup(cmd_list[0]);
 	}
-	else
+	else // SEARCH IN PATH
 	{
 		cmd_path = ft_cmd_path(cmd_list[0], envp);
 		if (!cmd_path)
@@ -87,3 +87,29 @@ void	ft_exec_cmd(t_subcmd *sub, char **envp)
 	}
 }
 
+// ONLY FOR TESTING
+int main(void)
+{
+	pid_t pid;
+	int status;
+	
+	pid = fork();
+	if (pid == 0)
+	{
+		execute_command();
+	}
+	else if (pid > 0)
+	{
+		// Parent process
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			printf("exit code = %d\n", WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			printf("Child terminated by signal = %d\n", WTERMSIG(status));
+	}
+	else
+	{
+		perror("fork failed");
+	}
+	return (0);
+}
