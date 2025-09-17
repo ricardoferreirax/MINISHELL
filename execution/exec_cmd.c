@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 00:18:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:25:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,27 @@ void	ft_exec_cmd(t_subcmd *sub, char **envp)
 		exit(EXIT_FAILURE);
 	}
 }
+// test the execution of a command in the pipeline
+int main()
+{
+	pid_t pid;
+	int status;
 
+	if (pid == 0)
+	{
+		ft_exec_cmd(subcmd, envp);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			printf ("exit code: %d\n", WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			printf ("terminated by signal: %d\n", WTERMSIG(status));
+	}
+	else
+	{
+		perror("Fork failed");
+		return (-1);
+	}
+}

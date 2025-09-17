@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 10:09:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:32:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ static void	read_till_delimiter(t_subcmd *sub, t_mini *mini, int pipefd[2])
 
 int	prepare_heredocs_for_cmd(t_cmd *cmd, t_mini *mini)
 {
-	t_subcmd	*node;
-	int			hdoc_status = 0;
+	t_subcmd	*subcmd;
+	int			hdoc_status;
 
-	node = cmd->head;
-	while (node)
+	subcmd = cmd->head;
+    hdoc_status = 0;
+	while (subcmd)
 	{
 		if (node->hero_doc)
 		{
-			node->expand_hdoc = !is_limiter_quoted(node->delimiter); // decide se expande ou não (DEPENDE SE O DELIMITER TEM ASPAS)
-			hdoc_status = handle_heredoc(node, mini);
+			// subcmd->expand_hdoc = !is_limiter_quoted(node->delimiter); // decide se expande ou não (DEPENDE SE O DELIMITER TEM ASPAS) RESOLVER MAIS TARDE
+			hdoc_status = handle_heredoc(subcmd, mini);
 		}
-		node = node->next;
+		subcmd = subcmd->next;
 	}
 	return (hdoc_status); // no fim cmd->head->in_fd aponta para o último heredoc válido
 }
