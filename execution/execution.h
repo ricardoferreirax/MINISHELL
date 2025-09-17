@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 11:13:37 by pfreire-         ###   ########.fr       */
+/*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/17 14:24:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include <stdio.h>
+#include "../MiNyanShell.h"
 
-// t_mini parser(int argc, char **argv, char **env)
-// {
-	
-// }
-
+typedef struct s_exec_cmd
+{
+    int pipefd[2];
+    pid_t pid;
+    int prev_fd;
+    t_mini *mini;
+}
+t_exec_cmd;
