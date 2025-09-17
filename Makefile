@@ -13,7 +13,8 @@
 NAME = minishell
 
 CC = cc
-NFLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g
+
 SRC_FILES =	test_main.c \
 			parsing/aux_funcs.c
 OBJS = $(SRC_FILES:.c=.o)
@@ -22,8 +23,9 @@ LIBFT = libft/libft.a
 
 all: $(NAME) 
 
-$(NAME):$(OBJS) $(LIBFT) $(MLX)
-	@$(CC) -g $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME):$(OBJS) $(LIBFT) 
+	@$(CC) -g $(OBJS) $(LIBFT) -lreadline -lhistory -o $(NAME)
+
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@

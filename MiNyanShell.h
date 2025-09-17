@@ -6,16 +6,16 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/16 14:47:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:07:11 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-#include "parsing/parsing.h"
-# include "parsing/parsing.h"
+# include <stdio.h>
 # include "stdio.h"
+
 # include <readline/history.h>
 # include <readline/readline.h>
 // Base Structs, hand s off dude, no touching these
@@ -47,10 +47,11 @@ typedef struct s_0w0
 
 typedef struct s_OwO
 {
-	bool		pipe;
-	t_subcmd	*head;
-	t_cmd		*next;
-}				t_cmd;
+	bool				pipe;
+	t_subcmd			*head;
+	t_cmd				*next;
+}						t_cmd;
+
 
 // base structs end
 
