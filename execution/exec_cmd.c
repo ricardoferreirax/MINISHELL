@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/17 18:28:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/18 09:52:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_cmd_access(char *cmd)
 		return (127);
 	else if (access(cmd, X_OK) != 0)
 		return (126);
-	return (0); // SUCESS
+	return (0); // SUCCESS
 }
 
 static char	*handle_cmd_path(char **cmd_list, char **envp)

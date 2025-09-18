@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 18:31:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/18 10:14:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
-	int	in_fd;
+	int					in_fd;
+	int					out_fd;
 }						t_subcmd;
 
 typedef struct s_OwO
@@ -54,7 +55,7 @@ typedef struct s_OwO
 	bool				pipe;
 	t_subcmd			*head;
 	t_cmd				*next;
-	int last_status;
+	int					last_status;
 }						t_cmd;
 
 
