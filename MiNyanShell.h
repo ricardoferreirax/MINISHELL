@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/18 17:26:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/18 10:44:26 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
