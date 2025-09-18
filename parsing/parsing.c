@@ -6,12 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 16:43:35 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:02:03 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
-#include "parsing.h" w
+#include "parsing.h"
+
+
 
 char	*isolate_command(char *cmd)
 {
@@ -40,7 +42,7 @@ t_cmd	*list_creator(char *cmd)
 	t_cmd	*filler;
 	char	**arr;
 	int		i;
-	int		j;
+	int		j = 0;
 
 	i = 0;
 	head = malloc(sizeof(t_cmd));
