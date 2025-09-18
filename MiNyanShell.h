@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 16:18:58 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:19:44 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_0w0
 	t_subcmd			*next;
 	t_cmd				*last;
 	int					in_fd;
+	int					out_fd;
 }						t_subcmd;
 
 typedef struct s_OwO
@@ -58,7 +59,7 @@ typedef struct s_OwO
 typedef struct s_UwU
 {
 	t_cmd				*head;
-	t_cmd				*tail;
+	//t_cmd				*tail;
 	char				**env;
 }						t_mini;
 

@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/17 16:18:52 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:07:05 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		t_mini nyan = parser(cmd, env);
 		(void) nyan;
-		cmd = readline("\nMiNyanShell :3> ");
+		cmd = readline("MiNyanShell :3> ");
 	}
 
 	return (0);
