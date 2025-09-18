@@ -55,7 +55,6 @@ typedef struct s_OwO
 	bool				pipe;
 	t_subcmd			*head;
 	t_cmd				*next;
-	int					last_status;
 }						t_cmd;
 
 
@@ -65,6 +64,7 @@ typedef struct s_UwU
 {
 	t_cmd				*head;
 	char				**env;
+	int 				last_status;
 }						t_mini;
 
 #endif

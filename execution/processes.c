@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/18 10:16:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:15:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,65 +23,55 @@ static void parent_process(t_cmd *cmd, t_exec_cmd *ctx)
     }
 }
 
-
-static int handle_command(t_cmd *cmd, t_exec_cmd *ctx)
+void last_child(t_cmd *cmd, t_exec_cmd *ctx)
 {
+    t_subcmd *subcmd;
+
+    subcmd = cmd->head; // o último comando
+    dup2(ctx->prev_fd, STDIN_FILENO); // aponta/liga o stdin para o prev_fd (read end do pipe anterior)
+    if (subcmd->out_fd != -1)  // se o output vai para o outfile
+        dup2(subcmd->out_fd, STDOUT_FILENO); // aponta/liga o stdout para o outfile
+    close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior) pois já está duplicado
+    ft_exec_cmd(subcmd, ctx->mini->env);
+    exit(1);
+}
+
+void middle_child(t_cmd *cmd, t_exec_cmd *ctx)
+{
+    t_subcmd *subcmd;
+    
+    subcmd = cmd->head;
+    dup2(ctx->prev_fd, STDIN_FILENO); // aponta/liga o stdin para o prev_fd (read end do pipe anterior)
+    if (cmd->next)  // se houver próximo comando
+        dup2(ctx->pipefd[1], STDOUT_FILENO); // aponta/liga o stdout para o pipe write end
+    close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior) pois já está duplicado
+    close(ctx->pipefd[0]); // fecha o read end do pipe pois só vai escrever
+    close(ctx->pipefd[1]); // fecha o write end do pipe pois já está duplicado
+    ft_exec_cmd(subcmd, ctx->mini->env);
+    exit(1); 
+}
+
+void first_child(t_cmd *cmd, t_exec_cmd *ctx)
+{
+    t_subcmd *subcmd;
+    
+    subcmd = cmd->head;
     if (cmd->next) // se houver próximo comando
-    {
-        if (pipe(ctx->pipefd) == -1) // cria o pipe
-            error_exit("minishell: pipe failed");
-    }
-    ctx->pid = fork(); // cria um novo processo
-    if (ctx->pid < 0)
-        error_exit("minishell: fork failed");
-    if (ctx->pid == 0) // CHILD
-        child_process(cmd, ctx);
-    else if (ctx->pid > 0) // PARENT
-        parent_process(cmd, ctx);
-    return (0);
+        dup2(ctx->pipefd[1], STDOUT_FILENO); // aponta/liga o stdout para o pipe write end
+    if (subcmd->in_fd != -1) // se o input vem do infile (ou do heredoc)
+        dup2(subcmd->in_fd, STDIN_FILENO); // aponta/liga o stdin para o infile (ou heredoc)
+    close(ctx->pipefd[0]); // fecha o read end do pipe pois só vai escrever
+    close(ctx->pipefd[1]); // fecha o write end do pipe pois já está duplicado
+    ft_exec_cmd(subcmd, ctx->mini->env);
+    exit(1); // se o execve falhar
 }
 
-void	mini_wait(t_cmd *mini, pid_t last_pid)
+void child_process(t_cmd *cmd, t_exec_cmd *ctx)
 {
-	pid_t	pid;
-	int		status;
-
-	status = 0;
-	while (1)
-	{
-		pid = wait(&status);
-		if (pid <= 0)  // nenhum filho para esperar
-			break ;
-		if (pid == last_pid) // corresponde ao último filho ?
-		{
-			if (WIFEXITED(status))  // isded normally com exit
-				mini->last_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status)) // isded por sinal
-				mini->last_status = (128 + WTERMSIG(status)); // 128 + signal number
-		}
-	}
-	// if (mini->last_status == 130 || mini->last_status == 131)
-	// {
-	// 	if (mini->last_status == 131)
-	// 		ft_putstr_fd("Quit (core dumped)", 2);
-	// 	ft_putstr_fd("\n", 2);
-}
-
-
-// 130 = process interrupted SIGINT (Ctrl + C)
-// 131 = process quit (core dumped) SIGQUIT (Ctrl + \)
-
-int execute_pipeline(t_cmd *cmds, t_mini *mini)
-{
-    t_exec_cmd ctx;
-
-    ctx.prev_fd = -1; // inicialmente não temos prev_fd
-    ctx.mini = mini; // guardamos o contexto do mini para aceder ao env 
-    while (cmds) // para cada comando na lista
-    {
-        handle_command(cmds, &ctx); // crio o pipe, faço fork e tratamos do child e do parent
-        cmds = cmds->next;
-    }
-    mini_wait(mini, ctx.pid); // espera pelo último filho
-    return (cmds->last_status); // devolve o status do último comando
+    if (ctx->prev_fd == -1 && cmd == ctx->mini->head) // se é o first command
+        first_child(cmd, ctx);
+    else if (cmd->next)  // se for um middle command
+        middle_child(cmd, ctx);
+    else if (!cmd->next) // se for o last command
+        last_child(cmd, ctx);
 }
