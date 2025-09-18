@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/18 17:29:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:03:08 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_mini	parser(char *cmd, char **env)
 	cmd_nbr = arr_size((void **)pipes);
 	while (i < cmd_nbr)
 	{
-		curr = cmd_new(pipes[i]);
+		curr = cmd_new();
 		if (!nyan.head)
 			nyan.head = curr;
 		if (prev)
