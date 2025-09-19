@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 10:43:32 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:17:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-# include <stdbool.h>
 # include <stdio.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <stdbool.h>
+
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "execution/execution.h"
 
-typedef struct s_OwO	t_cmd;
-typedef struct s_0w0	t_subcmd;
+// Base Structs, hand s off dude, no touching these
+// OK
+
+typedef struct	s_OwO	t_cmd;
+typedef struct	s_0w0	t_subcmd;
 
 typedef enum e_token_type
 {
@@ -43,7 +49,9 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
+	t_redir             *redirs;
 	int					in_fd;
+	int					out_fd;
 }						t_subcmd;
 
 typedef struct s_OwO
@@ -51,7 +59,6 @@ typedef struct s_OwO
 	bool				pipe;
 	t_subcmd			*head;
 	t_cmd				*next;
-	int					last_status;
 }						t_cmd;
 
 // base structs end
