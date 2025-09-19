@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/18 17:15:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 10:36:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ void last_child(t_cmd *cmd, t_exec_cmd *ctx)
 {
     t_subcmd *subcmd;
 
-    subcmd = cmd->head; // o último comando
-    dup2(ctx->prev_fd, STDIN_FILENO); // aponta/liga o stdin para o prev_fd (read end do pipe anterior)
+    subcmd = cmd->head;
+    safe_dup2_and_close(ctx->prev_fd, STDIN_FILENO);
     if (subcmd->out_fd != -1)  // se o output vai para o outfile
-        dup2(subcmd->out_fd, STDOUT_FILENO); // aponta/liga o stdout para o outfile
-    close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior) pois já está duplicado
+        safe_dup2_and_close(subcmd->out_fd, STDOUT_FILENO);
     ft_exec_cmd(subcmd, ctx->mini->env);
     exit(1);
 }
@@ -41,12 +40,10 @@ void middle_child(t_cmd *cmd, t_exec_cmd *ctx)
     t_subcmd *subcmd;
     
     subcmd = cmd->head;
-    dup2(ctx->prev_fd, STDIN_FILENO); // aponta/liga o stdin para o prev_fd (read end do pipe anterior)
-    if (cmd->next)  // se houver próximo comando
-        dup2(ctx->pipefd[1], STDOUT_FILENO); // aponta/liga o stdout para o pipe write end
-    close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior) pois já está duplicado
+    safe_dup2_and_close(ctx->prev_fd, STDIN_FILENO);
+    if (cmd->next)
+        safe_dup2_and_close(ctx->pipefd[1], STDOUT_FILENO);
     close(ctx->pipefd[0]); // fecha o read end do pipe pois só vai escrever
-    close(ctx->pipefd[1]); // fecha o write end do pipe pois já está duplicado
     ft_exec_cmd(subcmd, ctx->mini->env);
     exit(1); 
 }
@@ -56,12 +53,11 @@ void first_child(t_cmd *cmd, t_exec_cmd *ctx)
     t_subcmd *subcmd;
     
     subcmd = cmd->head;
-    if (cmd->next) // se houver próximo comando
-        dup2(ctx->pipefd[1], STDOUT_FILENO); // aponta/liga o stdout para o pipe write end
+    if (cmd->next)
+        safe_dup2_and_close(ctx->pipefd[1], STDOUT_FILENO);
     if (subcmd->in_fd != -1) // se o input vem do infile (ou do heredoc)
-        dup2(subcmd->in_fd, STDIN_FILENO); // aponta/liga o stdin para o infile (ou heredoc)
-    close(ctx->pipefd[0]); // fecha o read end do pipe pois só vai escrever
-    close(ctx->pipefd[1]); // fecha o write end do pipe pois já está duplicado
+        safe_dup2_and_close(subcmd->in_fd, STDIN_FILENO);
+    close(ctx->pipefd[0]);
     ft_exec_cmd(subcmd, ctx->mini->env);
     exit(1); // se o execve falhar
 }

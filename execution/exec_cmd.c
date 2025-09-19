@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/18 09:52:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:33:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_exec_cmd(t_subcmd *sub, char **envp)
 		cmd_not_found_msg(sub->cmd);
 		exit(127); // só no child
 	}
-	cmd_path = handle_cmd_path(sub->cmd, envp);
+	cmd_path = handle_cmd_path(sub->args, envp);
 	if (!cmd_path)
 	{
 		cmd_not_found_msg(sub->cmd);
@@ -87,29 +87,3 @@ void	ft_exec_cmd(t_subcmd *sub, char **envp)
 	}
 }
 
-// ONLY FOR TESTING
-// int main(void)
-// {
-// 	pid_t pid;
-// 	int status;
-	
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		execute_command();
-// 	}
-// 	else if (pid > 0)
-// 	{
-// 		// Parent process
-// 		waitpid(pid, &status, 0);
-// 		if (WIFEXITED(status))
-// 			printf("exit code = %d\n", WEXITSTATUS(status));
-// 		else if (WIFSIGNALED(status))
-// 			printf("Child terminated by signal = %d\n", WTERMSIG(status));
-// 	}
-// 	else
-// 	{
-// 		perror("fork failed");
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/18 09:49:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 10:38:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ int	prepare_heredocs_for_cmd(t_cmd *cmd, t_mini *mini)
 	{
 		if (node->hero_doc)
 		{
-			node->expand_hdoc = !is_limiter_quoted(node->delimiter); // decide se expande ou não (DEPENDE SE O DELIMITER TEM ASPAS)
+			// node->expand_hero_doc = !is_limiter_quoted(node->delimiter); // decide se expande ou não (DEPENDE SE O DELIMITER TEM ASPAS)
 			hdoc_status = handle_heredoc(node, mini);
 		}
 		node = node->next;
 	}
 	return (hdoc_status); // no fim cmd->head->in_fd aponta para o último heredoc válido
-}
 
-// precisamos de t_mini * para aceder ao envp e ao last_status (temos de ver também depois os sinais) 
+
+	// precisamos de t_mini * para aceder ao env (temos de ver também depois os sinais)
 
 int handle_heredoc(t_subcmd *subcmd, t_mini *mini)
 {
