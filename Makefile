@@ -6,7 +6,7 @@
 #    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 16:26:27 by pfreire-          #+#    #+#              #
-#    Updated: 2025/09/19 13:07:49 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/09/19 13:34:27 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,9 @@ NAME = minishell
 
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g
-
 SRC_FILES =	test_main.c \
-			parsing/aux_funcs.c
-     
+			parsing/aux_funcs.c \
+			parsing/parsing.c
 OBJS = $(SRC_FILES:.c=.o)
 LIBFT = libft/libft.a
 
