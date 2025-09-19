@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 10:39:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 12:40:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "execution/execution.h"
+
+// Base Structs, hand s off dude, no touching these
+// OK
 
 typedef struct	s_OwO	t_cmd;
 typedef struct	s_0w0	t_subcmd;
@@ -44,6 +49,7 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
+	t_redir     *redirs;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;

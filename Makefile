@@ -14,7 +14,10 @@ NAME = minishell
 
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g
-SRC_FILES =
+
+SRC_FILES =	test_main.c \
+			parsing/aux_funcs.c
+     
 OBJS = $(SRC_FILES:.c=.o)
 LIBFT = libft/libft.a
 
