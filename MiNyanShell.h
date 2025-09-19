@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 12:40:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 13:08:07 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "execution/execution.h"
-
 // Base Structs, hand s off dude, no touching these
 // OK
 
@@ -49,7 +47,6 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
-	t_redir     *redirs;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;
@@ -67,7 +64,7 @@ typedef struct s_UwU
 {
 	t_cmd				*head;
 	char				**env;
-	int 				last_status;
+	int					last_status;
 }						t_mini;
 
 #endif
