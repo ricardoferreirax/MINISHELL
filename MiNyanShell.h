@@ -49,7 +49,7 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
-	t_redir             *redirs;
+	t_redir     *redirs;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;
