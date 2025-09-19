@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 12:40:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 19:51:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
-	t_redir     *redirs;
+	t_redir				*redirs;
+	t_cmd_mode			cmd_type;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;

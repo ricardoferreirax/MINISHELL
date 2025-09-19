@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/18 17:28:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 22:15:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiNyanShell.h"
 
-void	mini_wait(t_mini *mini, pid_t last_pid)
+static void	mini_wait(t_mini *mini, pid_t last_pid)
 {
 	pid_t	pid;
 	int		status;
@@ -38,6 +38,17 @@ void	mini_wait(t_mini *mini, pid_t last_pid)
 	// 	ft_putstr_fd("\n", 2);
 }
 
+static void parent_process(t_cmd *cmd, t_exec_cmd *ctx)
+{
+    if (ctx->prev_fd != -1) // se existir prev_fd
+        close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior)
+    if (cmd->next) // se houver próximo comando
+    {
+        close(ctx->pipefd[1]);
+        ctx->prev_fd = ctx->pipefd[0]; // o read end do pipe é o próximo prev_fd
+    }
+}
+
 static int handle_command(t_cmd *cmd, t_exec_cmd *ctx)
 {
     if (cmd->next) // se houver próximo comando
@@ -55,17 +66,17 @@ static int handle_command(t_cmd *cmd, t_exec_cmd *ctx)
     return (0);
 }
 
-int execute_pipeline(t_cmd *cmds, t_mini *mini)
+int ft_pipeline(t_cmd *cmds, t_mini *mini)
 {
     t_exec_cmd ctx;
 
     ctx.prev_fd = -1; // inicialmente não temos prev_fd
-    ctx.mini = mini; // guardamos o contexto do mini para aceder ao env 
+    ctx.mini = mini; // aceder ao env 
     while (cmds) // para cada comando na lista
     {
         handle_command(cmds, &ctx);
         cmds = cmds->next;
     }
-    mini_wait(mini, ctx.pid); // espera pelo último filho
-    return (mini->last_status); // devolve o status do último comando
+    mini_wait(mini, ctx.pid); // espera pelo último child process
+    return (mini->last_status); // devolve o status do último 
 }
