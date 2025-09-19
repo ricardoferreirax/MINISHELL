@@ -19,13 +19,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "execution/execution.h"
-
-// Base Structs, hand s off dude, no touching these
-// OK
 
 typedef struct	s_OwO	t_cmd;
 typedef struct	s_0w0	t_subcmd;
