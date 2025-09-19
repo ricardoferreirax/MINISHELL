@@ -3,29 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 19:51:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 13:08:07 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-# include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
+# include "libft/libft.h"
+# include "parsing/parsing.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "execution/execution.h"
-
-// Base Structs, hand s off dude, no touching these
-// OK
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 typedef struct	s_OwO	t_cmd;
 typedef struct	s_0w0	t_subcmd;
@@ -68,7 +65,9 @@ typedef struct s_UwU
 {
 	t_cmd				*head;
 	char				**env;
-	int 				last_status;
+	int					last_status;
 }						t_mini;
+
+t_mini					parser(char *cmd, char **env);
 
 #endif
