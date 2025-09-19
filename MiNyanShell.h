@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 10:39:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:49:22 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
-# include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
+# include "libft/libft.h"
+# include "parsing/parsing.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-typedef struct	s_OwO	t_cmd;
-typedef struct	s_0w0	t_subcmd;
+typedef struct s_OwO	t_cmd;
+typedef struct s_0w0	t_subcmd;
 
 typedef enum e_token_type
 {
@@ -61,7 +63,9 @@ typedef struct s_UwU
 {
 	t_cmd				*head;
 	char				**env;
-	int 				last_status;
+	int					last_status;
 }						t_mini;
+
+t_mini					parser(char *cmd, char **env);
 
 #endif

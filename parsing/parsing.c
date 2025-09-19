@@ -6,13 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/18 18:03:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:48:11 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
 #include "parsing.h"
-#include <string.h>
 
 char	*isolate_command(char *cmd)
 {
@@ -96,7 +95,6 @@ t_cmd	*cmd_new(void)
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->head = subcmd_new();
-	cmd->last_status = -1;
 	cmd->next = NULL;
 	cmd->pipe = false;
 	return (cmd);
