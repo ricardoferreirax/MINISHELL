@@ -6,24 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/19 12:15:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 22:15:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
 
-static void parent_process(t_cmd *cmd, t_exec_cmd *ctx)
-{
-    if (ctx->prev_fd != -1) // se existir prev_fd
-        close(ctx->prev_fd); // fecha o prev_fd (read end do pipe anterior)
-    if (cmd->next) // se houver próximo comando
-    {
-        close(ctx->pipefd[1]);
-        ctx->prev_fd = ctx->pipefd[0]; // o read end do pipe é o próximo prev_fd
-    }
-}
-
-void last_child(t_cmd *cmd, t_exec_cmd *ctx)
+static void last_child(t_cmd *cmd, t_exec_cmd *ctx)
 {
     t_subcmd *subcmd;
 
@@ -33,11 +22,11 @@ void last_child(t_cmd *cmd, t_exec_cmd *ctx)
     if (subcmd->out_fd != -1)
         if (safe_dup2_and_close(subcmd->out_fd, STDOUT_FILENO) != 0)
             error_exit("dup2 failed (outfile)");
-    ft_exec_cmd(subcmd, ctx->mini->env);
+    exec_subcmd(subcmd, ctx->mini->env);
     exit(1);
 }
 
-void middle_child(t_cmd *cmd, t_exec_cmd *ctx)
+static void middle_child(t_cmd *cmd, t_exec_cmd *ctx)
 {
     t_subcmd *subcmd;
     
@@ -50,11 +39,11 @@ void middle_child(t_cmd *cmd, t_exec_cmd *ctx)
             error_exit("dup2 failed (pipe write)");
 
     close(ctx->pipefd[0]);
-    ft_exec_cmd(subcmd, ctx->mini->env);
+    exec_subcmd(subcmd, ctx->mini->env);
     exit(1); 
 }
 
-void first_child(t_cmd *cmd, t_exec_cmd *ctx)
+static void first_child(t_cmd *cmd, t_exec_cmd *ctx)
 {
     t_subcmd *subcmd;
     
@@ -62,13 +51,11 @@ void first_child(t_cmd *cmd, t_exec_cmd *ctx)
     if (cmd->next)
         if (safe_dup2_and_close(ctx->pipefd[1], STDOUT_FILENO) != 0)
             error_exit("dup2 failed (pipe write)");
-
     if (subcmd->in_fd != -1)
         if (safe_dup2_and_close(subcmd->in_fd, STDIN_FILENO) != 0)
             error_exit("dup2 failed (stdin)");
-
     close(ctx->pipefd[0]);
-    ft_exec_cmd(subcmd, ctx->mini->env);
+    exec_subcmd(subcmd, ctx->mini->env);
     exit(1); // se o execve falhar
 }
 

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/19 11:28:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/19 14:22:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,3 @@ void handle_redirs(t_subcmd *subcmd)
 		redir = redir->next;
 	}
 }
-
-
