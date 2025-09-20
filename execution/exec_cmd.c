@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/19 21:48:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:47:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	exec_external_cmd(t_subcmd *subcmd, t_mini *mini)
 
 void	exec_subcmd(t_subcmd *subcmd, t_mini *mini)
 {
+	handle_redirs(subcmd);
 	if (subcmd->cmd_type == CMD_BUILTIN)
 	{
 		exec_builtin(subcmd, mini);
