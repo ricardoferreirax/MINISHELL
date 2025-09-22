@@ -6,7 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/09/22 11:35:21 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/09/22 14:37:53 by pfreire-         ###   ########.fr       */
+>>>>>>> pedro
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +61,7 @@ typedef struct s_0w0
 	t_subcmd			*next;
 	t_cmd				*last;
 	t_redir				*redirs;
-	t_cmd_mode			*cmd_type;
+	t_cmd_mode			cmd_type;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;
