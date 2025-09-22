@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/22 10:16:05 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:48:16 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,12 @@ t_cmd	*cmd_new(void)
 
 void fill_cmd(t_mini *nyan, char *str)
 {
-	int i = 0;
+	int *
+	i = 0;
 	char **arr = split_ignore_quotes(str, ' ');
 	while(arr[i] != NULL)
 	{
-		
+		parse(&nyan, &i)
 	}
 }
 
