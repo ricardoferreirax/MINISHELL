@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 13:08:07 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/21 19:18:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINYANSHELL_H
 
 # include "libft/libft.h"
-# include "parsing/parsing.h"
+/* # include "parsing/parsing.h"
 # include <readline/history.h>
-# include <readline/readline.h>
+# include <readline/readline.h> */
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,6 +26,9 @@
 
 typedef struct	s_OwO	t_cmd;
 typedef struct	s_0w0	t_subcmd;
+typedef struct s_redir t_redir;
+typedef enum   e_cmd_mode t_cmd_mode;
+
 
 typedef enum e_token_type
 {
@@ -47,7 +50,7 @@ typedef struct s_0w0
 	t_subcmd			*next;
 	t_cmd				*last;
 	t_redir				*redirs;
-	t_cmd_mode			cmd_type;
+	t_cmd_mode			*cmd_type;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;

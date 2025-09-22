@@ -6,33 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/20 15:38:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:01:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "execution.h"
 # include "../MiNyanShell.h"
-
-static void	detect_subcmd_type(t_subcmd *subcmd)
-{
-	char *cmd_arg;
-
-	if (!subcmd->args || !subcmd->args[0])
-	{
-		subcmd->cmd_type = CMD_EMPTY;
-		return ;
-	}
-	cmd_arg = subcmd->args[0];
-	if (is_it_builtin(cmd_arg))
-		subcmd->cmd_type = CMD_BUILTIN;
-	else if (cmd_arg[0] == '/')
-		subcmd->cmd_type = CMD_ABS_PATH;
-	else if ((cmd_arg[0] == '.' && cmd_arg[1] == '/')
-		|| (cmd_arg[0] == '.' && cmd_arg[1] == '.' && cmd_arg[2] == '/'))
-		subcmd->cmd_type = CMD_REL_PATH;
-	else
-		subcmd->cmd_type = CMD_SIMPLE;
-}
 
 static char	**ft_parse_cmd(char *cmd)
 {
@@ -47,45 +26,97 @@ static char	**ft_parse_cmd(char *cmd)
 	return (cmd_list);
 }
 
-static void	iterate_cmd_list(t_cmd *cmd_list)
+static void set_subcmd_type(t_subcmd *subcmd)
 {
-	t_cmd		*node;
-	t_subcmd	*subcmd;
+    char *cmd_arg;
 
-	node = cmd_list;
-	while (node)
-	{
-		subcmd = node->head;
-		while (subcmd)
-		{
-			if (!subcmd->args && subcmd->cmd)
-				subcmd->args = ft_parse_cmd(subcmd->cmd);
-			detect_subcmd_type(subcmd);
-			subcmd = subcmd->next;
-		}
-		node = node->next;
-	}
+    if (!subcmd)
+        return;
+    if (!subcmd->args && subcmd->cmd) // se houver comando mas não houver args
+        subcmd->args = ft_parse_cmd(subcmd->cmd);
+    if (!subcmd->args || !subcmd->args[0])
+    {
+        subcmd->cmd_type = NONE_CMD;
+        return;
+    }
+    cmd_arg = subcmd->args[0];
+    if (is_builtin(cmd_arg))
+        subcmd->cmd_type = BUILTIN_CMD;
+    else if (cmd_arg[0] == '/')
+        subcmd->cmd_type = ABS_PATH_CMD;
+    else if ((cmd_arg[0] == '.' && cmd_arg[1] == '/') ||
+             (cmd_arg[0] == '.' && cmd_arg[1] == '.' && cmd_arg[2] == '/'))
+        subcmd->cmd_type = REL_PATH_CMD;
+    else
+        subcmd->cmd_type = SIMPLE_CMD;
 }
 
-int	ft_execution(t_cmd *cmd_list, t_mini *mini)
+static void prepare_pipeline_subcmds(t_cmd *cmd_list)
 {
-    int			status;
-    t_subcmd	*subcmd;
-    
-    if (!cmd_list || !cmd_list->head)
-        return (0);
-    iterate_cmd_list(cmd_list);        
-    subcmd = cmd_list->head;
+    t_cmd    *cmd;
+    t_subcmd *subcmd;
+
+	cmd = cmd_list;
+    while (cmd)
+    {
+        subcmd = cmd->head;
+        while (subcmd)
+        {
+            set_subcmd_type(subcmd);
+            subcmd = subcmd->next;
+        }
+        cmd = cmd->next;
+    }
+}
+
+int ft_execution(t_cmd *cmd_list, t_mini *mini)
+{
+    int         status;
+    t_subcmd    *subcmd;
+
     status = 0;
-    if (!cmd_list->next) // comando único
-	{
-    	if (subcmd->cmd_type == CMD_BUILTIN && builtin_runs_in_parent(subcmd))
-        	status = exec_builtin(subcmd, mini); // corre no parent
-    	else
-        	status = exec_subcmd(subcmd, mini);  // corre num child (builtin "safe" ou externo)
-	}
-    else // pipeline
+    if (!cmd_list || !cmd_list->head || !mini)
+        return (0);
+    prepare_pipeline_subcmds(cmd_list);
+    subcmd = cmd_list->head;
+    if (!cmd_list->next)
+    {
+        if (!subcmd->args || !subcmd->args[0])
+            status = 0;
+        else if (subcmd->cmd_type == BUILTIN_CMD)
+        {
+            if (builtin_runs_in_parent(subcmd)) // se for um builtin que altera o estado do shell
+                status = exec_builtin(subcmd, mini); // executa cd, export, unset, exit no parent
+            else  // se for um builtin que não altera o estado do shell
+                status = exec_single_cmd(subcmd, mini); // executa echo, pwd, env no child
+        }
+        else // se for um comando externo
+            status = execute_single_cmd(subcmd, mini);
+    }
+    else
         status = ft_pipeline(cmd_list, mini);
-    mini->last_status = status;        
+    mini->last_status = status;
     return (status);
 }
+
+
+
+// static int run_in_child_and_wait(t_subcmd *subcmd, t_mini *mini)
+// {
+//     pid_t pid;
+//     int   status;
+
+//     pid = fork();
+//     if (pid < 0)
+//     {
+//         error_exit("minishell: fork failed");
+//         return (1);
+//     }
+//     if (pid == 0)
+//     {
+//         exec_subcmd(subcmd, mini); // em caso de sucesso n volta
+//         exit(1); // só volta se falhar antes do execve
+//     }
+//     status = wait_single(pid);
+//     return (status);
+// }

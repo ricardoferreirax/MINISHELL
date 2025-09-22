@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/19 10:38:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:03:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	read_till_delimiter(t_subcmd *sub, t_mini *mini, int pipefd[2])
 	char	*line;
 	char	*expanded;
 
-	close(pipefd[0]); // só vamos escrever
+	close(pipefd[0]);
 	while (1)
 	{
 		line = readline("> ");
@@ -43,16 +43,16 @@ static void	read_till_delimiter(t_subcmd *sub, t_mini *mini, int pipefd[2])
 			free(line);
 			break;
 		}
-		if (sub->expand_hdoc_content)
-		{
-			// expansão de variáveis apenas se não estava entre aspas (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS)
-		}
+		// if (sub->expand_hdoc_content)
+		// {
+		// 	// expansão de variáveis apenas se não estava entre aspas (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS)
+		// }
 		write(pipefd[1], line, ft_strlen(line));
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}
 	close(pipefd[1]);
-	_exit(0); // termina só o child
+	exit(0); // termina só o child
 }
 
 int	prepare_heredocs_for_cmd(t_cmd *cmd, t_mini *mini)
@@ -71,9 +71,10 @@ int	prepare_heredocs_for_cmd(t_cmd *cmd, t_mini *mini)
 		node = node->next;
 	}
 	return (hdoc_status); // no fim cmd->head->in_fd aponta para o último heredoc válido
+}
 
 
-	// precisamos de t_mini * para aceder ao env (temos de ver também depois os sinais)
+// precisamos de t_mini * para aceder ao env (temos de ver também depois os sinais)
 
 int handle_heredoc(t_subcmd *subcmd, t_mini *mini)
 {
