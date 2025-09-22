@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 11:49:22 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:33:16 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINYANSHELL_H
 
 # include "libft/libft.h"
-# include "parsing/parsing.h"
+/* # include "parsing/parsing.h"
 # include <readline/history.h>
-# include <readline/readline.h>
+# include <readline/readline.h> */
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,8 +24,18 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_OwO	t_cmd;
-typedef struct s_0w0	t_subcmd;
+typedef struct	s_OwO	t_cmd;
+typedef struct	s_0w0	t_subcmd;
+typedef struct s_redir t_redir;
+
+typedef enum e_cmd_mode
+{
+	NONE_CMD,
+	BUILTIN_CMD,
+	ABS_PATH_CMD,
+	REL_PATH_CMD,
+	SIMPLE_CMD
+}	t_cmd_mode;
 
 typedef enum e_token_type
 {
@@ -46,6 +56,8 @@ typedef struct s_0w0
 	char				*outfile;
 	t_subcmd			*next;
 	t_cmd				*last;
+	t_redir				*redirs;
+	t_cmd_mode			*cmd_type;
 	int					in_fd;
 	int					out_fd;
 }						t_subcmd;
