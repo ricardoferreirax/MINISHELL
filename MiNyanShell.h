@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/22 14:37:53 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:27:59 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef enum e_cmd_mode
 
 typedef enum e_token_type
 {
-	REDIR_INVALID = -1, // Not a redirection token
-	REDIR_IN = 0,
+	REDIR_INVALID, // Not a redirection token
+	REDIR_IN,
 	REDIR_OUT,
+	REDIR_BOTH,
 	REDIR_APPEND,
 	REDIR_HEREDOC,
 }						t_redir_type;
@@ -55,7 +56,6 @@ typedef struct s_0w0
 	char				*infile;
 	char				*outfile;
 	t_subcmd			*next;
-	t_cmd				*last;
 	t_redir				*redirs;
 	t_cmd_mode			cmd_type;
 	int					in_fd;
