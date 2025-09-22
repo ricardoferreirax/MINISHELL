@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/19 11:48:11 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/22 10:16:05 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,25 @@ t_cmd	*cmd_new(void)
 	return (cmd);
 }
 
+void fill_cmd(t_mini *nyan, char *str)
+{
+	int i = 0;
+	char **arr = split_ignore_quotes(str, ' ');
+	while(arr[i] != NULL)
+	{
+		
+	}
+}
+
+void init_mini(t_mini *nyan, char **pipes)
+{
+	int i = 0;
+	while(pipes[i] != NULL)
+	{
+		fill_cmd(nyan, pipes[i]);
+	}
+}
+
 t_mini	parser(char *cmd, char **env)
 {
 	t_mini	nyan;
@@ -125,5 +144,6 @@ t_mini	parser(char *cmd, char **env)
 		prev = curr;
 		i++;
 	}
+	init_mini(nyan, pipes);
 	return (nyan);
 }
