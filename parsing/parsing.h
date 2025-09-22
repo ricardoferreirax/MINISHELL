@@ -6,13 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:29 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/22 11:55:51 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/22 14:00:33 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-# define NULL ((void)*)
 # include "../libft/libft.h"
 
 // AUX Funcs
