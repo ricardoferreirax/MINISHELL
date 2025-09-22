@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/20 15:42:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:25:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,3 @@ bool builtin_runs_in_parent(t_subcmd *subcmd)
     return (false);
 }
 
-// bool builtin_runs_in_child(t_subcmd *subcmd)
-// {
-//     if (!subcmd || !subcmd->args || !subcmd->args[0])
-//         return false;
-//     if (ft_strcmp(subcmd->args[0], "echo") == 0
-//         || ft_strcmp(subcmd->args[0], "pwd") == 0
-//         || ft_strcmp(subcmd->args[0], "env") == 0)
-//         return true;
-//     return false;
-// }
