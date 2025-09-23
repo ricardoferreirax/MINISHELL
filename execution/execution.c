@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/22 09:01:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:48:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void prepare_pipeline_subcmds(t_cmd *cmd_list)
     }
 }
 
-int ft_execution(t_cmd *cmd_list, t_mini *mini)
+/* int ft_execution(t_cmd *cmd_list, t_mini *mini)
 {
     int         status;
     t_subcmd    *subcmd;
@@ -86,9 +86,9 @@ int ft_execution(t_cmd *cmd_list, t_mini *mini)
         else if (subcmd->cmd_type == BUILTIN_CMD)
         {
             if (builtin_runs_in_parent(subcmd)) // se for um builtin que altera o estado do shell
-                status = exec_builtin(subcmd, mini); // executa cd, export, unset, exit no parent
+                status = execute_parent_builtin_with_redirs(subcmd, mini); // executa cd, export, unset, exit no parent
             else  // se for um builtin que não altera o estado do shell
-                status = exec_single_cmd(subcmd, mini); // executa echo, pwd, env no child
+                status = execute_single_cmd(subcmd, mini); // executa echo, pwd, env no child
         }
         else // se for um comando externo
             status = execute_single_cmd(subcmd, mini);
@@ -97,26 +97,30 @@ int ft_execution(t_cmd *cmd_list, t_mini *mini)
         status = ft_pipeline(cmd_list, mini);
     mini->last_status = status;
     return (status);
+} */
+
+
+int	handle_commands(t_mini *mini)
+{
+	t_cmd	*cmd;
+    t_cmd   *tmp;
+	int		has_pipeline;
+
+	if (!mini || !mini->head)
+		return (0);
+	cmd = mini->head;
+	if (!cmd->head || !cmd->head->args || !cmd->head->args[0])
+		return (0);
+	has_pipeline = 0;
+	tmp = cmd;
+	while (tmp && tmp->next)
+	{
+		has_pipeline = 1;
+		tmp = tmp->next;
+	}
+	if (has_pipeline)
+		return (execute_pipeline(cmd, mini));
+	return (execute_single(cmd->head, mini));
 }
 
 
-
-// static int run_in_child_and_wait(t_subcmd *subcmd, t_mini *mini)
-// {
-//     pid_t pid;
-//     int   status;
-
-//     pid = fork();
-//     if (pid < 0)
-//     {
-//         error_exit("minishell: fork failed");
-//         return (1);
-//     }
-//     if (pid == 0)
-//     {
-//         exec_subcmd(subcmd, mini); // em caso de sucesso n volta
-//         exit(1); // só volta se falhar antes do execve
-//     }
-//     status = wait_single(pid);
-//     return (status);
-// }
