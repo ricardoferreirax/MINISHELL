@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/21 22:27:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:28:18 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ typedef enum e_cmd_mode
 	SIMPLE_CMD
 }	t_cmd_mode;
 
-typedef struct s_exec_cmd
+typedef struct s_pipeline
 {
     pid_t pid;
     int pipefd[2];
-    int prev_fd;
+    int prev_pipefd;
+    int last_status;
     t_mini *mini;
-} t_exec_cmd;
+} t_pipeline;
 
 typedef struct s_redir
 {
@@ -44,12 +45,10 @@ typedef struct s_redir
     struct s_redir *next;
 }   t_redir;
 
-int ft_execution(t_cmd *cmd_list, t_mini *mini);
-int ft_pipeline(t_cmd *cmds, t_mini *mini);
-void	exec_subcmd_with_redirs(t_subcmd *subcmd, t_mini *mini);
-int exec_single_cmd(t_subcmd *subcmd, t_mini *mini);
+int execute_pipeline(t_cmd *cmd, t_mini *mini);
+void	execute_subcommand(t_subcmd *subcmd, t_mini *mini);
+
 char	*handle_cmd_path(char *cmd, char **envp);
-void child_process(t_cmd *cmd, t_exec_cmd *ctx);
 void handle_redirs(t_subcmd *subcmd);
 void wait_for_children(t_mini *mini, pid_t last_pid);
 
