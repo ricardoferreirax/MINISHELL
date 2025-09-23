@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/18 16:01:46 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:00:10 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,31 +194,3 @@ t_redir_type	which_type(t_subcmd *cmd, char **argv, int i)
 	return (REDIR_INVALID);
 }
 
-void	fill_arg(t_subcmd *cmd, char **argv, int *i)
-{
-	cmd->type = which_type(cmd, argv, *i);
-	if (cmd->type != REDIR_INVALID)
-		i++;
-}
-void	fill_subcmd(t_subcmd *cmd, char *args)
-{
-	int		i;
-	char	**argv;
-
-	i = 0;
-	argv = split_ignore_quotes(args, ' ');
-	while (argv[i] != NULL)
-	{
-		fill_arg(cmd, argv, &i);
-		i++;
-	}
-}
-
-t_subcmd	*new_subcmd(char *cmd, char *args)
-{
-	t_subcmd *sc = malloc(sizeof(t_subcmd));
-
-	sc->cmd = ft_strdup(cmd);
-	fill_subcmd(sc, args);
-	return (sc);
-}
