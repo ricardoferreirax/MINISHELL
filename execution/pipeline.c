@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/23 22:25:51 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/24 22:36:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int fork_child(t_cmd *curr_cmd, t_pipeline *pp, int curr_pipe[2])
     pid = fork();
     if (pid == -1)
     {
-        perror("MiNyanShell :3 : fork failed");
+        perror("MiNyanShell: fork failed");
         return (-1);
     }
     if (pid == 0)
