@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/23 15:25:30 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/23 23:33:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 				i = 0;
 				while(nyan.head->head->args[i] != NULL)
 				{
-					ft_pritnf("%s\n",);
+					ft_pritnf("%s\n", nyan.head->head->args[i]);
 				}
 			}
 			i++;
