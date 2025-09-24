@@ -6,34 +6,58 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/23 16:48:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:34:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "execution.h"
 # include "../MiNyanShell.h"
 
-static char	**ft_parse_cmd(char *cmd)
+static int execute_cmd_list(t_cmd *cmd_list, t_mini *mini)
 {
-	char	**cmd_list;
+    int      status;
+    t_subcmd *subcmd;
 
-	cmd_list = ft_split_quotes(cmd, ' ');
-	if (!cmd_list || !cmd_list[0])
-	{
-		ft_free_str(cmd_list);
-		return (NULL);
-	}
-	return (cmd_list);
+    subcmd = cmd_list->head;
+    if (!cmd_list->next) // só um comando
+    {
+        if (!subcmd->args || !subcmd->args[0])
+            status = 0;
+        else if (subcmd->cmd_type == BUILTIN_CMD)
+        {
+            if (builtin_runs_in_parent(subcmd))
+                status = execute_parent_builtin_with_redirs(subcmd, mini);
+            else
+                status = execute_single_cmd(subcmd, mini);
+        }
+        else
+            status = execute_single_cmd(subcmd, mini);
+    }
+    else
+        status = execute_pipeline(cmd_list, mini);
+
+    return (status);
+}
+
+static int prepare_heredocs(t_cmd *cmd_list, t_mini *mini)
+{
+    int heredoc_status;
+
+    if (!cmd_list || !cmd_list->head || !mini)
+        return (1);
+    heredoc_status = process_all_heredocs(cmd_list, mini);
+    if (heredoc_status != 0)
+    {
+        mini->last_status = heredoc_status;
+        return (heredoc_status); // aborta se falhar
+    }
+    return (0);
 }
 
 static void set_subcmd_type(t_subcmd *subcmd)
 {
     char *cmd_arg;
 
-    if (!subcmd)
-        return;
-    if (!subcmd->args && subcmd->cmd) // se houver comando mas não houver args
-        subcmd->args = ft_parse_cmd(subcmd->cmd);
     if (!subcmd->args || !subcmd->args[0])
     {
         subcmd->cmd_type = NONE_CMD;
@@ -51,7 +75,7 @@ static void set_subcmd_type(t_subcmd *subcmd)
         subcmd->cmd_type = SIMPLE_CMD;
 }
 
-static void prepare_pipeline_subcmds(t_cmd *cmd_list)
+static void iterate_subcmds(t_cmd *cmd_list)
 {
     t_cmd    *cmd;
     t_subcmd *subcmd;
@@ -69,58 +93,17 @@ static void prepare_pipeline_subcmds(t_cmd *cmd_list)
     }
 }
 
-/* int ft_execution(t_cmd *cmd_list, t_mini *mini)
+int ft_execution(t_cmd *cmd_list, t_mini *mini)
 {
-    int         status;
-    t_subcmd    *subcmd;
+    int status;
+    int heredoc_status;
 
-    status = 0;
     if (!cmd_list || !cmd_list->head || !mini)
         return (0);
-    prepare_pipeline_subcmds(cmd_list);
-    subcmd = cmd_list->head;
-    if (!cmd_list->next)
-    {
-        if (!subcmd->args || !subcmd->args[0])
-            status = 0;
-        else if (subcmd->cmd_type == BUILTIN_CMD)
-        {
-            if (builtin_runs_in_parent(subcmd)) // se for um builtin que altera o estado do shell
-                status = execute_parent_builtin_with_redirs(subcmd, mini); // executa cd, export, unset, exit no parent
-            else  // se for um builtin que não altera o estado do shell
-                status = execute_single_cmd(subcmd, mini); // executa echo, pwd, env no child
-        }
-        else // se for um comando externo
-            status = execute_single_cmd(subcmd, mini);
-    }
-    else
-        status = ft_pipeline(cmd_list, mini);
+    iterate_subcmds(cmd_list);
+    if (prepare_heredocs(cmd_list, mini) != 0)
+        return (mini->last_status);
+    status = execute_cmd_list(cmd_list, mini);
     mini->last_status = status;
     return (status);
-} */
-
-
-int	handle_commands(t_mini *mini)
-{
-	t_cmd	*cmd;
-    t_cmd   *tmp;
-	int		has_pipeline;
-
-	if (!mini || !mini->head)
-		return (0);
-	cmd = mini->head;
-	if (!cmd->head || !cmd->head->args || !cmd->head->args[0])
-		return (0);
-	has_pipeline = 0;
-	tmp = cmd;
-	while (tmp && tmp->next)
-	{
-		has_pipeline = 1;
-		tmp = tmp->next;
-	}
-	if (has_pipeline)
-		return (execute_pipeline(cmd, mini));
-	return (execute_single(cmd->head, mini));
 }
-
-

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
 /*   Updated: 2025/09/23 22:28:59 by rmedeiro         ###   ########.fr       */
@@ -62,3 +62,4 @@ int exec_builtin(t_subcmd *subcmd, t_mini *mini)
         return ft_cd(subcmd, mini);
     return (1);
 }
+

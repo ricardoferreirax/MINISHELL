@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/23 22:28:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:37:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ typedef struct s_pipeline
 typedef struct s_redir
 {
     char *file;
+    char *delimiter;
     t_redir_type type;
     struct s_redir *next;
 }   t_redir;
 
 int execute_pipeline(t_cmd *cmd, t_mini *mini);
-void	execute_subcommand(t_subcmd *subcmd, t_mini *mini);
+int ft_execution(t_cmd *cmd_list, t_mini *mini);
 
+void	execute_subcommand(t_subcmd *subcmd, t_mini *mini);
 char	*handle_cmd_path(char *cmd, char **envp);
 void handle_redirs(t_subcmd *subcmd);
 void wait_for_children(t_mini *mini, pid_t last_pid);
