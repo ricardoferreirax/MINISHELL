@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/24 14:02:53 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:58:42 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ void	handle_redirs(t_subcmd *sub, char **tokens, int *i)
 	}
 	if ((ft_strcmp(tokens[*i], "<") == 0))
 		redir_in(sub, tokens, i);
-	if ((ft_strcmp(tokens[*i], ">")) == 0 || ft_strcmp(tokens[*i], ">>") == 0)
+	ft_printf("redir out detected\n");
+	if ((ft_strcmp(tokens[*i], ">")) == 0 || (ft_strcmp(tokens[*i], ">>") == 0))
 		redir_out(sub, tokens, i);
 }
 
@@ -206,6 +207,7 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		tokens = split_ignore_quotes(pipes[i], ' ');
 		fill_subcmd(curr, tokens);
 		curr = curr->next;
+		(tokens);
 		i++;
 	}
 }

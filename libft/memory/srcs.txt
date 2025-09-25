@@ -1,4 +1,6 @@
 memory
+free_2d.c
+free_3d.c
 ft_bzero.c
 ft_calloc.c
 ft_memchr.c
