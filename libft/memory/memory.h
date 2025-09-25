@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:47:13 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 12:05:24 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:26:38 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	*ft_memcpy(void *dest, const void *src, size_t i);
 void	*ft_memmove(void *dest, const void *src, size_t i);
 void	*ft_memset(void *a, int c, size_t i);
 void	free_2d(void **arr);
-void free_3d(void ***arr);
+void	free_3d(void ***arr);
 #endif

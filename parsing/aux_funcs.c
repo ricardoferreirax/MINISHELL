@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/23 15:00:10 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:27:36 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	**split_ignore_quotes(char *str, char c)
 	{
 		arr[i] = word_copy_ignorequotes(&str, c);
 		if (arr[i] == NULL)
-			return (free_chararr(arr), NULL);
+			return (free_2d((void **)arr), NULL);
 		i++;
 	}
 	arr[i] = NULL;

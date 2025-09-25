@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 11:58:42 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/25 18:57:17 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,68 @@ void	handle_command(t_subcmd *sub, char **tokens, int *i)
 	}
 }
 
+void add_arg(t_subcmd *sub, char *token)
+{
+	int count = 0;
+	if(!sub->args)
+	{
+		sub->args = malloc(sizeof(char *) * 2);
+		sub->args[0] = ft_strdup(token);
+		sub->args[1] = NULL;
+		return;
+	}
+	while(sub->args[count])
+		count++;
+	char **new_arg = malloc(sizeof(char *) * (count + 2));
+	int i = 0;
+	while(i < count)
+	{
+		new_arg[i] = sub->args[i];
+		i++;
+	}
+	new_arg[count] = ft_strdup(token);
+	new_arg[count + 1] = NULL;
+	free(sub->args);
+	sub->args = new_arg;
+}
+// i need to create new nodes only and only for the specific case where the field has already been filled. fro this the below function will return true when a new node is created
+bool parse(t_subcmd *sub, char **tokens, int *i)
+{
+	if(tokens[*i] && !is_redir(tokens[*i]))
+	{
+		if(!sub->cmd)
+			sub->cmd = ft_strdup(tokens[*i]);
+		while(tokens[*i] && !is_redir(tokens[*i]))
+		{
+			add_arg(sub, tokens[*i]);
+			(*i)++;
+		}
+	}
+	else if(tokens[*i] && ft_strcmp(tokens[*i], "<<") == 0)
+	{
+		if(sub->delimiter)
+			sub = sub->next;
+		sub->type = REDIR_HEREDOC;
+		(*i)++;
+		sub->delimiter = ft_strdup(tokens[*i]);
+		sub = sub_cmdappend(sub);
+	}
+	else if(tokens[*i] && ((ft_strcmp(tokens[*i], ">>") == 0) || (ft_strcmp(tokens[*i], ">") == 0)))
+	{
+		if(ft_strcmp(tokens[*i], ">") == 0)
+			sub->type = REDIR_APPEND;
+		(*i)++;
+		sub->outfile = ft_strdup(tokens[*i]);
+		(*i)++;
+	}
+	else if(tokens[*i] && ft_strcmp(tokens[*i], "<") == 0)
+	{
+		(*i)++;
+		sub->infile = ft_strdup(tokens[*i]);
+		(*i)++;
+	}
+}
+
 void	fill_subcmd(t_cmd *node, char **tokens)
 {
 	int			j;
@@ -185,13 +247,21 @@ void	fill_subcmd(t_cmd *node, char **tokens)
 			head = curr;
 		if(prev)
 			prev->next = curr;
-		if (is_redir(tokens[j]))
-			handle_redirs(curr, tokens, &j);
-		else
-			handle_command(curr, tokens, &j);
+		parse(curr, tokens, &j);
 		prev = curr;
 	}
 	node->head = head;
+}
+
+void print_tokens(char **tokens)
+{
+	int i = 0;
+	while(tokens[i])
+	{
+		printf("%s ", tokens[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 void	fill_mini(t_mini *nyan, char **pipes)
@@ -205,9 +275,9 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes[i])
 	{
 		tokens = split_ignore_quotes(pipes[i], ' ');
+		print_tokens(tokens);
 		fill_subcmd(curr, tokens);
-		curr = curr->next;
-		(tokens);
+		free_2d((void**) tokens);
 		i++;
 	}
 }
