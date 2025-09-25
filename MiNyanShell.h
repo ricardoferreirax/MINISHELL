@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/22 17:29:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:07:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINYANSHELL_H
 
 # include "libft/libft.h"
-/* # include "parsing/parsing.h"
+# include "parsing/parsing.h"
 # include <readline/history.h>
-# include <readline/readline.h> */
+# include <readline/readline.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>

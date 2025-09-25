@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_chararr.c                                  :+:      :+:    :+:   */
+/*   free_2d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:11:04 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/08/19 11:49:50 by pfreire-         ###   ########.fr       */
+/*   Created: 2025/09/25 11:58:58 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/09/25 12:03:29 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "memory.h"
 
-/// @brief Frees all memory allocated for an array
-/// @param array array to be freed
-void	free_chararr(char **array)
+void	free_2d(void **arr)
 {
 	int	i;
 
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
