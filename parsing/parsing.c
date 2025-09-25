@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/23 15:00:00 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/24 14:02:53 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_cmd	*cmd_new(void)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->head = subcmd_new();
 	cmd->next = NULL;
-	//cmd->pipe = false;
+	// cmd->pipe = false;
 	return (cmd);
 }
 
@@ -151,7 +151,7 @@ void	handle_command(t_subcmd *sub, char **tokens, int *i)
 
 	j = 0;
 	sub->cmd = ft_strdup(tokens[*i]);
-	sub->args = malloc(sizeof(char *) * arg_nbr(tokens, *i));
+	sub->args = malloc(sizeof(char *) * arg_nbr(tokens, *i) + 1);
 	if (!sub->args)
 		exit(1);
 	while (tokens[*i] != NULL && !is_redir(tokens[*i]))
@@ -169,19 +169,28 @@ void	handle_command(t_subcmd *sub, char **tokens, int *i)
 void	fill_subcmd(t_cmd *node, char **tokens)
 {
 	int			j;
-	t_subcmd	*sub;
+	t_subcmd	*curr;
+	t_subcmd	*prev;
+	t_subcmd	*head;
 
+	head = NULL;
+	curr = NULL;
+	prev = NULL;
 	j = 0;
-	(void) node;
 	while (tokens[j] != NULL)
 	{
-		sub = subcmd_new();
+		curr = subcmd_new();
+		if(!head)
+			head = curr;
+		if(prev)
+			prev->next = curr;
 		if (is_redir(tokens[j]))
-			handle_redirs(sub, tokens, &j);
+			handle_redirs(curr, tokens, &j);
 		else
-			handle_command(sub, tokens, &j);
-		j++;
+			handle_command(curr, tokens, &j);
+		prev = curr;
 	}
+	node->head = head;
 }
 
 void	fill_mini(t_mini *nyan, char **pipes)
