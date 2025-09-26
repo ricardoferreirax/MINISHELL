@@ -6,55 +6,39 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/24 23:34:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/26 22:45:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "execution.h"
 # include "../MiNyanShell.h"
 
-static int execute_cmd_list(t_cmd *cmd_list, t_mini *mini)
+static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
 {
-    int      status;
-    t_subcmd *subcmd;
+    int num_cmds;
+    int status;
 
-    subcmd = cmd_list->head;
-    if (!cmd_list->next) // só um comando
+    num_cmds = init_pipeline(cmd_list);
+    if (num_cmds == -1)
     {
-        if (!subcmd->args || !subcmd->args[0])
-            status = 0;
-        else if (subcmd->cmd_type == BUILTIN_CMD)
-        {
-            if (builtin_runs_in_parent(subcmd))
-                status = execute_parent_builtin_with_redirs(subcmd, mini);
-            else
-                status = execute_single_cmd(subcmd, mini);
-        }
-        else
-            status = execute_single_cmd(subcmd, mini);
+        mini->last_status = 1;
+        return (1);
     }
-    else
+    if (num_cmds == 1)
+    {
+        status = execute_single_cmd(cmd_list->head, mini);
+        if (status == -1) // não e um builtin então é um comando externo
+            status = execute_external_cmd(cmd_list->head, mini);
+    }
+    else if (num_cmds > 1)
         status = execute_pipeline(cmd_list, mini);
-
+    else // nenhum comando
+        status = 0;
+    // set_signals();
     return (status);
 }
 
-static int prepare_heredocs(t_cmd *cmd_list, t_mini *mini)
-{
-    int heredoc_status;
-
-    if (!cmd_list || !cmd_list->head || !mini)
-        return (1);
-    heredoc_status = process_all_heredocs(cmd_list, mini);
-    if (heredoc_status != 0)
-    {
-        mini->last_status = heredoc_status;
-        return (heredoc_status); // aborta se falhar
-    }
-    return (0);
-}
-
-static void set_subcmd_type(t_subcmd *subcmd)
+static void assign_subcmd_type(t_subcmd *subcmd)
 {
     char *cmd_arg;
 
@@ -75,7 +59,7 @@ static void set_subcmd_type(t_subcmd *subcmd)
         subcmd->cmd_type = SIMPLE_CMD;
 }
 
-static void iterate_subcmds(t_cmd *cmd_list)
+static void set_subcmd_types(t_cmd *cmd_list)
 {
     t_cmd    *cmd;
     t_subcmd *subcmd;
@@ -86,24 +70,45 @@ static void iterate_subcmds(t_cmd *cmd_list)
         subcmd = cmd->head;
         while (subcmd)
         {
-            set_subcmd_type(subcmd);
+            assign_subcmd_type(subcmd);
             subcmd = subcmd->next;
         }
         cmd = cmd->next;
     }
 }
 
+static int pre_execution(t_cmd *cmd, t_mini *mini)
+{
+    t_subcmd *subcmd;
+
+    if (!cmd || !cmd->head)
+        return (EXEC_EMPTY);
+    subcmd = cmd->head;
+    if ((!subcmd->args || !subcmd->args[0]) && !subcmd->redirs) // comando vazio sem redireções
+        return (EXEC_EMPTY);
+    if ((!subcmd->args || !subcmd->args[0]) && subcmd->redirs && !cmd->next) // só redireções (sem args e sem pipeline)
+        return (handle_single_redirection_only(cmd, mini));
+    if (process_all_heredocs(cmd, mini) != 0) // processar os heredocs (só se não for vazio ou só redireções)
+        return (EXEC_ERROR);
+    return (EXEC_NORMAL);
+}
+
 int ft_execution(t_cmd *cmd_list, t_mini *mini)
 {
+    int check_result;
     int status;
-    int heredoc_status;
 
     if (!cmd_list || !cmd_list->head || !mini)
         return (0);
-    iterate_subcmds(cmd_list);
-    if (prepare_heredocs(cmd_list, mini) != 0)
-        return (mini->last_status);
-    status = execute_cmd_list(cmd_list, mini);
+    check_result = pre_execution(cmd_list, mini);
+    if (check_result != EXEC_NORMAL)
+	{
+		// set_signals();
+		mini->last_status = check_result;
+        return (check_result);
+	}
+    set_subcmd_types(cmd_list);
+    status = execute_cmds(cmd_list, mini);
     mini->last_status = status;
     return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/24 23:37:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:09:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <fcntl.h>
+
+#define EXEC_NORMAL 1
+#define EXEC_EMPTY 0
+#define EXEC_ERROR -1
 
 typedef struct s_UwU   t_mini;
 typedef struct s_0w0   t_subcmd;
@@ -48,6 +52,8 @@ typedef struct s_redir
 
 int execute_pipeline(t_cmd *cmd, t_mini *mini);
 int ft_execution(t_cmd *cmd_list, t_mini *mini);
+
+int exec_builtin(t_subcmd *subcmd, t_mini *mini);
 
 void	execute_subcommand(t_subcmd *subcmd, t_mini *mini);
 char	*handle_cmd_path(char *cmd, char **envp);

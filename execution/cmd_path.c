@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:11:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/19 22:14:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:09:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
+
 
 static char	*ft_join_dir_cmd(char *path_dir, char *cmd)
 {
