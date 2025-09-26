@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/pfreire-/Work/42_MINISHELL",
-      "program": "/home/pfreire-/Work/42_MINISHELL/build/Debug/outDebug",
+      "cwd": "/var/home/pedro/Code/42_MINISHELL",
+      "program": "/var/home/pedro/Code/42_MINISHELL/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
