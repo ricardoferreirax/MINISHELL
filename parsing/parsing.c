@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 20:28:28 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:59:35 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,22 +120,6 @@ void	redir_out(t_subcmd *sub, char **tokens, int *i)
 	(*i)++;
 }
 
-void	handle_redirs(t_subcmd *sub, char **tokens, int *i)
-{
-	if (ft_strcmp(tokens[*i], "<<") == 0)
-	{
-		sub->delimiter = tokens[*i + 1];
-		sub->type = REDIR_HEREDOC;
-		sub = sub->next;
-		(*i)++;
-	}
-	if ((ft_strcmp(tokens[*i], "<") == 0))
-		redir_in(sub, tokens, i);
-	ft_printf("redir out detected\n");
-	if ((ft_strcmp(tokens[*i], ">")) == 0 || (ft_strcmp(tokens[*i], ">>") == 0))
-		redir_out(sub, tokens, i);
-}
-
 int	arg_nbr(char **tokens, int i)
 {
 	int	j;
@@ -146,26 +130,6 @@ int	arg_nbr(char **tokens, int i)
 	return (j);
 }
 
-void	handle_command(t_subcmd *sub, char **tokens, int *i)
-{
-	int	j;
-
-	j = 0;
-	sub->cmd = ft_strdup(tokens[*i]);
-	sub->args = malloc(sizeof(char *) * arg_nbr(tokens, *i) + 1);
-	if (!sub->args)
-		exit(1);
-	while (tokens[*i] != NULL && !is_redir(tokens[*i]))
-	{
-		sub->args[j] = tokens[*i];
-		(*i)++;
-		j++;
-	}
-	while (tokens[*i] != NULL)
-	{
-		handle_redirs(sub, tokens, i);
-	}
-}
 
 void	add_arg(t_subcmd *sub, char *token)
 {
@@ -195,7 +159,101 @@ void	add_arg(t_subcmd *sub, char *token)
 	free(sub->args);
 	sub->args = new_arg;
 }
-// i need to create new nodes only and only for the specific case where the field has already been filled. fro this the below function will return true when a new node is created
+
+t_subcmd	*clone_out(t_subcmd *sub, char *outfile)
+{
+	t_subcmd	*clone;
+
+	clone = malloc(sizeof(t_subcmd));
+	if (!clone)
+		return (NULL);
+	clone->type = sub->type;
+	clone->delimiter = ft_strdup(sub->delimiter);
+	clone->args = malloc(sizeof(char *) * (arr_size((void **)sub->args) + 1));
+	int i = 0;
+	while(sub->args[i])
+	{
+		clone->args[i] = ft_strdup(sub->args[i]);
+		i++;
+	}
+	clone->cmd = ft_strdup(sub->cmd);
+	clone->outfile = ft_strdup(outfile);
+	clone->infile = ft_strdup(sub->infile);
+	clone->next = sub->next;
+	clone->redirs = sub->redirs;
+	clone->cmd_type = sub->cmd_type;
+	clone->in_fd = sub->in_fd;
+	clone->out_fd = sub->out_fd;
+	return (clone);
+}
+
+t_subcmd	*clone_in(t_subcmd *sub, char *infile)
+{
+	t_subcmd	*clone;
+
+	clone = malloc(sizeof(t_subcmd));
+	if (!clone)
+		return (NULL);
+	clone->type = sub->type;
+	clone->delimiter = ft_strdup(sub->delimiter);
+	int i = 0;
+	clone->args = malloc(sizeof(char *) * (arr_size((void **)sub->args) + 1));
+	while(sub->args[i])
+	{
+		clone->args[i] = ft_strdup(sub->args[i]);
+		i++;
+	}
+	clone->args[i] = NULL;
+	clone->cmd = ft_strdup(sub->cmd);
+	clone->infile = ft_strdup(infile);
+	clone->outfile = ft_strdup(sub->outfile);
+	clone->next = sub->next;
+	clone->redirs = sub->redirs;
+	clone->cmd_type = sub->cmd_type;
+	clone->in_fd = sub->in_fd;
+	clone->out_fd = sub->out_fd;
+	return (clone);
+}
+
+void	reset_in(t_subcmd *sub)
+{
+	sub->type = REDIR_IN;
+	if(sub->delimiter)
+		free(sub->delimiter);
+	sub->delimiter = NULL;
+	if(sub->args)
+		free_2d((void**) sub->args);
+	sub->args = NULL;
+	if(sub->cmd)
+		free(sub->cmd);
+	sub->cmd = NULL;
+	if(sub->outfile)
+		free(sub->outfile);
+	sub->outfile = NULL;
+
+	sub->in_fd = -1;
+	sub->out_fd = -1;
+}
+
+void	reset_out(t_subcmd *sub)
+{
+	sub->type = REDIR_OUT;
+	if(sub->delimiter)
+		free(sub->delimiter);
+	sub->delimiter = NULL;
+	if(sub->args)
+		free_2d((void **)sub->args);
+	sub->args = NULL;
+	if(sub->cmd)
+		free(sub->cmd);
+	sub->cmd = NULL;
+	if(sub->infile)
+		free(sub->infile);
+	sub->infile = NULL;
+	sub->in_fd = -1;
+	sub->out_fd = -1;
+}
+
 bool	parse(t_subcmd *sub, char **tokens, int *i)
 {
 	bool	new_node;
@@ -205,7 +263,6 @@ bool	parse(t_subcmd *sub, char **tokens, int *i)
 	{
 		if (!sub->cmd)
 		{
-			new_node = true;
 			sub->cmd = ft_strdup(tokens[*i]);
 		}
 		while (tokens[*i] && !is_redir(tokens[*i]))
@@ -224,21 +281,40 @@ bool	parse(t_subcmd *sub, char **tokens, int *i)
 		sub->type = REDIR_HEREDOC;
 		(*i)++;
 		sub->delimiter = ft_strdup(tokens[*i]);
-		sub = sub_cmdappend(sub);
+		(*i)++;
+		new_node = true;
+		sub = sub->next;
 	}
 	else if (tokens[*i] && ((ft_strcmp(tokens[*i], ">>") == 0)
 			|| (ft_strcmp(tokens[*i], ">") == 0)))
 	{
-		if (ft_strcmp(tokens[*i], ">") == 0)
+		sub->type = REDIR_OUT;
+		if (ft_strcmp(tokens[*i], ">>") == 0)
 			sub->type = REDIR_APPEND;
 		(*i)++;
-		sub->outfile = ft_strdup(tokens[*i]);
+		if (sub->outfile)
+		{
+			sub->next = clone_out(sub, tokens[*i]);
+			reset_out(sub);
+			sub = sub->next;
+		}
+		else
+			sub->outfile = ft_strdup(tokens[*i]);
 		(*i)++;
 	}
 	else if (tokens[*i] && ft_strcmp(tokens[*i], "<") == 0)
 	{
+		sub->type = REDIR_IN;
 		(*i)++;
-		sub->infile = ft_strdup(tokens[*i]);
+		if(sub->infile)
+		{
+			sub->next = clone_in(sub, tokens[*i]);
+			reset_in(sub);
+			sub = sub->next;
+			
+		}
+		else
+			sub->infile = ft_strdup(tokens[*i]);
 		(*i)++;
 	}
 	return (new_node);
