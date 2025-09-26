@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 14:31:44 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/26 18:39:40 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_token_type
 	REDIR_INVALID = -1, // Not a redirection token
 	REDIR_IN = 0,
 	REDIR_OUT,
+	REDIR_INOUT,
 	REDIR_APPEND,
 	REDIR_HEREDOC,
 }						t_redir_type;

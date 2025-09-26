@@ -24,7 +24,7 @@
   "42header.username": "pfreire-",
   "workbench.startupEditor": "none",
   "git.enableSmartCommit": true,
-  "workbench.colorTheme": "Miku Theme",
+  "workbench.colorTheme": "Monokai Dimmed",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.profiles": {
     "bash": {
