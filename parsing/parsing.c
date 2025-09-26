@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 18:57:17 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/25 20:28:28 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,21 +167,25 @@ void	handle_command(t_subcmd *sub, char **tokens, int *i)
 	}
 }
 
-void add_arg(t_subcmd *sub, char *token)
+void	add_arg(t_subcmd *sub, char *token)
 {
-	int count = 0;
-	if(!sub->args)
+	int		count;
+	char	**new_arg;
+	int		i;
+
+	count = 0;
+	if (!sub->args)
 	{
 		sub->args = malloc(sizeof(char *) * 2);
 		sub->args[0] = ft_strdup(token);
 		sub->args[1] = NULL;
-		return;
+		return ;
 	}
-	while(sub->args[count])
+	while (sub->args[count])
 		count++;
-	char **new_arg = malloc(sizeof(char *) * (count + 2));
-	int i = 0;
-	while(i < count)
+	new_arg = malloc(sizeof(char *) * (count + 2));
+	i = 0;
+	while (i < count)
 	{
 		new_arg[i] = sub->args[i];
 		i++;
@@ -192,41 +196,52 @@ void add_arg(t_subcmd *sub, char *token)
 	sub->args = new_arg;
 }
 // i need to create new nodes only and only for the specific case where the field has already been filled. fro this the below function will return true when a new node is created
-bool parse(t_subcmd *sub, char **tokens, int *i)
+bool	parse(t_subcmd *sub, char **tokens, int *i)
 {
-	if(tokens[*i] && !is_redir(tokens[*i]))
+	bool	new_node;
+
+	new_node = false;
+	if (tokens[*i] && !is_redir(tokens[*i]))
 	{
-		if(!sub->cmd)
+		if (!sub->cmd)
+		{
+			new_node = true;
 			sub->cmd = ft_strdup(tokens[*i]);
-		while(tokens[*i] && !is_redir(tokens[*i]))
+		}
+		while (tokens[*i] && !is_redir(tokens[*i]))
 		{
 			add_arg(sub, tokens[*i]);
 			(*i)++;
 		}
 	}
-	else if(tokens[*i] && ft_strcmp(tokens[*i], "<<") == 0)
+	else if (tokens[*i] && ft_strcmp(tokens[*i], "<<") == 0)
 	{
-		if(sub->delimiter)
+		if (sub->delimiter)
+		{
+			new_node = true;
 			sub = sub->next;
+		}
 		sub->type = REDIR_HEREDOC;
 		(*i)++;
 		sub->delimiter = ft_strdup(tokens[*i]);
 		sub = sub_cmdappend(sub);
 	}
-	else if(tokens[*i] && ((ft_strcmp(tokens[*i], ">>") == 0) || (ft_strcmp(tokens[*i], ">") == 0)))
+	else if (tokens[*i] && ((ft_strcmp(tokens[*i], ">>") == 0)
+			|| (ft_strcmp(tokens[*i], ">") == 0)))
 	{
-		if(ft_strcmp(tokens[*i], ">") == 0)
+		if (ft_strcmp(tokens[*i], ">") == 0)
 			sub->type = REDIR_APPEND;
 		(*i)++;
 		sub->outfile = ft_strdup(tokens[*i]);
 		(*i)++;
 	}
-	else if(tokens[*i] && ft_strcmp(tokens[*i], "<") == 0)
+	else if (tokens[*i] && ft_strcmp(tokens[*i], "<") == 0)
 	{
 		(*i)++;
 		sub->infile = ft_strdup(tokens[*i]);
 		(*i)++;
 	}
+	return (new_node);
 }
 
 void	fill_subcmd(t_cmd *node, char **tokens)
@@ -235,28 +250,36 @@ void	fill_subcmd(t_cmd *node, char **tokens)
 	t_subcmd	*curr;
 	t_subcmd	*prev;
 	t_subcmd	*head;
+	bool		new_node;
 
+	new_node = false;
 	head = NULL;
 	curr = NULL;
 	prev = NULL;
 	j = 0;
+	curr = subcmd_new();
 	while (tokens[j] != NULL)
 	{
-		curr = subcmd_new();
-		if(!head)
+		if (!head)
 			head = curr;
-		if(prev)
+		if (prev)
 			prev->next = curr;
-		parse(curr, tokens, &j);
-		prev = curr;
+		new_node = parse(curr, tokens, &j);
+		if (new_node)
+		{
+			prev = curr;
+			curr = subcmd_new();
+		}
 	}
 	node->head = head;
 }
 
-void print_tokens(char **tokens)
+void	print_tokens(char **tokens)
 {
-	int i = 0;
-	while(tokens[i])
+	int	i;
+
+	i = 0;
+	while (tokens[i])
 	{
 		printf("%s ", tokens[i]);
 		i++;
@@ -277,7 +300,7 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		tokens = split_ignore_quotes(pipes[i], ' ');
 		print_tokens(tokens);
 		fill_subcmd(curr, tokens);
-		free_2d((void**) tokens);
+		free_2d((void **)tokens);
 		i++;
 	}
 }
