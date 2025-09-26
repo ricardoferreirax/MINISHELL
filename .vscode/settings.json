@@ -1,10 +1,64 @@
 {
+  "files.autoSave": "afterDelay",
+  "editor.indentSize": "tabSize",
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  },
+  "json.schemas": [],
+  "[cpp]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  },
+  "explorer.confirmDelete": false,
+  "debug.onTaskErrors": "showErrors",
+  "makefile.configureOnOpen": true,
+  "editor.renderWhitespace": "boundary",
+  "C_Cpp.copilotHover": "disabled",
+  "git.openRepositoryInParentFolders": "never",
+  "explorer.confirmDragAndDrop": false,
+  "chat.agent.enabled": false,
+  "chat.commandCenter.enabled": false,
+  "42header.email": "pfreire-@student.42lisboa.com",
+  "42header.username": "pfreire-",
+  "workbench.startupEditor": "none",
+  "git.enableSmartCommit": true,
+  "workbench.colorTheme": "Monokai Dimmed",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.profiles": {
+    "bash": {
+      "path": "/bin/bash"
+    },
+    "zsh": {
+      "path": "/usr/bin/zsh"
+    }
+  },
+  "mikuPlayer.commands.playPause": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause",
+  "mikuPlayer.commands.next": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next",
+  "mikuPlayer.commands.previous": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous",
+  "mikuPlayer.commands.volumeUp": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+  "mikuPlayer.commands.volumeDown": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+  "mikuPlayer.commands.mute": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+  "mikuPlayer.metadata.enabled": true,
+  "mikuPlayer.metadata.artistCommand": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Metadata | awk -F': ' '/xesam:artist/ {print $2}'",
+  "mikuPlayer.metadata.titleCommand": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Metadata | awk -F': ' '/xesam:title/ {print $2}'",
+  "mikuPlayer.backgroundImageCommand": "qdbus org.mpris.MediaPlayer2.plasma-browser-integration /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Metadata | awk -F': ' '/mpris:artUrl/ {print $2}'",
+  "mikuPlayer.backgroundEnabled": true,
+  "mikuPlayer.buttonLabels": {
+    "play-pause": "▶Play/Pause",
+    "previous": "⏮ Back",
+    "next": "⏭ Skip",
+    "volume-down": "🔉 Lower",
+    "volume-up": "🔊 Raise",
+    "mute": "🔇 Mute"
+  },
+  "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
   "C_Cpp_Runner.cStandard": "",
   "C_Cpp_Runner.cppStandard": "",
-  "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.useMsvc": false,
   "C_Cpp_Runner.warnings": [
     "-Wall",
