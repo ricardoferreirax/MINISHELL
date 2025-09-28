@@ -6,12 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/26 17:22:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 18:45:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-#include "execution.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
 
 static int extract_exit_code(int status)
 {
@@ -43,70 +43,63 @@ static void wait_for_children(t_mini *mini, pid_t last_pid)
     }
 }
 
-void parent_pipe_control(t_cmd *cmd, t_pipeline *pp)
+static void parent_pipe_control(t_cmd *cmd, t_pipeline *pp)
 {
     if (pp->prev_pipefd != -1) // Fecha o read end do pipe anterior caso ainda esteja aberto
     {
         close(pp->prev_pipefd);
         pp->prev_pipefd = -1;
     }
-    if (cmd->next)  // Se houver próximo comando, mantemos o lado de leitura do pipe atual
+    if (cmd->next)  // Se houver próximo comando, mantemos o read end do pipe atual
     {
         close(pp->pipefd[1]);
-        pp->prev_pipefd = pp->pipefd[0]; // o próximo comando vai ler do read end do pipe atual
+        pp->prev_pipefd = pp->pipefd[0]; // assim o próximo comando vai ler do read end do pipe atual
     }
-    else // último comando → não precisa de guardar o prev_pipefd
+    else // último comando não precisa de guardar o prev_pipefd
         pp->prev_pipefd = -1;
-    if (cmd->head && cmd->head->in_fd != -1)  // Fecha o fd do heredoc se existir
-    {
-        close(cmd->head->in_fd);
-        cmd->head->in_fd = -1;
-    }
+    if (cmd->head)
+        close_heredoc(cmd->head);
 }
 
-static int handle_pipeline_cmd(t_cmd *curr, t_pipeline *pp)
+static int create_pipe_and_fork(t_cmd *cmd, t_pipeline *pp)
 {
-    if (curr->next && pipe(pp->pipefd) == -1) // cria o pipe só se houver próximo comando
+    if (cmd->next && pipe(pp->pipefd) == -1) 
     {
-        perror("MiNyanshell: pipe failed");
-        if (pp->prev_pipefd != -1)
-        {
-            close(pp->prev_pipefd);
-            pp->prev_pipefd = -1;
+        perror("MiNyanshell: error creating pipe");
+        if (pp->prev_pipefd != -1) 
+        { 
+            close(pp->prev_pipefd); 
+            pp->prev_pipefd = -1; 
         }
-        return (1);
+        return (-1);
     }
-    pp->pid = fork();
-    if (pp->pid == -1)
-    {
-        perror("MiNyanshell: fork failed");
-        return (1);
-    }
-    if (pp->pid == 0)
-        child_process(curr, pp);  
-    else
-        parent_pipe_control(curr, pp, pp->pipefd);
+    if (safe_fork(cmd, pp) != 0)
+        return (-1);
     return (0);
 }
 
-int execute_pipeline(t_cmd *cmd_list, t_mini *mini)
+int execute_pipeline(t_cmd *cmds, t_mini *mini)
 {
     t_pipeline pp;
-    t_cmd      *current_cmd;
+    t_cmd     *current_cmd;
 
     pp.pid = -1;
     pp.prev_pipefd = -1;
     pp.last_status = 0;
     pp.mini = mini;
-    // set_signals();
-    current_cmd = cmd_list;
+    // set_non_interactive_signals();
+    current_cmd = cmds;
     while (current_cmd)
     {
-        if (handle_pipeline_cmd(current_cmd, &pp))
-            return (1);
+        if (create_pipe_and_fork(current_cmd, &pp) == -1)
+            return (handle_fork_error(current_cmd, &pp), 1);
+        if (pp.pid == 0)
+            child_execute_cmd(current_cmd, &pp);
+        else
+            parent_pipe_control(current_cmd, &pp);
         current_cmd = current_cmd->next;
     }
-    wait_for_children(pp.mini, pp.pid);
-    // set_signals();
-    return (pp.last_status);
+    wait_for_children(mini, pp.pid);
+    // set_interactive_signals();       voltar ao modo prompt
+    return (mini->last_status);
 }

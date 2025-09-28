@@ -6,11 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 22:31:07 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/25 16:04:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:01:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "../include/builtin.h"
 
 static int print_pwd_from_env(char **env)
 {

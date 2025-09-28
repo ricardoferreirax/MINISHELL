@@ -6,109 +6,85 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/26 22:45:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 18:45:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "execution.h"
-# include "../MiNyanShell.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+
+static int number_of_cmds(t_cmd *cmd_list)
+{
+    t_cmd *current_cmd;
+    int    num_cmds;
+
+    if (!cmd_list)
+        return (0);
+    current_cmd = cmd_list;
+    num_cmds = 0;
+    while (current_cmd)
+    {
+        num_cmds++;
+        current_cmd = current_cmd->next;
+    }
+    return (num_cmds);
+}
 
 static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
 {
     int num_cmds;
     int status;
 
-    num_cmds = init_pipeline(cmd_list);
-    if (num_cmds == -1)
-    {
-        mini->last_status = 1;
-        return (1);
-    }
+    num_cmds = number_of_cmds(cmd_list);
     if (num_cmds == 1)
     {
         status = execute_single_cmd(cmd_list->head, mini);
-        if (status == -1) // não e um builtin então é um comando externo
-            status = execute_external_cmd(cmd_list->head, mini);
+        if (status == -1)
+            status = run_external_single(cmd_list->head, mini);
+        return (status);
     }
-    else if (num_cmds > 1)
-        status = execute_pipeline(cmd_list, mini);
-    else // nenhum comando
-        status = 0;
-    // set_signals();
-    return (status);
-}
-
-static void assign_subcmd_type(t_subcmd *subcmd)
-{
-    char *cmd_arg;
-
-    if (!subcmd->args || !subcmd->args[0])
-    {
-        subcmd->cmd_type = NONE_CMD;
-        return;
-    }
-    cmd_arg = subcmd->args[0];
-    if (is_builtin(cmd_arg))
-        subcmd->cmd_type = BUILTIN_CMD;
-    else if (cmd_arg[0] == '/')
-        subcmd->cmd_type = ABS_PATH_CMD;
-    else if ((cmd_arg[0] == '.' && cmd_arg[1] == '/') ||
-             (cmd_arg[0] == '.' && cmd_arg[1] == '.' && cmd_arg[2] == '/'))
-        subcmd->cmd_type = REL_PATH_CMD;
-    else
-        subcmd->cmd_type = SIMPLE_CMD;
-}
-
-static void set_subcmd_types(t_cmd *cmd_list)
-{
-    t_cmd    *cmd;
-    t_subcmd *subcmd;
-
-	cmd = cmd_list;
-    while (cmd)
-    {
-        subcmd = cmd->head;
-        while (subcmd)
-        {
-            assign_subcmd_type(subcmd);
-            subcmd = subcmd->next;
-        }
-        cmd = cmd->next;
-    }
+    if (num_cmds > 1)
+        return (execute_pipeline(cmd_list, mini));
+    return (0); // num_cmds == 0 nada a executar
 }
 
 static int pre_execution(t_cmd *cmd, t_mini *mini)
 {
     t_subcmd *subcmd;
 
-    if (!cmd || !cmd->head)
-        return (EXEC_EMPTY);
+    if (!cmd || !cmd->head) // comando vazio
+        return (0);
     subcmd = cmd->head;
     if ((!subcmd->args || !subcmd->args[0]) && !subcmd->redirs) // comando vazio sem redireções
-        return (EXEC_EMPTY);
+        return (0);
     if ((!subcmd->args || !subcmd->args[0]) && subcmd->redirs && !cmd->next) // só redireções (sem args e sem pipeline)
-        return (handle_single_redirection_only(cmd, mini));
-    if (process_all_heredocs(cmd, mini) != 0) // processar os heredocs (só se não for vazio ou só redireções)
-        return (EXEC_ERROR);
-    return (EXEC_NORMAL);
+        return (run_redirs_without_cmd(cmd, mini));
+    if (process_all_heredocs(cmd, mini) != 0) // processar os heredocs (só se não for um comando vazio ou se não tiver só redireções)
+        return (1);
+    return (-1); // it's totally fineeee
 }
 
 int ft_execution(t_cmd *cmd_list, t_mini *mini)
 {
-    int check_result;
+    int pre_exec;
     int status;
 
-    if (!cmd_list || !cmd_list->head || !mini)
+    if (!mini || !cmd_list || !cmd_list->head)
+    {
+        if (mini)
+            mini->last_status = 0;
         return (0);
-    check_result = pre_execution(cmd_list, mini);
-    if (check_result != EXEC_NORMAL)
+    }
+    // set_noninteractive_signals();
+    pre_exec = pre_execution(cmd_list, mini);
+    if (pre_exec != -1)
 	{
 		// set_signals();
-		mini->last_status = check_result;
-        return (check_result);
+		mini->last_status = pre_exec;
+        return (pre_exec);
 	}
-    set_subcmd_types(cmd_list);
     status = execute_cmds(cmd_list, mini);
     mini->last_status = status;
+    // set_interactive_signals(); -> voltar ao modo prompt
     return (status);
 }

@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:25:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/26 19:05:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:11:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiNyanShell.h"
+#include "execution.h"
 #include <stdio.h>
 
 void	error_exit(const char *message)
@@ -39,4 +40,22 @@ void warn_heredoc_eof(char *lim)
           "warning: here-document delimited by end-of-file (wanted '", 58);
     write(STDERR_FILENO, lim, ft_strlen(lim));
     write(STDERR_FILENO, "')\n", 3);
+}
+
+void handle_fork_error(t_cmd *current_cmd, t_pipeline *pp)
+{
+    if (pp && pp->mini)
+        pp->mini->last_status = 1;
+    if (pp && pp->prev_pipefd != -1) /* fecha o read-end do pipe anterior, se ainda existir */
+	{
+        close(pp->prev_pipefd);
+        pp->prev_pipefd = -1;
+    }
+    if (current_cmd && current_cmd->next && pp) /* se para este comando tínhamos criado um pipe, fecha as duas pontas */
+	{
+        close(pp->pipefd[0]);
+        close(pp->pipefd[1]);
+    }
+    if (current_cmd && current_cmd->head)
+        close_heredoc(current_cmd->head);
 }

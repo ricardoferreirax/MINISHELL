@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:04:13 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/25 16:02:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:04:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "utils.h"
-#include "../MiNyanShell.h"
+
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "../include/builtin.h"
 
 static int is_valid_n_case(char **arg)
 {

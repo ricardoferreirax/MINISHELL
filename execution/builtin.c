@@ -6,13 +6,16 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/26 22:12:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:09:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "../include/builtin.h"
+#include "../libft/libft.h"
 
-bool	is_builtin(const char *cmd)
+bool	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (false);
@@ -35,19 +38,19 @@ int execute_builtin(t_subcmd *subcmd, t_mini *mini)
         return (1);
     }
     if (ft_strcmp(subcmd->args[0], "echo") == 0)
-        return (ft_echo(subcmd->args));
-    else if (ft_strcmp(subcmd->args[0], "cd") == 0)
-        return (ft_cd(mini, subcmd->args));
+        return (ft_echo(subcmd));
     else if (ft_strcmp(subcmd->args[0], "pwd") == 0)
-        return (ft_pwd(mini, subcmd->args));
-    else if (ft_strcmp(subcmd->args[0], "export") == 0)
-        return (ft_export(mini, subcmd->args));
-    else if (ft_strcmp(subcmd->args[0], "unset") == 0)
-        return (ft_unset(mini, subcmd->args));
-    else if (ft_strcmp(subcmd->args[0], "env") == 0)
-        return (ft_env(mini, subcmd->args));
-    else if (ft_strcmp(subcmd->args[0], "exit") == 0)
-        return (ft_exit(mini, subcmd->args));
+        return (ft_pwd(subcmd, mini));
+    // else if (ft_strcmp(subcmd->args[0], "cd") == 0)
+    //     return (ft_cd(mini, subcmd->args));
+    // else if (ft_strcmp(subcmd->args[0], "export") == 0)
+    //     return (ft_export(mini, subcmd->args));
+    // else if (ft_strcmp(subcmd->args[0], "unset") == 0)
+    //     return (ft_unset(mini, subcmd->args));
+    // else if (ft_strcmp(subcmd->args[0], "env") == 0)
+    //     return (ft_env(mini, subcmd->args));
+    // else if (ft_strcmp(subcmd->args[0], "exit") == 0)
+    //     return (ft_exit(mini, subcmd->args));
     mini->last_status = 1;
     return (1);
 }

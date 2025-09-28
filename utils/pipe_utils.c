@@ -6,11 +6,34 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/26 22:22:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:10:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiNyanShell.h"
+#include "execution.h"
+
+int wait_for_single(pid_t pid)
+{
+   int status;
+
+    while (1)
+    {
+        if (waitpid(pid, &status, 0) == -1)
+        {
+            if (errno == EINTR)
+                continue;     // tentou de novo se foi interrompido por sinal
+            perror("MiNyanShell: waitpid");
+            return (1);
+        }
+        break; // sai do loop se waitpid teve sucesso
+    }
+    if (WIFEXITED(status))   
+        return (WEXITSTATUS(status));
+    if (WIFSIGNALED(status)) 
+        return (128 + WTERMSIG(status));
+    return (1);
+}
 
 int safe_dup2_and_close(int oldfd, int newfd)
 {
@@ -47,4 +70,56 @@ void close_heredoc(t_subcmd *subcmd)
         close(subcmd->in_fd);
         subcmd->in_fd = -1;
     }
+}
+
+int safe_fork(t_cmd *cmd, t_pipeline *pp)
+{
+    pp->pid = fork();
+    if (pp->pid == -1)
+    {
+        perror("MiNyanshell: error forking process");
+        if (cmd->next)
+        {
+            close(pp->pipefd[0]);
+            close(pp->pipefd[1]);
+        }
+        if (pp->prev_pipefd != -1)
+        {
+            close(pp->prev_pipefd);
+            pp->prev_pipefd = -1;
+        }
+        return (-1);
+    }
+    return (0);
+}
+
+void free_args(char **args)
+{
+    int i;
+
+    if (!args)
+        return;
+    i = 0;
+    while (args[i])
+    {
+        free(args[i]);
+        i++;
+    }
+    free(args);
+}
+
+void	ft_free_str(char **str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+	free(str);
 }

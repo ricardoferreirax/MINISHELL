@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   free_chararr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 09:53:07 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/28 19:47:01 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/28 19:46:10 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/28 19:46:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "memory.h"
 
-# include "ctype/ctype.h"
-# include "gnl/get_next_line.h"
-# include "memory/memory.h"
-# include "output/output.h"
-# include "print/printf/ft_printf.h"
-# include "print/dprintf/ft_dprintf.h"
-# include "strings/ft_strings.h"
+void free_chararr(char **arr)
+{
+    int i;
 
-#endif
+    if (!arr) return;
+    i = 0;
+    while (arr[i]) {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
