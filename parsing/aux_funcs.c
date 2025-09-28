@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/25 13:27:36 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/27 09:18:18 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ bool	no_unclosed_quotes(char *str)
 	inquote = false;
 	indquote = false;
 	i = 0;
+	if (!str)
+		return (false);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' && !indquote)
@@ -193,4 +195,3 @@ t_redir_type	which_type(t_subcmd *cmd, char **argv, int i)
 	}
 	return (REDIR_INVALID);
 }
-

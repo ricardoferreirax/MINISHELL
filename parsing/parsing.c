@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 09:52:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/26 18:54:37 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/27 16:49:05 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,15 +171,15 @@ t_subcmd	*clone_out(t_subcmd *sub, char *outfile)
 	clone->delimiter = ft_strdup(sub->delimiter);
 	clone->args = malloc(sizeof(char *) * (arr_size((void **)sub->args) + 1));
 	int i = 0;
-	while(sub->args[i])
+	while(sub->args && sub->args[i])
 	{
 		clone->args[i] = ft_strdup(sub->args[i]);
 		i++;
 	}
+	clone->args[i] = NULL;
 	clone->cmd = ft_strdup(sub->cmd);
 	clone->outfile = ft_strdup(outfile);
 	clone->infile = ft_strdup(sub->infile);
-	clone->next = sub->next;
 	clone->redirs = sub->redirs;
 	clone->cmd_type = sub->cmd_type;
 	clone->in_fd = sub->in_fd;
@@ -198,7 +198,7 @@ t_subcmd	*clone_in(t_subcmd *sub, char *infile)
 	clone->delimiter = ft_strdup(sub->delimiter);
 	int i = 0;
 	clone->args = malloc(sizeof(char *) * (arr_size((void **)sub->args) + 1));
-	while(sub->args[i])
+	while(sub->args && sub->args[i])
 	{
 		clone->args[i] = ft_strdup(sub->args[i]);
 		i++;

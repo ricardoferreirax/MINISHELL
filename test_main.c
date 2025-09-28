@@ -6,12 +6,15 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/26 13:03:54 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/28 20:07:25 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiNyanShell.h"
+#include <string.h>
 
+
+//A documentação do codigo ta na minha cabeça. Boa Sorte :,) ass. pedro
 void	print_type(t_redir_type type)
 {
 	if (type == REDIR_IN)
@@ -36,9 +39,10 @@ int	main(int argc, char **argv, char **env)
 	while (argc)
 	{
 		(void)argv;
-		if (!no_unclosed_quotes(cmd) || strcmp(cmd, "exit") == 0)
+		if (!no_unclosed_quotes(cmd))
 			return (ft_printf("OwO: WhAT iS tHIs? *notices open quote*\n"), 69);
-
+		if(strcmp(cmd, "exit") == 0)
+			return(ft_printf("EXITING\n"), 420);
 		nyan = parser(cmd, env);
 		int j = 0;
 		while (nyan.head)
@@ -57,12 +61,12 @@ int	main(int argc, char **argv, char **env)
 				ft_printf("CMD:  %s\n", nyan.head->head->cmd);
 				ft_printf("Token N %d\n", i);
 				ft_printf("Args->\n", i);
-				while (nyan.head->head->args
-					&& nyan.head->head->args[i] != NULL)
-				{
-					ft_printf("\t%s\n", nyan.head->head->args[i]);
-					i++;
-				}
+				// while (nyan.head->head->args
+				// 	&& nyan.head->head->args[i] != NULL)
+				// {
+				// 	ft_printf("\t%s\n", nyan.head->head->args[i]);
+				// 	i++;
+				// }
 				ft_printf("-------------------------------------\n");
 				nyan.head->head = nyan.head->head->next;
 				k++;
