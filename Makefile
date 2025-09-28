@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/09/28 19:31:38 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/09/29 00:07:17 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ SRC_FILES = \
 	execution/pipeline.c execution/heredoc.c execution/builtin.c execution/cmd_path.c \
 	execution/child_process.c execution/execute_cmds.c utils/errors.c utils/pipe_utils.c \
 	utils/split_quotes.c builtin/ft_echo.c builtin/ft_pwd.c \
+	parsing_test/parse.c parsing_test/pipeline_build.c parsing_test/redir_build.c \
+	parsing_test/split_ignore_quotes.c parsing_test/subcmd_build.c parsing_test/validate_line.c \
+	parsing_test/utils.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/28 18:48:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 22:51:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_0w0
 {
 	char				**args;
 	char				*cmd;
-	char				*infile;
-	char				*outfile;
+	// char				*infile;
+	// char				*outfile;
 	int					in_fd;
 	int					out_fd;
 	t_redir				*redirs;
