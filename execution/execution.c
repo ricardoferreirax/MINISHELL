@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 18:45:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 09:43:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,18 @@ static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
 
 static int pre_execution(t_cmd *cmd, t_mini *mini)
 {
-    t_subcmd *subcmd;
+    t_subcmd *sub;
 
-    if (!cmd || !cmd->head) // comando vazio
-        return (0);
-    subcmd = cmd->head;
-    if ((!subcmd->args || !subcmd->args[0]) && !subcmd->redirs) // comando vazio sem redireções
-        return (0);
-    if ((!subcmd->args || !subcmd->args[0]) && subcmd->redirs && !cmd->next) // só redireções (sem args e sem pipeline)
-        return (run_redirs_without_cmd(cmd, mini));
-    if (process_all_heredocs(cmd, mini) != 0) // processar os heredocs (só se não for um comando vazio ou se não tiver só redireções)
+    if (!cmd || !cmd->head)
+        return 0;
+
+    sub = cmd->head;
+    if (process_all_heredocs(cmd, mini) != 0) // processa SEMPRE os heredocs se houver comandos/redirs
         return (1);
+    if ((!sub->args || !sub->args[0]) && sub->redirs && !cmd->next) // só redireções (sem args e sem pipeline)
+        return (run_redirs_without_cmd(cmd, mini));
+    if ((!sub->args || !sub->args[0]) && !sub->redirs) // comando vazio (sem args e sem redirs)
+        return (0);
     return (-1); // it's totally fineeee
 }
 

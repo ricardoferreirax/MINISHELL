@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/09/29 00:07:17 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/09/29 09:44:39 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 
 SRC_FILES = \
-	execution/testing_main.c execution/execution.c execution/redirection.c \
+	testing_main.c execution/execution.c execution/redirection.c \
 	execution/pipeline.c execution/heredoc.c execution/builtin.c execution/cmd_path.c \
 	execution/child_process.c execution/execute_cmds.c utils/errors.c utils/pipe_utils.c \
 	utils/split_quotes.c builtin/ft_echo.c builtin/ft_pwd.c \
