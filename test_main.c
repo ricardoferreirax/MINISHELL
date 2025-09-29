@@ -12,8 +12,7 @@
 
 #include "include/MiNyanShell.h"
 
-
-//A documentação do codigo ta na minha cabeça. Boa Sorte :,) ass. pedro
+// A documentação do codigo ta na minha cabeça. Boa Sorte :,) ass. pedro
 void	print_type(t_redir_type type)
 {
 	if (type == REDIR_IN)
@@ -40,8 +39,8 @@ int	main(int argc, char **argv, char **env)
 		(void)argv;
 		if (!no_unclosed_quotes(cmd))
 			return (ft_printf("OwO: WhAT iS tHIs? *notices open quote*\n"), 69);
-		if(strcmp(cmd, "exit") == 0)
-			return(ft_printf("EXITING\n"), 420);
+		if (strcmp(cmd, "exit") == 0)
+			return (ft_printf("EXITING\n"), 420);
 		nyan = parser(cmd, env);
 		int j = 0;
 		while (nyan.head)
@@ -56,19 +55,20 @@ int	main(int argc, char **argv, char **env)
 				ft_printf("Outfile:  %s\n", nyan.head->head->outfile);
 				ft_printf("Infile:  %s\n", nyan.head->head->infile);
 				// ft_printf("Type:  %s\n", nyan.head->head->type);
-				//ft_printf("Heredoc Delim:  %s\n", nyan.head->head->delimiter);
-				ft_printf("CMD:  %s\n", nyan.head->head->cmd);
-				ft_printf("Token N %d\n", i);
-				ft_printf("Args->\n", i);
-				// while (nyan.head->head->args
-				// 	&& nyan.head->head->args[i] != NULL)
-				// {
-				// 	ft_printf("\t%s\n", nyan.head->head->args[i]);
-				// 	i++;
-				// }
-				ft_printf("-------------------------------------\n");
-				nyan.head->head = nyan.head->head->next;
-				k++;
+				// ft_printf("Heredoc Delim:  %s\n",
+					nyan.head->head->delimiter);
+					ft_printf("CMD:  %s\n", nyan.head->head->cmd);
+					ft_printf("Token N %d\n", i);
+					ft_printf("Args->\n", i);
+					// while (nyan.head->head->args
+					// 	&& nyan.head->head->args[i] != NULL)
+					// {
+					// 	ft_printf("\t%s\n", nyan.head->head->args[i]);
+					// 	i++;
+					// }
+					ft_printf("-------------------------------------\n");
+					nyan.head->head = nyan.head->head->next;
+					k++;
 			}
 			nyan.head = nyan.head->next;
 			i++;

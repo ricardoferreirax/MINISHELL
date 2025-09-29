@@ -82,19 +82,19 @@ static char	*ft_cmd_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-static int check_cmd_access(char *cmd)
+static int	check_cmd_access(char *cmd)
 {
-    if (access(cmd, F_OK) != 0) 
+	if (access(cmd, F_OK) != 0)
 	{
-        errno = ENOENT;
-        return (127);
-    }
-    if (access(cmd, X_OK) != 0) 
+		errno = ENOENT;
+		return (127);
+	}
+	if (access(cmd, X_OK) != 0)
 	{
-        errno = EACCES;
-        return (126);
-    }
-    return (0);
+		errno = EACCES;
+		return (126);
+	}
+	return (0);
 }
 
 char	*handle_cmd_path(char *cmd, char **envp)
@@ -103,7 +103,7 @@ char	*handle_cmd_path(char *cmd, char **envp)
 	int		code;
 
 	if (!cmd)
-		return (NULL);	
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		code = check_cmd_access(cmd);

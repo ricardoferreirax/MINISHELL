@@ -20,7 +20,7 @@
 
 void	ft_bzero(void *a, size_t i);
 void	*ft_calloc(size_t nmemb, size_t size);
-void    free_chararr(char **arr);
+void	free_chararr(char **arr);
 void	*ft_memchr(const void *a, int b, size_t c);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t i);

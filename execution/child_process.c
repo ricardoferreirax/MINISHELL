@@ -13,56 +13,46 @@
 #include "../include/MiNyanShell.h"
 #include "../include/execution.h"
 
-static void setup_child_pipes(t_cmd *cmd, t_pipeline *pp)
+static void	setup_child_pipes(t_cmd *cmd, t_pipeline *pp)
 {
-    if (pp->prev_pipefd != -1) 
-    {
-        if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-            exit(1);
-        pp->prev_pipefd = -1;
-    }
-    if (cmd->next) 
-    {
-        if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
-            exit(1);
-        close(pp->pipefd[0]);
-    }
+	if (pp->prev_pipefd != -1)
+	{
+		if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+			exit(1);
+		pp->prev_pipefd = -1;
+	}
+	if (cmd->next)
+	{
+		if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
+			exit(1);
+		close(pp->pipefd[0]);
+	}
 }
 
-void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
+void	child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
 {
-    t_subcmd *subcmd;
+	t_subcmd	*subcmd;
 
-    // set_child_signals();               /* SIGINT/SIGQUIT default no filho */
-    setup_child_pipes(cmd, pp);
-    subcmd = cmd->head;
-    if (apply_redirs_in_child(subcmd) != 0)
-        exit(1);
-    if (!subcmd->args || !subcmd->args[0])
-        exit(0);
-    if (subcmd->args[0][0] == '\0')  // string vazia (“command not found”)
-    {
-        cmd_not_found_msg(subcmd->args[0]);
-        exit(127);
-    }
-    if (is_builtin(subcmd->args[0])) // Na pipeline, os builtins executam no child
-    {
-        execute_builtin(subcmd, pp->mini);
-        exit(pp->mini->last_status);
-    }
-    execute_external_cmd(subcmd, pp->mini);
+	// set_child_signals();               /* SIGINT/SIGQUIT default no filho */
+	setup_child_pipes(cmd, pp);
+	subcmd = cmd->head;
+	if (apply_redirs_in_child(subcmd) != 0)
+		exit(1);
+	if (!subcmd->args || !subcmd->args[0])
+		exit(0);
+	if (subcmd->args[0][0] == '\0') // string vazia (“command not found”)
+	{
+		cmd_not_found_msg(subcmd->args[0]);
+		exit(127);
+	}
+	if (is_builtin(subcmd->args[0])) // Na pipeline,
+		os builtins executam no child
+		{
+			execute_builtin(subcmd, pp->mini);
+			exit(pp->mini->last_status);
+		}
+	execute_external_cmd(subcmd, pp->mini);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // static void first_child(t_cmd *cmd, t_pipeline *pp)
 // {

@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 11:50:32 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:10:09 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,53 @@ char	**init_mini(t_mini *nyan, char *cmd)
 	return (pipes);
 }
 
-char *pre_parse(char *pipe)
+
+int normalize_str(char *str)
 {
-	
+	int i = 0;
+	int size = ft_strlen(str);
+	while(str[i] != '\0')
+	{
+		if(str[i] == '>' || str[i] == '<')
+		{
+			if(i > 0 && str[i - 1] != ' ')
+				size++;
+			if(str[i + 1] != '<' && str[i + 1] != '>' && str[i + 1] != ' ')
+				size++;
+		}
+		i++;
+	}
+}
+
+
+char **pre_parse(char *pipe)
+{
+	int i = 0;
+	int j = 0;
+	char **dest;
+	char *temp;
+	temp = malloc(sizeof(char) * normalize_str(pipe));
+	while(pipe[i] != '\0')
+	{
+		if(pipe[i] == '<' || pipe[i] == '>')
+		{
+			if(i > 0 && pipe[i - 1] != ' ')
+			{
+				temp[i + j] = ' ';
+				j++;
+			}
+			// Be careful to handle >< or <>
+			if(pipe[i + 1] != '<' && pipe[i + 1] != '>' && pipe[i + 1] != ' ')
+			{
+				temp[i + j] = pipe[i];
+				temp[i + j] = ' ';
+				j++;
+				i++;
+				continue;
+			}
+		}
+		temp[i + j] = pipe[i];
+	}
 }
 
 void	fill_mini(t_mini *nyan, char **pipes)

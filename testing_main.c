@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 18:19:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 11:47:45 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:12:42 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		fill_mini(&mini, pipes);
 		free_2d((void **)pipes);
-		status = ft_execution(mini.head, &mini);
-		mini.last_status = status;
-		free_cmd_list(mini.head);
-		mini.head = NULL;
+		// status = ft_execution(mini.head, &mini);
+		// mini.last_status = status;
+		// free_cmd_list(mini.head);
+		// mini.head = NULL;
 
 		free(input);
 	}

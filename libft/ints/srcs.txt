@@ -1,2 +1,1 @@
-ints
-randomizer.c
+ints randomizer.c

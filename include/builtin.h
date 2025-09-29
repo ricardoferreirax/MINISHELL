@@ -13,14 +13,14 @@
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-# include <unistd.h>
-# include <stdlib.h>
 # include "MiNyanShell.h"
+# include <stdlib.h>
+# include <unistd.h>
 
-int ft_echo(t_subcmd *subcmd);
-int ft_pwd(t_subcmd *subcmd, t_mini *mini);
+int		ft_echo(t_subcmd *subcmd);
+int		ft_pwd(t_subcmd *subcmd, t_mini *mini);
 
-bool is_builtin(char *cmd);
-int execute_builtin(t_subcmd *subcmd, t_mini *mini);
+bool	is_builtin(char *cmd);
+int		execute_builtin(t_subcmd *subcmd, t_mini *mini);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/29 11:14:44 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:14:33 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct	s_OwO	t_cmd;
-typedef struct	s_0w0	t_subcmd;
-typedef struct s_redir t_redir;
+typedef struct s_OwO	t_cmd;
+typedef struct s_0w0	t_subcmd;
+typedef struct s_redir	t_redir;
 
 // typedef enum e_cmd_mode
 // {
@@ -48,13 +48,14 @@ typedef enum e_token_type
 
 typedef struct s_0w0
 {
-	char				**args;
+	t_redir_type		type;
 	char				*cmd;
+	char				**args;
+	char				*delimiter;
 	char				*infile;
 	char				*outfile;
 	int					in_fd;
 	int					out_fd;
-	t_redir				*redirs;
 	t_subcmd			*next;
 }						t_subcmd;
 

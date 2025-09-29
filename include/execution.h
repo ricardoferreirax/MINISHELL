@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 11:15:18 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:13:55 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ typedef struct s_pipeline
 	int					last_status;
 	t_mini				*mini;
 }						t_pipeline;
-
-typedef struct s_redir
-{
-	char				*file;
-	char				*delimiter;
-	t_redir_type		type;
-	struct s_redir		*next;
-}						t_redir;
 
 int						ft_execution(t_cmd *cmd_list, t_mini *mini);
 int						execute_single_cmd(t_subcmd *subcmd, t_mini *mini);

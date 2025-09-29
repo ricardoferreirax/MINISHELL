@@ -31,7 +31,7 @@ char	*ft_strdup(const char *src)
 	char	*buffer;
 	int		sizesrc;
 
-	if(!src)
+	if (!src)
 		return (NULL);
 	sizesrc = ft_strlen(src);
 	buffer = malloc((sizesrc * sizeof(char)) + 1);
