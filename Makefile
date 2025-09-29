@@ -5,46 +5,51 @@
 #                                                     +:+ +:+         +:+      #
 #    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/04 16:26:27 by pfreire-          #+#    #+#              #
-#    Updated: 2025/09/17 16:21:39 by pfreire-         ###   ########.fr        #
+#    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
+#    Updated: 2025/09/29 10:48:58 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME    = minishell
 
-CC = cc
-FLAGS = -Wall -Werror -Wextra -g
-SRC_FILES =	test_main.c \
-			parsing/aux_funcs.c \
-			parsing/parsing.c
-OBJS = $(SRC_FILES:.c=.o)
-LIBFT = libft/libft.a
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -g
+INCS    = -Iinclude -Ilibft
 
+LIBFT   = libft/libft.a
 
-all: $(NAME) 
+SRC_FILES = \
+	testing_main.c execution/execution.c execution/redirection.c \
+	execution/pipeline.c execution/heredoc.c execution/builtin.c execution/cmd_path.c \
+	execution/child_process.c execution/execute_cmds.c utils/errors.c utils/pipe_utils.c \
+	utils/split_quotes.c builtin/ft_echo.c builtin/ft_pwd.c \
+	parsing_test/parse.c parsing_test/pipeline_build.c parsing_test/redir_build.c \
+	parsing_test/split_ignore_quotes.c parsing_test/subcmd_build.c parsing_test/validate_line.c \
+	parsing_test/utils.c
 
-$(NAME):$(OBJS) $(LIBFT) 
-	@$(CC) -g $(OBJS) $(LIBFT) -lreadline -lhistory -o $(NAME)
+OBJ_FILES = $(SRC_FILES:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ_FILES) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -lreadline -lhistory -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(FLAGS) -c $< -o $@
-	
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+
 $(LIBFT):
-	@$(MAKE) -C libft
+	$(MAKE) -C libft
 
 clean:
-	@rm -f $(OBJS)
-	@make clean -C libft
-fclean:clean
-	@rm -f $(NAME)
-	@make fclean -C libft
+	rm -f $(OBJ_FILES)
+	$(MAKE) -C libft clean
+
+fclean: clean
+	rm -f $(NAME)
+	$(MAKE) -C libft fclean
 
 re: fclean all
 
-ra: re clean
-	@rm -f $(OBJS)
-	@make clean -C libft
-
 e: all clean
 
-.PHONY: all fclean clean re
+.PHONY: all clean fclean re

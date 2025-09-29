@@ -6,12 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/28 20:07:25 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 11:18:27 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-#include <string.h>
+#include "include/MiNyanShell.h"
 
 
 //A documentação do codigo ta na minha cabeça. Boa Sorte :,) ass. pedro
@@ -57,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 				ft_printf("Outfile:  %s\n", nyan.head->head->outfile);
 				ft_printf("Infile:  %s\n", nyan.head->head->infile);
 				// ft_printf("Type:  %s\n", nyan.head->head->type);
-				ft_printf("Heredoc Delim:  %s\n", nyan.head->head->delimiter);
+				//ft_printf("Heredoc Delim:  %s\n", nyan.head->head->delimiter);
 				ft_printf("CMD:  %s\n", nyan.head->head->cmd);
 				ft_printf("Token N %d\n", i);
 				ft_printf("Args->\n", i);

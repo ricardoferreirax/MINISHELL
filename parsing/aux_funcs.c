@@ -6,12 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/27 09:18:18 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 11:17:12 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "parsing.h"
+#include "../include/MiNyanShell.h"
 #include <stdbool.h>
 
 char	*skip_whitespaces(char *str)
@@ -175,7 +174,7 @@ t_redir_type	which_type(t_subcmd *cmd, char **argv, int i)
 {
 	if (ft_strcmp(argv[i], "<<") == 0)
 	{
-		cmd->delimiter = ft_strdup(argv[i + 1]);
+		//cmd->delimiter = ft_strdup(argv[i + 1]);
 		return (REDIR_HEREDOC);
 	}
 	if (ft_strcmp(argv[i], ">>"))
