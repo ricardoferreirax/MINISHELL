@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:55:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/27 14:56:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:24:08 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_mini t_mini;
+typedef struct s_UwU t_mini;
 
 void set_interactive_signals(void);
 void set_non_interactive_signals(void);
