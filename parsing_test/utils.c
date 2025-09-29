@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 00:05:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:45:47 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "../include/MiNyanShell.h"
 #include "../include/parsing.h"
 
 char	*skip_whitespaces(char *str)

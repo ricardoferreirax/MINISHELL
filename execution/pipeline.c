@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 18:45:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:06:09 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static void	parent_pipe_control(t_cmd *cmd, t_pipeline *pp)
 		close(pp->prev_pipefd);
 		pp->prev_pipefd = -1;
 	}
-	if (cmd->next) // Se houver próximo comando,
-		mantemos o read end do pipe atual
-		{
-			close(pp->pipefd[1]);
-			pp->prev_pipefd = pp->pipefd[0];
-			// assim o próximo comando vai ler do read end do pipe atual
-		}
+	if (cmd->next)
+		// Se houver próximo comando mantemos o read end do pipe atual
+	{
+		close(pp->pipefd[1]);
+		pp->prev_pipefd = pp->pipefd[0];
+		// assim o próximo comando vai ler do read end do pipe atual
+	}
 	else // último comando não precisa de guardar o prev_pipefd
 		pp->prev_pipefd = -1;
 	if (cmd->head)

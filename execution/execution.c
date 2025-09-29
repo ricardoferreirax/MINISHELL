@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 09:43:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:54:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/execution.h"
+#include <readline/history.h>
 
 static int	number_of_cmds(t_cmd *cmd_list)
 {
@@ -58,10 +59,10 @@ static int	pre_execution(t_cmd *cmd, t_mini *mini)
 	if (process_all_heredocs(cmd, mini) != 0)
 		// processa SEMPRE os heredocs se houver comandos/redirs
 		return (1);
-	if ((!sub->args || !sub->args[0]) && sub->redirs && !cmd->next)
+	if ((!sub->args || !sub->args[0]) && (sub->type != REDIR_INVALID) && !cmd->next)
 		// só redireções (sem args e sem pipeline)
 		return (run_redirs_without_cmd(cmd, mini));
-	if ((!sub->args || !sub->args[0]) && !sub->redirs)
+	if ((!sub->args || !sub->args[0]) && (sub->type == REDIR_INVALID))
 		// comando vazio (sem args e sem redirs)
 		return (0);
 	return (-1); // it's totally fineeee

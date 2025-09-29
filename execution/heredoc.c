@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 18:52:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:50:56 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // 	return (false);
 // }
 
-int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
+int	heredoc_read_loop(t_mini *mini, t_subcmd *sub, int write_fd)
 {
 	char	*line;
 
@@ -40,10 +40,10 @@ int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 		line = readline("> ");
 		if (!line) // EOF (Ctrl+D) antes do delimiter */
 		{
-			warn_heredoc_eof(redir->delimiter);
+			warn_heredoc_eof(sub->delimiter);
 			break ;
 		}
-		if (redir->delimiter != NULL && ft_strcmp(line, redir->delimiter) == 0)
+		if (sub->delimiter != NULL && ft_strcmp(line, sub->delimiter) == 0)
 		{
 			free(line);
 			break ;
@@ -59,7 +59,7 @@ int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 	return (0);
 }
 
-static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
+static void	child_heredoc(t_mini *mini, t_subcmd *sub, int pipefd[2])
 {
 	int	exit_code;
 
@@ -67,7 +67,7 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
 	close(pipefd[0]);        // child não lê
 	signal(SIGINT, SIG_DFL); // Ctrl+C interrompe o heredoc
 	signal(SIGQUIT, SIG_IGN);
-	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
+	exit_code = heredoc_read_loop(mini, sub, pipefd[1]);
 	close(pipefd[1]);
 	exit(exit_code);
 }
@@ -96,7 +96,7 @@ int	parent_heredoc_control(t_subcmd *sub, t_mini *mini, int pipefd[2],
 	return (0);             // sucesso
 }
 
-int	handle_single_heredoc(t_subcmd *subcmd, t_redir *redir, t_mini *mini)
+int	handle_single_heredoc(t_subcmd *subcmd, t_mini *mini)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -111,7 +111,7 @@ int	handle_single_heredoc(t_subcmd *subcmd, t_redir *redir, t_mini *mini)
 		return (perror("MiNyanshell: fork"), 1);
 	}
 	if (pid == 0)
-		child_heredoc(redir, mini, pipefd);
+		child_heredoc(mini, subcmd, pipefd);
 	else
 		return (parent_heredoc_control(subcmd, mini, pipefd, pid));
 	return (0);
@@ -121,7 +121,6 @@ int	process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
 {
 	t_cmd		*cmd;
 	t_subcmd	*subcmd;
-	t_redir		*redir;
 
 	cmd = cmd_list;
 	while (cmd)
@@ -129,16 +128,11 @@ int	process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
 		subcmd = cmd->head;
 		while (subcmd)
 		{
-			redir = subcmd->redirs;
-			while (redir)
-			{
-				if (redir->type == REDIR_HEREDOC)
+				if (subcmd->type == REDIR_HEREDOC)
 				{
-					if (handle_single_heredoc(subcmd, redir, mini) != 0)
+					if (handle_single_heredoc(subcmd, mini) != 0)
 						return (1); // falhou um heredoc
 				}
-				redir = redir->next;
-			}
 			subcmd = subcmd->next;
 		}
 		cmd = cmd->next;

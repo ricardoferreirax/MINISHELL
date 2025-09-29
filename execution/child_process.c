@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 18:46:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:05:39 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
 		cmd_not_found_msg(subcmd->args[0]);
 		exit(127);
 	}
-	if (is_builtin(subcmd->args[0])) // Na pipeline,
-		os builtins executam no child
-		{
-			execute_builtin(subcmd, pp->mini);
-			exit(pp->mini->last_status);
-		}
+	if (is_builtin(subcmd->args[0]))
+		// Na pipeline,os builtins executam no child
+	{
+		execute_builtin(subcmd, pp->mini);
+		exit(pp->mini->last_status);
+	}
 	execute_external_cmd(subcmd, pp->mini);
 }
 

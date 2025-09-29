@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 18:19:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 15:12:42 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:11:46 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	print_mini(t_mini *nyan)
 			printf("\t%s\n", nyan->head->head->args[j]);
 			j++;
 		}
-		printf("DELIMITER: %s\n", nyan->head->head->redirs->delimiter);
-		printf("FILE: %s\n", nyan->head->head->redirs->file);
 	}
 }
 
@@ -93,13 +91,13 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		if (!no_unclosed_quotes(input))
 		{
-			fprintf(stderr, "MiNyanShell: syntax error: unclosed quotes\n");
+			ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n");
 			free(input);
 			continue ;
 		}
 		if (!no_forbidden_actions(input))
 		{
-			fprintf(stderr, "MiNyanShell: unsupported operator (&&, ||, *)\n");
+			ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
 			free(input);
 			continue ;
 		}
@@ -112,10 +110,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		fill_mini(&mini, pipes);
 		free_2d((void **)pipes);
-		// status = ft_execution(mini.head, &mini);
-		// mini.last_status = status;
-		// free_cmd_list(mini.head);
-		// mini.head = NULL;
+		status = ft_execution(mini.head, &mini);
+		mini.last_status = status;
+		free_cmd_list(mini.head);
+		mini.head = NULL;
 
 		free(input);
 	}

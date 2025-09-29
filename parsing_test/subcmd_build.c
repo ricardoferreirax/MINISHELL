@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:56:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 15:27:14 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:43:24 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_subcmd	*subcmd_new(void)
 	subcmd->infile = NULL;
 	subcmd->in_fd = -1;
 	subcmd->out_fd = -1;
-	subcmd->next = NULL; /* 1 subcmd por t_cmd */
+	subcmd->next = NULL;
 	return (subcmd);
 }
 
