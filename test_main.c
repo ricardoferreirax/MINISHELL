@@ -6,11 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 11:13:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/26 13:03:54 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 10:06:02 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "include/MiNyanShell.h"
 
 void	print_type(t_redir_type type)
 {
