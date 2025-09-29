@@ -1,88 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/24 22:02:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/24 22:11:19 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/28 18:40:11 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/28 18:40:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "utils.h"
-
-int ft_strcmp(char *s1, char *s2)
-{
-    while (*s1 && (*s1 == *s2))
-    {
-        s1++;
-        s2++;
-    }
-    return (*(unsigned char *)s1 - *(unsigned char *)s2);
-}
-
-void ft_putstr_fd(char *s, int fd)
-{
-    if (!s)
-        return;
-    while (*s)
-    {
-        write(fd, s, 1);
-        s++;
-    }
-}
-
-size_t ft_strlen(const char *s)
-{
-    size_t len = 0;
-    while (s && s[len])
-        len++;
-    return len;
-}
-
-
-char *ft_strdup(const char *s1)
-{
-    char *dup;
-    int len = ft_strlen(s1);
-    int i;
-
-    dup = (char *)malloc((len + 1) * sizeof(char));
-    if (!dup)
-        return NULL;
-    i = 0;
-    while (s1[i])
-    {
-        dup[i] = s1[i];
-        i++;
-    }
-    dup[i] = '\0';
-    return dup;
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*substring;
-	size_t	idx;
-
-	if (!s)
-		return (NULL);
-	if (start >= (unsigned int)ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	substring = malloc((len + 1) * sizeof(char));
-	if (!substring)
-		return (NULL);
-	idx = 0;
-	while (idx < len)
-		substring[idx++] = s[start++];
-	substring[idx] = '\0';
-	return (substring);
-}
+#include "MiNyanShell.h"
+#include "execution.h"
 
 static void	quote_check(char c, char *quote)
 {

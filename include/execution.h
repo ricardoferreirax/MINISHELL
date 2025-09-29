@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/24 23:37:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:32:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,14 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <signal.h>
 
 typedef struct s_UwU   t_mini;
 typedef struct s_0w0   t_subcmd;
-
-typedef enum e_cmd_mode
-{
-	NONE_CMD,
-	BUILTIN_CMD,
-	ABS_PATH_CMD,
-	REL_PATH_CMD,
-	SIMPLE_CMD
-}	t_cmd_mode;
 
 typedef struct s_pipeline
 {
@@ -46,13 +42,32 @@ typedef struct s_redir
     struct s_redir *next;
 }   t_redir;
 
-int execute_pipeline(t_cmd *cmd, t_mini *mini);
 int ft_execution(t_cmd *cmd_list, t_mini *mini);
-
-void	execute_subcommand(t_subcmd *subcmd, t_mini *mini);
+int execute_single_cmd(t_subcmd *subcmd, t_mini *mini);
+int run_external_single(t_subcmd *subcmd, t_mini *mini);
+void execute_external_cmd(t_subcmd *subcmd, t_mini *mini);
+int execute_pipeline(t_cmd *cmd_list, t_mini *mini);
+void child_execute_cmd(t_cmd *cmd, t_pipeline *pp);
+int	run_redirs_without_cmd(t_cmd *cmd, t_mini *mini);
+int apply_redirs_in_child(t_subcmd *sub);
 char	*handle_cmd_path(char *cmd, char **envp);
-void handle_redirs(t_subcmd *subcmd);
-void wait_for_children(t_mini *mini, pid_t last_pid);
+bool	is_builtin(char *cmd);
+int		execute_builtin(t_subcmd *subcmd, t_mini *mini);
+int	process_all_heredocs(t_cmd *cmd_list, t_mini *mini);
+int	handle_single_heredoc(t_subcmd *sub, t_redir *redir, t_mini *mini);
+int safe_dup2_and_close(int oldfd, int newfd);
+void reset_fds(int stdin_fd, int stdout_fd);
+void close_heredoc(t_subcmd *subcmd);
+int safe_fork(t_cmd *cmd, t_pipeline *pp);
+void handle_fork_error(t_cmd *current_cmd, t_pipeline *pp);
+int wait_for_single(pid_t pid);
+char	**ft_split_quotes(char const *s, char c);
+void free_args(char **args);
+void warn_heredoc_eof(char *lim);
+void	ft_free_str(char **str);
+void	cmd_not_found_msg(char *cmd);
+
+void free_chararr(char **arr);
 
 
 #endif

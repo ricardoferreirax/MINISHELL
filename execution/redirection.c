@@ -6,150 +6,108 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/23 23:41:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 18:45:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-#include "execution.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
 
-/* static void handle_redir_in(t_redir *redir)
+static int	open_redir_fd(t_redir *redir, int *last_fd)
 {
-    int fd = open(redir->file, O_RDONLY);
-    if (fd < 0)
-        error_exit("minishell: infile open failed");
-    safe_dup2_and_close(fd, STDIN_FILENO);
+	int	new_fd;
+
+	if (redir->type == REDIR_IN)
+		new_fd = open(redir->file, O_RDONLY);
+	else if (redir->type == REDIR_OUT)
+		new_fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (redir->type == REDIR_APPEND)
+		new_fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		return (-1);
+	if (new_fd == -1)
+	{
+		perror(redir->file);
+		return (-1);
+	}
+	if (*last_fd != -1)
+        close(*last_fd);
+	*last_fd = new_fd; // atualiza o último fd aberto
+	return (0);
 }
 
-static void handle_redir_out(t_redir *redir)
+static int process_redirs(t_subcmd *subcmd, int *last_in_fd, int *last_out_fd)
 {
-    int fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd < 0)
-        error_exit("minishell: outfile open failed");
-    safe_dup2_and_close(fd, STDOUT_FILENO);
-}
+    t_redir *redir;
 
-static void handle_redir_append(t_redir *redir)
-{
-    int fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    if (fd < 0)
-        error_exit("minishell: outfile append open failed");
-    safe_dup2_and_close(fd, STDOUT_FILENO);
-}
-
-static void handle_redir_heredoc(t_subcmd *subcmd)
-{
-    safe_dup2_and_close(subcmd->in_fd, STDIN_FILENO);
-}
-
-void handle_redirs(t_subcmd *subcmd)
-{
-    t_redir *redir = subcmd->redirs;
-
+    if (!subcmd) 
+		return 0;
+    redir = subcmd->redirs;
     while (redir)
     {
-        if (redir->type == REDIR_IN)
-            handle_redir_in(redir);
-        else if (redir->type == REDIR_OUT)
-            handle_redir_out(redir);
-        else if (redir->type == REDIR_APPEND)
-            handle_redir_append(redir);
-        else if (redir->type == REDIR_HEREDOC)
-            handle_redir_heredoc(subcmd);
-        else if (redir->type == REDIR_INVALID)
-            error_exit("minishell: invalid redirection type");
+        if (redir->type == REDIR_IN) 
+		{
+            if (open_redir_fd(redir, last_in_fd) == -1) 
+				return (1);
+        } 
+		else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND) 
+		{
+            if (open_redir_fd(redir, last_out_fd) == -1) 
+				return (1);
+        }
         redir = redir->next;
     }
-} */
+    return (0);
+}
 
-static int handle_input_redir(t_subcmd *subcmd, int saved_stdout, int saved_stdin)
+int apply_redirs_in_child(t_subcmd *sub)
 {
-    if (!subcmd->infile && subcmd->in_fd != -2) // sem infile e sem heredoc
+    int last_in_fd;
+    int last_out_fd;
+
+    if (sub->in_fd != -1) // se o heredoc já foi processado
+        last_in_fd = sub->in_fd; // o last_in_fd começa com o fd do heredoc
+    else
+        last_in_fd = -1; // senão começa sem as redireções de input
+    last_out_fd = -1; // começa sem redireções de output
+    if (process_redirs(sub, &last_in_fd, &last_out_fd)) // processa todas as redireções (menos os heredocs)
         return (1);
-    if (subcmd->in_fd == -2) // heredoc
+    if (last_in_fd != -1) // se houve uma redireção de input, aplica-a
     {
-        subcmd->in_fd = handle_heredoc(subcmd);
-        if (subcmd->in_fd == -1)
-        {
-            close(saved_stdout);
-            close(saved_stdin);
-            return (0);
-        }
+        if (safe_dup2_and_close(last_in_fd, STDIN_FILENO) != 0)
+            return (perror("MiNyanshell: failed to redirect input"), 1);
+        last_in_fd = -1; // já foi aplicada então marcamos como fechada
     }
-    else
+    if (last_out_fd != -1) // se houve uma redireção de output, aplica-a
     {
-        subcmd->in_fd = open(subcmd->infile, O_RDONLY);
-        if (subcmd->in_fd == -1)
-        {
-            perror("minishell: no such file or directory");
-            close(saved_stdout);
-            close(saved_stdin);
-            return 0;
-        }
+        if (safe_dup2_and_close(last_out_fd, STDOUT_FILENO) != 0)
+            return (perror("MiNyanshell: failed to redirect output"), 1);
+        last_out_fd = -1;
     }
-
-    if (safe_dup2_and_close(subcmd->in_fd, STDIN_FILENO) != 0)
-    {
-        close(saved_stdout);
-        close(saved_stdin);
-        return 0;
-    }
-    subcmd->in_fd = -1;
-    return 1;
+    return (0); // Sucesso
 }
 
-static int handle_output_redir(t_subcmd *subcmd, int saved_stdout, int saved_stdin)
+int	run_redirs_without_cmd(t_cmd *cmd, t_mini *mini)
 {
-    if (!subcmd->outfile)
-        return 1;
-    if (subcmd->cmd_type == REDIR_APPEND)
-        subcmd->out_fd = open(subcmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-    else
-        subcmd->out_fd = open(subcmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (subcmd->out_fd == -1)
-    {
-        perror("minishell: cannot open output file");
-        if (subcmd->infile)
-            safe_dup2_and_close(saved_stdin, STDIN_FILENO);
-        close(saved_stdout);
-        close(saved_stdin);
-        return 0;
-    }
-    if (safe_dup2_and_close(subcmd->out_fd, STDOUT_FILENO) != 0)
-    {
-        perror("minishell: failed to redirect output");
-        if (subcmd->infile)
-            safe_dup2_and_close(saved_stdin, STDIN_FILENO);
-        close(saved_stdout);
-        close(saved_stdin);
-        return 0;
-    }
-    subcmd->out_fd = -1;
-    return 1;
-}
+	t_subcmd	*sub;
+	int			orig_stdin;
+	int			orig_stdout;
+	int			result;
 
-int handle_redirections(t_subcmd *subcmd)
-{
-    int saved_stdout;
-    int saved_stdin;
-
-    if (!subcmd)
-        return (0);
-    saved_stdout = dup(STDOUT_FILENO);
-    saved_stdin  = dup(STDIN_FILENO);
-    if (saved_stdout == -1 || saved_stdin == -1)
-    {
-        if (saved_stdout != -1)
-            close(saved_stdout);
-        if (saved_stdin != -1)
-            close(saved_stdin);
-        return (0);
-    }
-    if (!handle_input_redir(subcmd, saved_stdout, saved_stdin))
-        return (0);
-    if (!handle_output_redir(subcmd, saved_stdout, saved_stdin))
-        return (0);
-    close(saved_stdout);
-    close(saved_stdin);
-    return (1);
+	if (!cmd || !cmd->head)
+		return (0);
+	sub = cmd->head;
+	orig_stdin = dup(STDIN_FILENO);
+	orig_stdout = dup(STDOUT_FILENO);
+	if (orig_stdin == -1 || orig_stdout == -1)
+		return (perror("MiNyanshell: dup original fds"), 1);
+	result = apply_redirs_in_child(sub);
+	reset_fds(orig_stdin, orig_stdout);
+	if (sub->in_fd != -1)
+	{
+		close(sub->in_fd);
+		sub->in_fd = -1;
+	}
+	mini->last_status = result;
+	return (result);
 }

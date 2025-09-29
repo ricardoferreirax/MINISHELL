@@ -3,18 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD:MiNyanShell.h
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
 /*   Updated: 2025/09/26 18:41:54 by pfreire-         ###   ########.fr       */
+=======
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/09/28 22:51:33 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo:include/MiNyanShell.h
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINYANSHELL_H
 # define MINYANSHELL_H
 
+<<<<<<< HEAD:MiNyanShell.h
 # include "libft/libft.h"
 # include "parsing/parsing.h"
+=======
+# include "../libft/libft.h"
+/* # include "parsing/parsing.h"
+>>>>>>> ricardo:include/MiNyanShell.h
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -49,17 +61,14 @@ typedef enum e_token_type
 
 typedef struct s_0w0
 {
-	t_redir_type		type;
-	char				*delimiter;
 	char				**args;
 	char				*cmd;
-	char				*infile;
-	char				*outfile;
-	t_subcmd			*next;
-	t_redir				*redirs;
-	t_cmd_mode			cmd_type;
+	// char				*infile;
+	// char				*outfile;
 	int					in_fd;
 	int					out_fd;
+	t_redir				*redirs;
+	t_subcmd			*next;
 }						t_subcmd;
 
 typedef struct s_OwO

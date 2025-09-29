@@ -6,11 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 22:31:07 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/24 22:35:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:01:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "../include/builtin.h"
 
 static int print_pwd_from_env(char **env)
 {
@@ -46,7 +48,7 @@ int ft_pwd(t_subcmd *subcmd, t_mini *mini)
         mini->last_status = 1;
         return (1);
     }
-    cwd = getcwd(NULL, 0);
+    cwd = getcwd(NULL, 0);  // 
     if (!cwd)
     {
         status = print_pwd_from_env(mini->env);

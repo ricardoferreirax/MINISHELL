@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 09:53:07 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/28 19:47:01 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/27 14:55:39 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/27 14:56:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "ctype/ctype.h"
-# include "gnl/get_next_line.h"
-# include "memory/memory.h"
-# include "output/output.h"
-# include "print/printf/ft_printf.h"
-# include "print/dprintf/ft_dprintf.h"
-# include "strings/ft_strings.h"
+# include <signal.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+typedef struct s_mini t_mini;
+
+void set_interactive_signals(void);
+void set_non_interactive_signals(void);
+void set_child_signals(void);
 
 #endif

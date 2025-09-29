@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   free_chararr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 <<<<<<< HEAD:builtin/utils.h
+<<<<<<< HEAD:builtin/utils.h
 /*   Created: 2025/09/24 22:04:36 by rmedeiro          #+#    #+#             */
 /*   Updated: 2025/09/24 22:09:58 by rmedeiro         ###   ########.fr       */
+=======
+/*   Created: 2025/09/28 19:46:10 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/28 19:46:44 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo:libft/memory/free_chararr.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "memory.h"
 
-# include <stddef.h>
+void free_chararr(char **arr)
+{
+    int i;
 
+<<<<<<< HEAD:builtin/utils.h
 int     ft_strcmp(char *s1, char *s2);
 size_t  ft_strlen(const char *s);
 void    ft_putstr_fd(char *s, int fd);
@@ -411,3 +418,13 @@ t_mini	parser(char *cmd, char **env)
 	return (nyan);
 }
 >>>>>>> pedro:parsing/parsing.c
+=======
+    if (!arr) return;
+    i = 0;
+    while (arr[i]) {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+>>>>>>> ricardo:libft/memory/free_chararr.c
