@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 17:03:37 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 10:20:06 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static int	process_redirs(t_subcmd *subcmd, int *last_in_fd, int *last_out_fd)
 		return (0);
 	while (subcmd)
 	{
-		if (subcmd->type == REDIR_IN)
+		if (subcmd->type == REDIR_IN || subcmd->type == REDIR_INOUT)
 		{
 			if (open_redir_fd(subcmd, last_in_fd) == -1)
 				return (1);
 		}
-		else if (subcmd->type == REDIR_OUT || subcmd->type == REDIR_APPEND)
+		if (subcmd->type == REDIR_OUT || subcmd->type == REDIR_APPEND || subcmd->type == REDIR_INOUT)
 		{
 			if (open_redir_fd(subcmd, last_out_fd) == -1)
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:56:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 16:43:24 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 10:37:35 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_subcmd	*subcmd_new(void)
 	subcmd = (t_subcmd *)calloc(1, sizeof(*subcmd));
 	if (!subcmd)
 		return (NULL);
+	subcmd->type = REDIR_INVALID;
 	subcmd->args = NULL;
 	subcmd->cmd = NULL;
 	subcmd->delimiter = NULL;
