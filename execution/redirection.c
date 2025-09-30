@@ -6,12 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 10:20:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:22:50 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "execution.h"
 
 static int	open_redir_fd(t_subcmd *sub, int *last_fd)
 {

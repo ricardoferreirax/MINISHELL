@@ -6,14 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 16:51:28 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:10:10 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include "MiNyanShell.h"
+# include "../MiNyanShell.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>

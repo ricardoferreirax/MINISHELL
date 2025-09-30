@@ -6,29 +6,29 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:24:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:21 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:17:07 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/parsing.h"
+#include "../MiNyanShell.h"
+#include "parsing.h"
 
-/* devolve 1 se consumiu algo com sucesso, 0 se erro de sintaxe */
-int	parse(t_subcmd *sub, char **tokens, int *i)
+int	parse(t_subcmd **sub, char **tokens, int *i)
 {
 	char	*op;
+	t_subcmd *curr = *sub;
 
 	if (tokens[*i] && !is_redir(tokens[*i]))
 	{
-		if (!sub->cmd)
+		if (!curr->cmd)
 		{
-			sub->cmd = ft_strdup(tokens[*i]);
-			if (!sub->cmd)
+			curr->cmd = ft_strdup(tokens[*i]);
+			if (!curr->cmd)
 				return (0);
 		}
 		while (tokens[*i] && !is_redir(tokens[*i]))
 		{
-			if (add_arg(sub, tokens[*i]) != 0)
+			if (add_arg(curr, tokens[*i]) != 0)
 				return (0);
 			(*i)++;
 		}
@@ -61,6 +61,7 @@ int	parse(t_subcmd *sub, char **tokens, int *i)
 				return (0);
 		}
 		(*i)++;
+		//*sub = curr;
 		return (1);
 	}
 	return (0);

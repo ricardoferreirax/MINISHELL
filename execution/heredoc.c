@@ -6,12 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 16:50:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:22:22 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "execution.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 

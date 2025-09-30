@@ -6,12 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 17:05:39 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:21:29 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "execution.h"
 
 static void	setup_child_pipes(t_cmd *cmd, t_pipeline *pp)
 {

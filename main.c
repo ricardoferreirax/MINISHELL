@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testing_main.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 18:19:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 09:59:44 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:09:29 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/MiNyanShell.h"
-#include "include/execution.h"
-#include "include/parsing.h"
+#include "MiNyanShell.h"
+#include "execution/execution.h"
+#include "parsing/parsing.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		if (!no_unclosed_quotes(input))
 		{
-			ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n");
+			ft_dprintf(2, "OwO What's is this?: *notices syntax error: unclosed quotes*\n");
 			free(input);
 			continue ;
 		}

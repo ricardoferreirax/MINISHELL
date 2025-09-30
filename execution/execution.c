@@ -6,12 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 16:54:23 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:22:05 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "execution.h"
 #include <readline/history.h>
 
 static int	number_of_cmds(t_cmd *cmd_list)
@@ -81,12 +81,12 @@ int	ft_execution(t_cmd *cmd_list, t_mini *mini)
 	}
 	// set_noninteractive_signals();
 	pre_exec = pre_execution(cmd_list, mini);
-	if (pre_exec != -1)
-	{
-		// set_signals();
-		mini->last_status = pre_exec;
-		return (pre_exec);
-	}
+	// if (pre_exec != -1)
+	// {
+	// 	// set_signals();
+	// 	mini->last_status = pre_exec;
+	// 	return (pre_exec);
+	// }
 	status = execute_cmds(cmd_list, mini);
 	mini->last_status = status;
 	// set_interactive_signals(); -> voltar ao modo prompt

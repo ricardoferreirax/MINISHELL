@@ -6,15 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:56:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 10:37:35 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:12:19 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/parsing.h"
+#include "../MiNyanShell.h"
+#include "parsing.h"
 
 static t_subcmd	*subcmd_new(void)
-		// cria um subcomando (um comando com os args e com a lista de redirs)
 {
 	t_subcmd	*subcmd;
 
@@ -77,17 +76,19 @@ int	add_arg(t_subcmd *subcmd, const char *token)
 
 void	fill_subcmd(t_cmd *node, char **tokens)
 {
-	t_subcmd	*sub;
+	t_subcmd	*head;
+	t_subcmd	*curr;
 	int			i;
 
-	sub = subcmd_new();
-	if (!sub)
+	head = subcmd_new();
+	if (!head)
 		return ;
+	curr = head;
 	i = 0;
 	while (tokens[i])
 	{
-		if (!parse(sub, tokens, &i))
+		if (!parse(&curr, tokens, &i))
 			break ;
 	}
-	node->head = sub;
+	node->head = head;
 }

@@ -6,12 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 11:18:03 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:09:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
-#include "../include/MiNyanShell.h"
+#include "../MiNyanShell.h"
 
 static void interactive_handler(int signum)
 {
