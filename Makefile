@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/01 11:59:36 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/10/01 16:29:53 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_FILES = main.c \
 			builtin/ft_cd.c \
 			builtin/ft_echo.c \
 			builtin/ft_pwd.c \
+			builtin/ft_env.c \
 			execution/builtin.c \
 			execution/child_process.c \
 			execution/cmd_path.c \

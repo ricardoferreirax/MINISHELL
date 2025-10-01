@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:22:50 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:46:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,9 @@ int	apply_redirs_in_child(t_subcmd *sub)
 	if (sub->in_fd != -1)        // se o heredoc já foi processado
 		last_in_fd = sub->in_fd; // o last_in_fd começa com o fd do heredoc
 	else
-		last_in_fd = -1;
-	// senão começa sem as redireções de input
-	last_out_fd = -1;
-	// começa sem redireções de output
-	if (process_redirs(sub, &last_in_fd, &last_out_fd))
-		// processa todas as redireções (menos os heredocs)
+		last_in_fd = -1; // senão começa sem as redireções de input
+	last_out_fd = -1; // começa sem redireções de output
+	if (process_redirs(sub, &last_in_fd, &last_out_fd)) // processa todas as redireções (menos os heredocs)
 		return (1);
 	if (last_in_fd != -1) // se houve uma redireção de input, aplica-a
 	{

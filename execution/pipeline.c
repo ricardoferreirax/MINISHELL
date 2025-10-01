@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:22:35 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:46:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,15 @@ static void	wait_for_children(t_mini *mini, pid_t last_pid)
 
 static void	parent_pipe_control(t_cmd *cmd, t_pipeline *pp)
 {
-	if (pp->prev_pipefd != -1)
-	// Fecha o read end do pipe anterior caso ainda esteja aberto
+	if (pp->prev_pipefd != -1) // Fecha o read end do pipe anterior caso ainda esteja aberto
 	{
 		close(pp->prev_pipefd);
 		pp->prev_pipefd = -1;
 	}
-	if (cmd->next)
-		// Se houver próximo comando mantemos o read end do pipe atual
+	if (cmd->next)  // Se houver próximo comando mantemos o read end do pipe atual
 	{
 		close(pp->pipefd[1]);
-		pp->prev_pipefd = pp->pipefd[0];
-		// assim o próximo comando vai ler do read end do pipe atual
+		pp->prev_pipefd = pp->pipefd[0]; // assim o próximo comando vai ler do read end do pipe atual
 	}
 	else // último comando não precisa de guardar o prev_pipefd
 		pp->prev_pipefd = -1;

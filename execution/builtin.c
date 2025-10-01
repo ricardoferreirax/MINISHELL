@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:20:57 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:41:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	execute_builtin(t_subcmd *subcmd, t_mini *mini)
 	//     return (ft_export(mini, subcmd->args));
 	// else if (ft_strcmp(subcmd->args[0], "unset") == 0)
 	//     return (ft_unset(mini, subcmd->args));
-	// else if (ft_strcmp(subcmd->args[0], "env") == 0)
-	//     return (ft_env(mini, subcmd->args));
+	else if (ft_strcmp(subcmd->args[0], "env") == 0)
+	    return (ft_env(mini, subcmd));
 	// else if (ft_strcmp(subcmd->args[0], "exit") == 0)
 	//     return (ft_exit(mini, subcmd->args));
 	mini->last_status = 1;

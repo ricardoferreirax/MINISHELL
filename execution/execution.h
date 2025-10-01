@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 09:21:50 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:35:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void					free_args(char **args);
 void					warn_heredoc_eof(char *lim);
 void					ft_free_str(char **str);
 void					cmd_not_found_msg(char *cmd);
+void	error_exit(const char *message);
 
 void					free_chararr(char **arr);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:22:05 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 16:45:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,11 @@ static int	pre_execution(t_cmd *cmd, t_mini *mini)
 	if (!cmd || !cmd->head)
 		return (0);
 	sub = cmd->head;
-	if (process_all_heredocs(cmd, mini) != 0)
-		// processa SEMPRE os heredocs se houver comandos/redirs
+	if (process_all_heredocs(cmd, mini) != 0) // processa SEMPRE os heredocs se houver comandos/redirs
 		return (1);
-	if ((!sub->args || !sub->args[0]) && (sub->type != REDIR_INVALID) && !cmd->next)
-		// só redireções (sem args e sem pipeline)
+	if ((!sub->args || !sub->args[0]) && (sub->type != REDIR_INVALID) && !cmd->next) // só redireções (sem args e sem pipeline)
 		return (run_redirs_without_cmd(cmd, mini));
-	if ((!sub->args || !sub->args[0]) && (sub->type == REDIR_INVALID))
-		// comando vazio (sem args e sem redirs)
+	if ((!sub->args || !sub->args[0]) && (sub->type == REDIR_INVALID)) // comando vazio (sem args e sem redirs)
 		return (0);
 	return (-1); // it's totally fineeee
 }
@@ -81,12 +78,12 @@ int	ft_execution(t_cmd *cmd_list, t_mini *mini)
 	}
 	// set_noninteractive_signals();
 	pre_exec = pre_execution(cmd_list, mini);
-	// if (pre_exec != -1)
-	// {
-	// 	// set_signals();
-	// 	mini->last_status = pre_exec;
-	// 	return (pre_exec);
-	// }
+	if (pre_exec != -1)
+	{
+		// set_signals();
+		mini->last_status = pre_exec;
+		return (pre_exec);
+	}
 	status = execute_cmds(cmd_list, mini);
 	mini->last_status = status;
 	// set_interactive_signals(); -> voltar ao modo prompt
