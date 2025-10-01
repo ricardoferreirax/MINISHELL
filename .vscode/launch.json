@@ -1,32 +1,24 @@
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "C/C++ Runner: Debug Session",
-			"type": "cppdbg",
-			"request": "launch",
-			"args": [],
-			"stopAtEntry": false,
-			"externalConsole": false,
-			"cwd": "${workspaceFolder}",
-			"program": "${workspaceFolder}/minishell",
-			"MIMode": "gdb",
-			"miDebuggerPath": "gdb",
-			"setupCommands": [
-				{
-					"description": "Enable pretty-printing for gdb",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
-				},
-				{
-					"description": "Follow child process after fork",
-					"text": "set follow-fork-mode child"
-				},
-				{
-					"description": "Do not detach from parent on fork (so you can switch if needed)",
-					"text": "set detach-on-fork off"
-				}
-			]
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/var/home/pedro/Code/42_MINISHELL",
+      "program": "/var/home/pedro/Code/42_MINISHELL/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
 }
