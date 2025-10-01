@@ -6,7 +6,7 @@
 #    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/01 11:59:36 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/10/01 13:55:20 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,5 +67,6 @@ fclean: clean
 re: fclean all
 
 e: all clean
+	clear
 
 .PHONY: all clean fclean re

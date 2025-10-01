@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 11:55:45 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:52:51 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ int	execute_single_cmd(t_subcmd *subcmd, t_mini *mini)
 	int	orig_stdin;
 	int	orig_stdout;
 
+	while(subcmd && subcmd->next)
+	{
+		if(subcmd->cmd)
+			break;
+		subcmd = subcmd->next;
+	}
 	if (!subcmd || !subcmd->args || !subcmd->args[0]
 		|| !is_builtin(subcmd->args[0]))
 		return (-1);

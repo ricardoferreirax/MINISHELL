@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline_build.c                                   :+:      :+:    :+:   */
+/*   init_fill_mini.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:17:21 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:34:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ char	**init_mini(t_mini *nyan, char *cmd)
 		i++;
 	}
 	return (pipes);
+}
+
+int pre_parse_word_count(char *str)
+{
+	
+}
+
+char **pre_parse(char *pipe)
+{
+	int i = 0;
+	char **dest;
+	dest = malloc(sizeof(char *) * pre_parse_word_count(pipe));
+	while(pipe[i])
+	{
+		
+	}
 }
 
 void	fill_mini(t_mini *nyan, char **pipes)
