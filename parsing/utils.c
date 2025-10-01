@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_chararr.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/28 19:46:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 19:46:44 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/30 17:13:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory.h"
+#include "../MiNyanShell.h"
+#include "parsing.h"
 
-void free_chararr(char **arr)
-{
-    int i;
-
-    if (!arr) return;
-    i = 0;
-    while (arr[i]) {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
-}

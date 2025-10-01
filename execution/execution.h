@@ -6,13 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 10:06:50 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 09:21:50 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
+# include "../MiNyanShell.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
@@ -34,14 +35,6 @@ typedef struct s_pipeline
 	t_mini				*mini;
 }						t_pipeline;
 
-typedef struct s_redir
-{
-	char				*file;
-	char				*delimiter;
-	t_redir_type		type;
-	struct s_redir		*next;
-}						t_redir;
-
 int						ft_execution(t_cmd *cmd_list, t_mini *mini);
 int						execute_single_cmd(t_subcmd *subcmd, t_mini *mini);
 int						run_external_single(t_subcmd *subcmd, t_mini *mini);
@@ -54,8 +47,7 @@ char					*handle_cmd_path(char *cmd, char **envp);
 bool					is_builtin(char *cmd);
 int						execute_builtin(t_subcmd *subcmd, t_mini *mini);
 int						process_all_heredocs(t_cmd *cmd_list, t_mini *mini);
-int						handle_single_heredoc(t_subcmd *sub, t_redir *redir,
-							t_mini *mini);
+int						handle_single_heredoc(t_subcmd *subcmd, t_mini *mini);
 int						safe_dup2_and_close(int oldfd, int newfd);
 void					reset_fds(int stdin_fd, int stdout_fd);
 void					close_heredoc(t_subcmd *subcmd);
