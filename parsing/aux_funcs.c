@@ -6,36 +6,13 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/30 17:15:04 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:53:40 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
 #include "parsing.h"
 
-bool	no_unclosed_quotes(char *str)
-{
-	bool	inquote;
-	bool	indquote;
-	int		i;
-
-	inquote = false;
-	indquote = false;
-	i = 0;
-	if (!str)
-		return (false);
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
-		i++;
-	}
-	if (indquote || inquote)
-		return (false);
-	return (true);
-}
 
 bool	forbidden_instruction(char *str, int i)
 {
@@ -56,27 +33,6 @@ bool	forbidden_instruction(char *str, int i)
 	return (false);
 }
 
-bool	no_forbidden_actions(char *str)
-{
-	int		i;
-	bool	inquote;
-	bool	indquote;
-
-	i = 0;
-	inquote = false;
-	indquote = false;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
-		if (!forbidden_instruction(str, i) && !indquote && !inquote)
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 char	*skip_whitespaces(char *str)
 {

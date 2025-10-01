@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 22:31:07 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 19:01:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:34:33 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/builtin.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "builtin.h"
+#include "../execution/execution.h"
 
 static int	print_pwd_from_env(char **env)
 {

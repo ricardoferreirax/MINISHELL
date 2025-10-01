@@ -6,13 +6,13 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:19:48 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:55:45 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiNyanShell.h"
 #include "execution.h"
-#include "errno.h"
+
 
 void	execute_external_cmd(t_subcmd *subcmd, t_mini *mini)
 {

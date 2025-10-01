@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:04:13 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 19:04:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/01 09:11:18 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/builtin.h"
-#include "../include/execution.h"
+#include "../MiNyanShell.h"
+#include "builtin.h"
+#include "../execution/execution.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
