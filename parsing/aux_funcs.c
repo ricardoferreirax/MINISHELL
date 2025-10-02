@@ -1,17 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   aux_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/29 00:05:15 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/10/01 11:53:40 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-#include "../include/parsing.h"
+#include "../MiNyanShell.h"
+#include "parsing.h"
+
+
+bool	forbidden_instruction(char *str, int i)
+{
+	if (str[i] == '&')
+	{
+		if (str[i + 1] == '&')
+			return (true);
+	}
+	else if (str[i] == '|')
+	{
+		if (str[i + 1] == '|')
+			return (true);
+	}
+	else if (str[i] == '*')
+	{
+		return (true);
+	}
+	return (false);
+}
+
 
 char	*skip_whitespaces(char *str)
 {

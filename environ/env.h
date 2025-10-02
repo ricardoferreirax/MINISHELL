@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/25 12:17:37 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 19:08:22 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/10/01 16:10:15 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/01 16:10:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "MiNyanShell.h"
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+	struct s_envp	*next;
+}	t_envp;
 
-int ft_echo(t_subcmd *subcmd);
-int ft_pwd(t_subcmd *subcmd, t_mini *mini);
-
-bool is_builtin(char *cmd);
-int execute_builtin(t_subcmd *subcmd, t_mini *mini);
-
-#endif
