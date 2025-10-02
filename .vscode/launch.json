@@ -13,6 +13,15 @@
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
+		        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Follow child process after fork",
+          "text": "set follow-fork-mode child"
+        },
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
