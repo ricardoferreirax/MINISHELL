@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 16:41:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:16:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execute_builtin(t_subcmd *subcmd, t_mini *mini)
 	// else if (ft_strcmp(subcmd->args[0], "unset") == 0)
 	//     return (ft_unset(mini, subcmd->args));
 	else if (ft_strcmp(subcmd->args[0], "env") == 0)
-	    return (ft_env(mini, subcmd));
+	    return (ft_env_list(mini, subcmd));
 	// else if (ft_strcmp(subcmd->args[0], "exit") == 0)
 	//     return (ft_exit(mini, subcmd->args));
 	mini->last_status = 1;

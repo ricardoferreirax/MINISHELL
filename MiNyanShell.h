@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiNyanShell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/09/30 17:08:58 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:23:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINYANSHELL_H
 
 # include "libft/libft.h"
+# include "environ/envyan.h" 
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -71,6 +72,7 @@ typedef struct s_UwU
 {
 	t_cmd				*head;
 	char				**env;
+	t_envp 				*envyan_list;
 	int					last_status;
 }						t_mini;
 
