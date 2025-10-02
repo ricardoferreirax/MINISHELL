@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:22:22 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:30:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	parent_heredoc_control(t_subcmd *sub, t_mini *mini, int pipefd[2],
 	exit_code = wait_for_single(pid);
 	if (exit_code == 130)
 	{
-		mini->last_status = 130; /* ctrl + c durante o heredoc */
+		mini->last_status = 130;  // ctrl + c durante o heredoc
 		close(pipefd[0]);
 		return (1);
 	}
@@ -93,7 +93,13 @@ int	parent_heredoc_control(t_subcmd *sub, t_mini *mini, int pipefd[2],
 	if (sub->in_fd != -1) // se tinha alguma redireção de input antes, fecha
 		close(sub->in_fd);
 	sub->in_fd = pipefd[0]; // passa a usar este heredoc como STDIN
-	return (0);             // sucesso
+	sub->type = REDIR_INVALID; // se houver mais redirs, não processa este
+    if (sub->delimiter)
+	{
+        free(sub->delimiter);
+        sub->delimiter = NULL;
+    }
+	return (0);
 }
 
 int	handle_single_heredoc(t_subcmd *subcmd, t_mini *mini)
@@ -117,25 +123,25 @@ int	handle_single_heredoc(t_subcmd *subcmd, t_mini *mini)
 	return (0);
 }
 
-int	process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
+int process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
 {
-	t_cmd		*cmd;
-	t_subcmd	*subcmd;
-
+    t_cmd     *cmd;
+	t_subcmd  *subcmd;
+	
 	cmd = cmd_list;
-	while (cmd)
-	{
-		subcmd = cmd->head;
-		while (subcmd)
-		{
-				if (subcmd->type == REDIR_HEREDOC)
-				{
-					if (handle_single_heredoc(subcmd, mini) != 0)
-						return (1); // falhou um heredoc
-				}
-			subcmd = subcmd->next;
-		}
-		cmd = cmd->next;
-	}
-	return (0); // sucesso
+    while (cmd)
+    {
+        subcmd = cmd->head;
+        while (subcmd)
+        {
+            if (subcmd->type == REDIR_HEREDOC && subcmd->delimiter)
+            {
+                if (handle_single_heredoc(subcmd, mini) != 0)
+                    return (1);
+            }
+            subcmd = subcmd->next;
+        }
+        cmd = cmd->next;
+    }
+    return (0);
 }
