@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/02 09:44:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:45:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int	handle_single_heredoc(t_subcmd *subcmd, t_mini *mini)
 		return (perror("MiNyanshell: pipe"), 1);
 	pid = fork();
 	if (pid == -1)
-	{sub->type = REDIR_INVALID;
+	{
+		subcmd->type = REDIR_INVALID;
 		close(pipefd[0]);
 		close(pipefd[1]);
 		return (perror("MiNyanshell: fork"), 1);
