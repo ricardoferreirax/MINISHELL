@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:48:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:18:50 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/02 12:01:20 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	heredoc_node(t_subcmd **sub, char *arg)
 	{
 		curr->next = clone(curr);
 		reset(curr);
-		curr->delimiter = ft_strdup(curr->next->delimiter);
+		curr->delimiter = ft_strdup(arg);
 		curr->type = REDIR_HEREDOC;
 		curr = curr->next;
 	}
