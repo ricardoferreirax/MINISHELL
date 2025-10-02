@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   free_chararr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/25 12:17:37 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 16:41:35 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/28 19:46:10 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/09/28 19:46:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "memory.h"
 
-# include "../MiNyanShell.h"
-# include <stdlib.h>
-# include <unistd.h>
+void free_chararr(char **arr)
+{
+    int i;
 
-int		ft_echo(t_subcmd *subcmd);
-int		ft_pwd(t_subcmd *subcmd, t_mini *mini);
-int		ft_env(t_mini *mini, t_subcmd *subcmd);
-
-bool	is_builtin(char *cmd);
-int		execute_builtin(t_subcmd *subcmd, t_mini *mini);
-
-#endif
+    if (!arr) return;
+    i = 0;
+    while (arr[i]) {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}

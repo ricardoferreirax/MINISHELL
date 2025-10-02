@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   split_ignore_quotes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 20:16:59 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:12:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/29 00:05:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "parsing.h"
+#include "../include/MiNyanShell.h"
+#include "../include/parsing.h"
 
 static int	count_words_ignore_quotes(char *str, char c)
 {

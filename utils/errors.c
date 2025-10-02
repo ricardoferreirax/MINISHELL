@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:25:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 09:18:02 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:11:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "../execution/execution.h"
+#include "MiNyanShell.h"
+#include "execution.h"
 #include <stdio.h>
 
 void	error_exit(const char *message)

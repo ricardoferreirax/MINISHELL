@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/02 09:31:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:47:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "execution.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "errno.h"
 
 void	execute_external_cmd(t_subcmd *subcmd, t_mini *mini)
 {

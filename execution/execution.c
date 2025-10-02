@@ -3,66 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 16:45:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:47:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "execution.h"
-#include <readline/history.h>
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
 
-static int	number_of_cmds(t_cmd *cmd_list)
+static int number_of_cmds(t_cmd *cmd_list)
 {
-	t_cmd	*current_cmd;
-	int		num_cmds;
+    t_cmd *current_cmd;
+    int    num_cmds;
 
-	if (!cmd_list)
-		return (0);
-	current_cmd = cmd_list;
-	num_cmds = 0;
-	while (current_cmd)
-	{
-		num_cmds++;
-		current_cmd = current_cmd->next;
-	}
-	return (num_cmds);
+    if (!cmd_list)
+        return (0);
+    current_cmd = cmd_list;
+    num_cmds = 0;
+    while (current_cmd)
+    {
+        num_cmds++;
+        current_cmd = current_cmd->next;
+    }
+    return (num_cmds);
 }
 
-static int	execute_cmds(t_cmd *cmd_list, t_mini *mini)
+static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
 {
-	int	num_cmds;
-	int	status;
+    int num_cmds;
+    int status;
 
-	num_cmds = number_of_cmds(cmd_list);
-	if (num_cmds == 1)
-	{
-		status = execute_single_cmd(cmd_list->head, mini);
-		if (status == -1)
-			status = run_external_single(cmd_list->head, mini);
-		return (status);
-	}
-	if (num_cmds > 1)
-		return (execute_pipeline(cmd_list, mini));
-	return (0); // num_cmds == 0 nada a executar
+    num_cmds = number_of_cmds(cmd_list);
+    if (num_cmds == 1)
+    {
+        status = execute_single_cmd(cmd_list->head, mini);
+        if (status == -1)
+            status = run_external_single(cmd_list->head, mini);
+        return (status);
+    }
+    if (num_cmds > 1)
+        return (execute_pipeline(cmd_list, mini));
+    return (0); // num_cmds == 0 nada a executar
 }
 
-static int	pre_execution(t_cmd *cmd, t_mini *mini)
+static int pre_execution(t_cmd *cmd, t_mini *mini)
 {
-	t_subcmd	*sub;
+    t_subcmd *sub;
 
-	if (!cmd || !cmd->head)
-		return (0);
-	sub = cmd->head;
-	if (process_all_heredocs(cmd, mini) != 0) // processa SEMPRE os heredocs se houver comandos/redirs
-		return (1);
-	if ((!sub->args || !sub->args[0]) && (sub->type != REDIR_INVALID) && !cmd->next) // só redireções (sem args e sem pipeline)
-		return (run_redirs_without_cmd(cmd, mini));
-	if ((!sub->args || !sub->args[0]) && (sub->type == REDIR_INVALID)) // comando vazio (sem args e sem redirs)
-		return (0);
-	return (-1); // it's totally fineeee
+    if (!cmd || !cmd->head)
+        return 0;
+
+    sub = cmd->head;
+    if (process_all_heredocs(cmd, mini) != 0) // processa SEMPRE os heredocs se houver comandos/redirs
+        return (1);
+    if ((!sub->args || !sub->args[0]) && sub->redirs && !cmd->next) // só redireções (sem args e sem pipeline)
+        return (run_redirs_without_cmd(cmd, mini));
+    if ((!sub->args || !sub->args[0]) && !sub->redirs) // comando vazio (sem args e sem redirs)
+        return (0);
+    return (-1); // it's totally fineeee
 }
 
 int	ft_execution(t_cmd *cmd_list, t_mini *mini)
