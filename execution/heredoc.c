@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/02 09:30:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:44:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	handle_single_heredoc(t_subcmd *subcmd, t_mini *mini)
 		return (perror("MiNyanshell: pipe"), 1);
 	pid = fork();
 	if (pid == -1)
-	{
+	{sub->type = REDIR_INVALID;
 		close(pipefd[0]);
 		close(pipefd[1]);
 		return (perror("MiNyanshell: fork"), 1);
@@ -134,7 +134,7 @@ int process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
         subcmd = cmd->head;
         while (subcmd)
         {
-            if (subcmd->type == REDIR_HEREDOC && subcmd->delimiter)
+            if (subcmd->type == REDIR_HEREDOC)
             {
                 if (handle_single_heredoc(subcmd, mini) != 0)
                     return (1);
