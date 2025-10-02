@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 16:43:14 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:04:30 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	**init_mini(t_mini *nyan, char *cmd)
 
 int	expand_size(char *str, int i)
 {
-	//must return the size of the expanded string $XXXX 
-	(void) str;
+	// must return the size of the expanded string $XXXX
+	(void)str;
 	return (i - i);
 }
 
@@ -74,9 +74,11 @@ int	pre_parse_size_count(char *str)
 			indquote = !indquote;
 		if (str[i] == '<' || str[i] == '>')
 		{
-			if ((!indquote && !indquote) && (str[i - 1] != ' ' || str[i - 1] != '>' || str[i - 1] != '<'))
+			if ((!indquote && !indquote) && (str[i - 1] != ' ' || str[i
+					- 1] != '>' || str[i - 1] != '<'))
 				size++;
-			if ((!indquote && !inquote) && (str[i + 1] != ' ' || str[i + 1] != '>' || str[i + 1] != '<'))
+			if ((!indquote && !inquote) && (str[i + 1] != ' ' || str[i
+					+ 1] != '>' || str[i + 1] != '<'))
 				size++;
 		}
 		if (!inquote && str[i] == '$')
@@ -94,12 +96,14 @@ char	**pre_parse(char *pipe)
 	bool	indquote;
 	bool	inquote;
 	char	**final;
+	int		j;
 
 	i = 0;
 	indquote = false;
 	inquote = false;
-	int j = 0;
+	j = 0;
 	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe));
+	printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
 	while (pipe[i])
 	{
 		if (pipe[i] == '\'' && !indquote)
@@ -108,25 +112,30 @@ char	**pre_parse(char *pipe)
 			indquote = !indquote;
 		if (pipe[i] == '<' || pipe[i] == '>')
 		{
-			if ((!inquote && !indquote) && (pipe[i - 1] != ' ' || pipe[i - 1] != '>' || pipe[i - 1] != '<'))
+			if ((!inquote && !indquote) && (pipe[i - 1] != ' ' && pipe[i
+					- 1] != '>' && pipe[i - 1] != '<'))
 			{
 				dest[j + i] = ' ';
 				j++;
 			}
-			if ((!inquote && !indquote) && (pipe[i + 1] != ' ' || pipe[i + 1] != '>' || pipe[i + 1] != '<'))
+			dest[j + i] = pipe[i];
+			i++;
+			if ((!inquote && !indquote) && (pipe[i + 1] != ' ' && pipe[i
+					+ 1] != '>' && pipe[i + 1] != '<'))
 			{
-				dest[i + j] = ' ';
+				dest[j + i] = ' ';
 				j++;
 			}
 		}
 		if (!inquote && pipe[i] == '$')
 		{
-			//must copy the expanded string $XXXX
+			// must copy the expanded string $XXXX
 			j += ft_strlcat(dest, dest, 100);
 		}
 		dest[i + j] = pipe[i];
 		i++;
 	}
+	printf("dest before split: %s\n", dest);
 	final = split_ignore_quotes(dest, ' ');
 	free(dest);
 	return (final);
@@ -137,16 +146,23 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	int		i;
 	t_cmd	*curr;
 	char	**tokens;
+	int		j;
 
 	curr = nyan->head;
 	i = 0;
 	while (pipes && pipes[i] && curr)
 	{
-		tokens = split_ignore_quotes(pipes[i], ' ');
+		tokens = pre_parse(pipes[i]);
+		j = 0;
+		while (tokens[j] != NULL)
+		{
+			ft_printf("token n%d : %s\n", j, tokens[j]);
+			j++;
+		}
 		if (tokens)
 		{
-			fill_subcmd(curr, tokens);
-			free_2d((void **)tokens);
+			// fill_subcmd(curr, tokens);
+			// free_2d((void **)tokens);
 		}
 		curr = curr->next;
 		i++;
