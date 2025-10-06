@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   validate_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:46:47 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:12:47 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/05 19:14:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "parsing.h"
+#include "../include/MiNyanShell.h"
+#include "../include/parsing.h"
 
 bool no_forbidden_actions(char *str)
 {
@@ -24,7 +24,6 @@ bool no_forbidden_actions(char *str)
     i = 0;
     in_squote = false;
     in_dquote = false;
-
     while (str[i] != '\0')
     {
         if (str[i] == '\'' && !in_dquote)
@@ -34,34 +33,33 @@ bool no_forbidden_actions(char *str)
         if (!in_squote && !in_dquote)
         {
             if (str[i] == '&' && str[i + 1] == '&')
-                return false;   /* && proibido */
+                return false;
             if (str[i] == '|' && str[i + 1] == '|')
-                return false;   /* || proibido */
-            /* '*' é permitido; se quiseres bloquear, usa a variante B */
+                return false;
         }
         i++;
     }
-    return true; /* não encontrou operadores proibidos */
+    return true;
 }
 
-bool	no_unclosed_quotes(char *str)
+bool no_unclosed_quotes(char *str)
 {
-	bool	inquote;
-	bool	indquote;
-	int		i;
+    bool in_squote;
+    bool in_dquote;
+    int  i;
 
-	inquote = false;
-	indquote = false;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
-		i++;
-	}
-	if (indquote || inquote)
-		return (false);
-	return (true);
+    in_squote = false;
+    in_dquote = false;
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\'' && !in_dquote)
+            in_squote = !in_squote;
+        if (str[i] == '\"' && !in_squote)
+            in_dquote = !in_dquote;
+        i++;
+    }
+    if (in_dquote || in_squote)
+        return false;
+    return true;
 }

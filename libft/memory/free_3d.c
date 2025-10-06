@@ -12,14 +12,14 @@
 
 #include "memory.h"
 
-void	free_3d(void ***arr)
+void free_3d(void ***arr)
 {
 	int i;
 
 	i = 0;
 	if (!arr)
-		return ;
-	while (arr[i])
+		return;
+	while(arr[i])
 	{
 		free_2d(arr[i]);
 		i++;

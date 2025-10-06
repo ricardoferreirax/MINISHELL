@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envyan.h                                           :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 16:10:15 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/02 15:10:07 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/09/25 12:17:37 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/06 00:46:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVYAN_H
-# define ENVYAN_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-typedef struct s_envp
-{
-	char			*key;
-	char			*value;
-	struct s_envp	*next;
-}	t_envp;
+# include <unistd.h>
+# include <stdlib.h>
+# include "MiNyanShell.h"
 
-t_envp *envyan_list(char **envp);
-void    free_envyan_list(t_envp *head);
+int ft_echo(t_cmd *cmd);
+int ft_pwd(t_cmd *cmd, t_mini *mini);
+int ft_env(t_cmd *cmd, t_mini *mini);
+
+int execute_builtin(t_cmd *cmd, t_mini *mini);
+bool is_builtin(char *cmd);
 
 #endif

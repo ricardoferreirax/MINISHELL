@@ -6,70 +6,67 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 12:35:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:02:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "execution.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
 
-static void run_subcmd_child(t_subcmd *sub, t_mini *mini)
+static void run_cmd_child(t_cmd *cmd, t_mini *mini)
 {
-    if (apply_redirs_in_child(sub) != 0)
+    int status;
+    char **envyan_array;
+
+    if (apply_redirs_in_child(cmd) != 0)
         exit(1);
-    if (!sub->args || !sub->args[0])
+    if (!cmd->cmd_args || !cmd->cmd_args[0])
         exit(0);
-    if (sub->args[0][0] == '\0') 
+    if (cmd->cmd_args[0][0] == '\0')
     {
-        cmd_not_found_msg(sub->args[0]);
+        cmd_not_found_msg(cmd->cmd_args[0]);
         exit(127);
     }
-    if (is_builtin(sub->args[0]))  // Na pipeline, os builtins executam no child
+    if (is_builtin(cmd->cmd_args[0]))
     {
-        execute_builtin(sub, mini);
-        exit(mini->last_status);
+        status = execute_builtin(cmd, mini);
+        exit(status);
     }
-    execute_external_cmd(sub, mini);
+    envyan_array = envyan_to_array(mini->envyan);
+    if (!envyan_array)
+        exit(1);
+    execute_external_cmd(cmd, envyan_array);
 }
 
 static void first_child(t_cmd *cmd, t_pipeline *pp)
 {
-    t_subcmd *subcmd;
-
-    subcmd = cmd->head;
-    if (cmd->next) 
+    if (cmd->next)
     {
         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
             error_exit("MiNyanShell: dup2 failed (pipe write)");
-        close(pp->pipefd[0]);
+        close_fd_safe(&pp->pipefd[0]);
     }
-    run_subcmd_child(subcmd, pp->mini);
+    run_cmd_child(cmd, pp->mini);
 }
 
 static void middle_child(t_cmd *cmd, t_pipeline *pp)
 {
-    t_subcmd *subcmd;
-
-    subcmd = cmd->head;
     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-        error_exit("MiNyanShell :3 : dup2 failed (pipe read)");
-    if (cmd->next) 
+        error_exit("MiNyanShell: dup2 failed (pipe read)");
+    if (cmd->next)
     {
         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
-            error_exit("MiNyanShell :3 : dup2 failed (pipe write)");
-        close(pp->pipefd[0]);
+            error_exit("MiNyanShell: dup2 failed (pipe write)");
+        close_fd_safe(&pp->pipefd[0]);
     }
-    run_subcmd_child(subcmd, pp->mini);
+    run_cmd_child(cmd, pp->mini);
 }
 
 static void last_child(t_cmd *cmd, t_pipeline *pp)
 {
-    t_subcmd *sub;
-
-    sub = cmd->head;
     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
         error_exit("MiNyanShell: dup2 failed (pipe read)");
-    run_subcmd_child(sub, pp->mini);
+    run_cmd_child(cmd, pp->mini);
 }
 
 void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
@@ -82,3 +79,63 @@ void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
     else
         middle_child(cmd, pp);  // tem pipe anterior e também há próximo
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// static void first_child(t_cmd *cmd, t_pipeline *pp)
+// {
+//     t_subcmd *subcmd;
+
+//     subcmd = cmd->head;
+//     if (cmd->next)
+//     {
+//         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
+//             error_exit("MiNyanShell :3 : dup2 failed (pipe write)");
+//         close(pp->pipefd[0]);
+//     }
+//     execute_subcommand(subcmd, pp->mini);
+// }
+
+// static void middle_child(t_cmd *cmd, t_pipeline *pp)
+// {
+//     t_subcmd *subcmd;
+
+//     subcmd = cmd->head;
+//     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+//         error_exit("MiNyanShell :3 : dup2 failed (pipe read)");
+//     if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
+//         error_exit("MiNyanShell :3 : dup2 failed (pipe write)");
+//     close(pp->pipefd[0]);
+//     execute_subcommand(subcmd, pp->mini);
+// }
+
+// static void last_child(t_cmd *cmd, t_pipeline *pp)
+// {
+//     t_subcmd *subcmd;
+
+//     subcmd = cmd->head;
+//     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+//         error_exit("MiNyanShell :3 : dup2 failed (pipe read)");
+
+//     execute_subcommand(subcmd, pp->mini);
+// }
+
+// void child_process(t_cmd *cmd, t_pipeline *pp)
+// {
+//     if (pp->prev_pipefd == -1 && cmd == pp->mini->head)
+//         first_child(cmd, pp);
+//     else if (cmd->next)
+//         middle_child(cmd, pp);
+//     else if (!cmd->next)
+//         last_child(cmd, pp);
+// }

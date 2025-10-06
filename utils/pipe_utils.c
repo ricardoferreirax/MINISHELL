@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/01 09:18:23 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/06 02:14:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "../execution/execution.h"
+#include "MiNyanShell.h"
+#include "execution.h"
 
 int wait_for_single(pid_t pid)
 {
@@ -39,14 +39,13 @@ int safe_dup2_and_close(int oldfd, int newfd)
 {
     if (oldfd < 0)
         return (0);
-    if (oldfd != newfd)
+    if (oldfd == newfd)
+        return (0);
+    if (dup2(oldfd, newfd) == -1)
     {
-        if (dup2(oldfd, newfd) == -1)
-        {
-            perror("minishell: dup2 error");
-            close(oldfd);
-            return (1);
-        }
+        perror("minishell: dup2 error");
+        close(oldfd);
+        return (1);
     }
     close(oldfd);
     return (0);
@@ -63,34 +62,52 @@ void reset_fds(int stdin_fd, int stdout_fd)
     close(stdout_fd);
 }
 
-void close_heredoc(t_subcmd *subcmd)
+void close_heredoc(t_cmd *cmd)
 {
-    if (subcmd->in_fd != -1) // heredoc já foi processado e tem fd aberto
+    if (!cmd)
+        return ;
+    if (cmd->in_fd != -1)
     {
-        close(subcmd->in_fd);
-        subcmd->in_fd = -1;
+        close(cmd->in_fd);
+        cmd->in_fd = -1;
+    }
+}
+
+void close_fd_safe(int *fd)
+{
+    if (fd && *fd >= 0)
+    {
+        close(*fd);
+        *fd = -1;
     }
 }
 
 int safe_fork(t_cmd *cmd, t_pipeline *pp)
 {
+    (void)cmd;
     pp->pid = fork();
     if (pp->pid == -1)
     {
-        perror("MiNyanshell: error forking process");
-        if (cmd->next)
-        {
-            close(pp->pipefd[0]);
-            close(pp->pipefd[1]);
-        }
-        if (pp->prev_pipefd != -1)
-        {
-            close(pp->prev_pipefd);
-            pp->prev_pipefd = -1;
-        }
+        perror("MiNyanShell: fork");
+        close_fd_safe(&pp->pipefd[0]);
+        close_fd_safe(&pp->pipefd[1]);
+        close_fd_safe(&pp->prev_pipefd);
         return (-1);
     }
     return (0);
+}
+
+void handle_fork_error(t_cmd *current_cmd, t_pipeline *pp)
+{
+    (void)current_cmd;
+
+    if (pp && pp->mini)
+        pp->mini->last_status = 1;
+    if (!pp)
+        return ;
+    close_fd_safe(&pp->prev_pipefd);
+    close_fd_safe(&pp->pipefd[0]);
+    close_fd_safe(&pp->pipefd[1]);
 }
 
 void free_args(char **args)
@@ -122,4 +139,19 @@ void	ft_free_str(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void free_str_array(char **arr)
+{
+    size_t i;
+
+    if (!arr)
+        return;
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }
