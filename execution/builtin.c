@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 00:45:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:31:18 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int execute_builtin(t_cmd *cmd, t_mini *mini)
         status = ft_pwd(cmd, mini);
     else if (ft_strcmp(cmd->cmd_args[0], "env") == 0)
         status = ft_env(cmd, mini);
-    /* else if (ft_strcmp(cmd->cmd_args[0], "cd") == 0)
+    else if (ft_strcmp(cmd->cmd_args[0], "cd") == 0)
         status = ft_cd(mini, cmd->cmd_args);
-    else if (ft_strcmp(cmd->cmd_args[0], "export") == 0)
+    /* else if (ft_strcmp(cmd->cmd_args[0], "export") == 0)
         status = ft_export(mini, cmd->cmd_args);
     else if (ft_strcmp(cmd->cmd_args[0], "unset") == 0)
         status = ft_unset(mini, cmd->cmd_args);

@@ -6,39 +6,23 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:09:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:42:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:37:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
-int	check_special_env_var(char *entry, char *var_name, int name_len)
-{
-	if (ft_strncmp(entry, var_name, name_len) == 0)
-		return (1);
-	return (0);
-}
-
-void	add_envyan_node(t_envyan **env_list, t_envyan **current, t_envyan *new_node)
-{
-	if (!*env_list)
-		*env_list = new_node;
-	else
-		(*current)->next = new_node;
-	*current = new_node;
-}
-
 static void	split_envyan_entry(char *entry, char **key, char **value)
 {
-	char	*equals_sign;
+	char	*equal;
 
-	equals_sign = ft_strchr(entry, '=');
-	if (equals_sign)
+	equal = ft_strchr(entry, '=');
+	if (equal)
 	{
-		*equals_sign = '\0';
+		*equal = '\0';
 		*key = entry;
-		*value = equals_sign + 1;
+		*value = equal + 1;
 	}
 	else
 	{

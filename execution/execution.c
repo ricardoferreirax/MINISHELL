@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 16:30:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:08:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
         return (0);
     if (num_cmds == 1)
     {
-        status = execute_single_cmd(cmd_list, mini);      // agora o “single” é o PRÓPRIO nó cmd_list
+        status = execute_single_cmd(cmd_list, mini);
         if (status == -1)                                 // se não era builtin
             status = run_external_single(cmd_list, mini); // tenta executar como comando externo
         return (status);

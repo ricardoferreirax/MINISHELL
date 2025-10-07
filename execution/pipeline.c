@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 19:35:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:09:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int execute_pipeline(t_cmd *cmds, t_mini *mini)
     pp.prev_pipefd = -1;
     pp.last_status = 0;
     pp.mini = mini;
-    // set_noninteractive_signals();       // modo não interativo (ignora certos sinais)
+    // set_noninteractive_signals();       // (ignora certos sinais)
     current_cmd = cmds;
     while (current_cmd)
     {

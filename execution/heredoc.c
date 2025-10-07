@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 18:29:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:05:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
 	int	exit_code;
 	(void)mini;
 
-	close(pipefd[0]);               // child não lê
+	close_fd_safe(&pipefd[0]);               // child não lê
 	signal(SIGINT, SIG_DFL);          // Ctrl+C interrompe o heredoc
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
-	close(pipefd[1]);
+	close_fd_safe(&pipefd[1]);
 	exit(exit_code);
 }
 
@@ -76,21 +76,21 @@ static int parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2], pid_t
 {
     int exit_code;
 
-    close(pipefd[1]);
+    close_fd_safe(&pipefd[1]);
     exit_code = wait_for_single(pid);
     if (exit_code == 130)
     {
         mini->last_status = 130;
-        close(pipefd[0]);
+        close_fd_safe(&pipefd[0]);
         return (1);
     }
     if (exit_code != 0)
     {
-        close(pipefd[0]);
+        close_fd_safe(&pipefd[0]);
         return (1);
     }
     if (cmd->in_fd != -1)     // se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
-        close(cmd->in_fd);
+        close_fd_safe(&cmd->in_fd);
     cmd->in_fd = pipefd[0];   // guarda o read end para usar como STDIN
     return (0);
 }
@@ -105,8 +105,8 @@ static int handle_single_heredoc(t_cmd *cmd, t_redir *redir, t_mini *mini)
     pid = fork();
     if (pid == -1)
     {
-        close(pipefd[0]);
-        close(pipefd[1]);
+        close_fd_safe(&pipefd[0]);
+        close_fd_safe(&pipefd[1]);
         return (perror("MiNyanShell: fork"), 1);
     }
     if (pid == 0)

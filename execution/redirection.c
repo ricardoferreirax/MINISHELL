@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 18:30:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:10:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int open_redir_fd(t_redir *redir, int *last_fd)
     }
     if (*last_fd != -1)
         close(*last_fd);
-    *last_fd = new_fd;            /* atualiza o último fd aberto */
+    *last_fd = new_fd;            // atualiza o último fd aberto
     return (0);
 }
 
@@ -76,7 +76,7 @@ int apply_redirs_in_child(t_cmd *cmd)
     last_out_fd = -1;                // começa sem redireções de output
     if (process_redirs(cmd, &last_in_fd, &last_out_fd) != 0)
         return (1);
-    if (last_in_fd != -1)            /* aplica última redireção de input (inclui heredoc) */
+    if (last_in_fd != -1)            /* aplica última redireção de input (inclui o heredoc) */
     {
         if (safe_dup2_and_close(last_in_fd, STDIN_FILENO) != 0)
             return (perror("MiNyanShell: failed to redirect input"), 1);

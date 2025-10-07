@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 00:29:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:37:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:46:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,103 +31,52 @@ t_envyan	*create_envyan_node(char *key, char *value)
 
 char *envyan_get_value(t_envyan *head, char *key)
 {
-    t_envyan *cur;
+    t_envyan *current;
 
     if (!key)
         return (NULL);
-    cur = head;
-    while (cur)
+    current = head;
+    while (current)
     {
-        if (cur->key && ft_strcmp(cur->key, key) == 0)
-            return (cur->value);
-        cur = cur->next;
+        if (current->key && ft_strcmp(current->key, key) == 0)
+            return (current->value);
+        current = current->next;
     }
     return (NULL);
 }
 
-void	cleanup_env_array(char **env_array, int index)
+void	clean_envyan_array(char **envyan_array, int index)
 {
 	int	i;
 
 	i = 0;
 	while (i < index)
 	{
-		free(env_array[i]);
+		free(envyan_array[i]);
 		i++;
 	}
-	free(env_array);
+	free(envyan_array);
 }
 
-int	ft_atoi(const char *str)
+void	add_envyan_node(t_envyan **env_list, t_envyan **current, t_envyan *new_node)
 {
-	int	result;
-	int	sign;
-	int	i;
-
-	i = 0;
-	result = 0;
-	sign = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - '0');
-		i++;
-	}
-	return (result * sign);
+	if (!*env_list)
+		*env_list = new_node;
+	else
+		(*current)->next = new_node;
+	*current = new_node;
 }
 
-static int	numberlen(int num)
+void	free_envyan(t_envyan *envyan)
 {
-	int			len;
-	long		n;
+	t_envyan	*tmp;
 
-	n = num;
-	len = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
+	while (envyan)
 	{
-		n = -n;
-		len++;
+		tmp = envyan;
+		envyan = envyan->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
 	}
-	while (n > 0)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa(int n)
-{
-	int			len;
-	char		*number;
-	long		nbr;
-
-	nbr = n;
-	len = numberlen(nbr);
-	number = malloc(sizeof(char) * (len + 1));
-	if (!number)
-		return (NULL);
-	if (nbr == 0)
-		number[0] = '0';
-	if (nbr < 0)
-	{
-		number[0] = '-';
-		nbr = -nbr;
-	}
-	number[len--] = '\0';
-	while (len >= 0 && nbr > 0)
-	{
-		number[len--] = (nbr % 10) + '0';
-		nbr /= 10;
-	}
-	return (number);
 }

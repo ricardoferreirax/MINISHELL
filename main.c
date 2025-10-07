@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 00:49:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:46:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static void command_loop(t_mini *mini)
 
     while (1)
     {
-        input = readline("minishell> ");
+        input = readline("MiNyanShell> ");
         if (!input)
         {
-            printf("exit\n");
+            printf("\nexit\n");
             break;
         }
         if (input[0] != '\0')
@@ -96,6 +96,6 @@ int main(int ac, char **av, char **envp)
     init_shell(&mini, envp);
     command_loop(&mini);
     rl_clear_history();
-    // free_env(mini.env);
+    free_envyan(mini.envyan);
     return (mini.last_status);
 }

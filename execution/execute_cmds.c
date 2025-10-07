@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:16:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:12:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int execute_single_cmd(t_cmd *cmd, t_mini *mini)
     int orig_stdout;
     int status;
 
-    while (cmd && cmd->next)            // avança até ao primeiro nó com args válidos (ignora nós vazios no início)
+    while (cmd && cmd->next)            // avança até ao primeiro node com args válidos (ignora os nodes vazios no início)
     {
         if (cmd->cmd_args && cmd->cmd_args[0])
             break;

@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/06 00:48:29 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/06 18:40:31 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_FILES = \
 	parsing/parse.c parsing/pipeline_build.c parsing/redir.c parsing/split_ignore_quotes.c \
 	parsing/cmd_build.c parsing/validate_input.c parsing/utils.c \
 	envyan/envyan_init.c envyan/envyan_to_array.c envyan/envyan_utils.c envyan/set_envyan.c \
-	envyan/handle_shlvl.c
+	envyan/handle_shlvl.c builtin/cd/cd_cases.c builtin/cd/cd_utils.c builtin/cd/ft_cd.c \
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

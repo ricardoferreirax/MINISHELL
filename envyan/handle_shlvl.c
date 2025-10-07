@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:12:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:43:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:04:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ t_envyan *process_shlvl(t_envyan **env_list, t_envyan **current, int shlvl)
     shlvl = shlvl + 1;
     if (shlvl < 0)
         shlvl = 0;
+    if (shlvl > 999)
+    {
+        ft_putendl_fd("Minyanshell: shell level (1000) too high, resetting to 1", 2);
+        shlvl = 1;
+    }
     shlvl_str = ft_itoa(shlvl);
     if (!shlvl_str)
         return (*env_list);

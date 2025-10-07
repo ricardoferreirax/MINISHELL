@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strings.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:00:40 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/08/19 14:33:34 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/06 11:13:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include "stdlib.h"
 # include "../memory/memory.h"
 
+
 int				ft_count_words(char const *s, char c);
+int	            ft_atoi(const char *s);
+char	        *ft_itoa(int n);
 char			**ft_split(char const *s, char c);
 char			*ft_strchr(const char *s, int b);
 int				ft_strcmp(char *s1, char *s2);
