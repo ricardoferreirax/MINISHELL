@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 20:51:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:50:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,56 +35,52 @@ int arr_size(void **arr)
     return (i);
 }
 
-void free_redir_list(t_redir *r)
+void free_argv(char **argv)
 {
-    t_redir *cur;
-    t_redir *nxt;
-
-    cur = r;
-    while (cur)
+    int i = 0;
+    if (!argv) return;
+    while (argv[i])
     {
-        nxt = cur->next;
-        if (cur->file)
-            free(cur->file);
-        if (cur->delimiter)
-            free(cur->delimiter);
-        free(cur);
-        cur = nxt;
+        free(argv[i]);
+        i++;
+    }
+    free(argv);
+}
+
+void free_redirs(t_redir *r)
+{
+    t_redir *next;
+
+    while (r)
+    {
+        next = r->next;
+        if (r->file)      
+            free(r->file);
+        if (r->delimiter)
+            free(r->delimiter);
+        free(r);
+        r = next;
     }
 }
 
 void free_cmd_list(t_cmd *head)
 {
     t_cmd *cur;
-    t_cmd *nxt;
-    int i;
+    t_cmd *next;
 
     cur = head;
     while (cur)
     {
-        if (cur->in_fd != -1)
-        {
-            close(cur->in_fd);
-            cur->in_fd = -1;
+        next = cur->next;
+
+        if (cur->in_fd != -1) 
+        { 
+            close(cur->in_fd); 
+            cur->in_fd = -1; 
         }
-        if (cur->cmd_args)
-        {
-            i = 0;
-            while (cur->cmd_args[i])
-            {
-                free(cur->cmd_args[i]);
-                i++;
-            }
-            free(cur->cmd_args);
-            cur->cmd_args = NULL;
-        }
-        if (cur->redirs)
-        {
-            free_redir_list(cur->redirs);
-            cur->redirs = NULL;
-        }
-        nxt = cur->next;
+        free_argv(cur->cmd_args);
+        free_redirs(cur->redirs);
         free(cur);
-        cur = nxt;
+        cur = next;
     }
 }

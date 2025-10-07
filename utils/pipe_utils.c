@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:14:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:43:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,35 @@ int safe_dup2_and_close(int oldfd, int newfd)
     if (dup2(oldfd, newfd) == -1)
     {
         perror("minishell: dup2 error");
-        close(oldfd);
+        close_fd_safe(&oldfd);
         return (1);
     }
-    close(oldfd);
+    close_fd_safe(&oldfd);
     return (0);
+}
+
+void close_all_heredoc_fds(t_cmd *head)
+{
+    t_cmd *cur = head;
+    while (cur)
+    {
+        if (cur->in_fd != -1) 
+        { 
+            close(cur->in_fd); 
+            cur->in_fd = -1; 
+        }
+        cur = cur->next;
+    }
 }
 
 void reset_fds(int stdin_fd, int stdout_fd)
 {
     if (dup2(stdin_fd, STDIN_FILENO) == -1)
         perror("MiNyanshell: dup2 restore stdin");
-    close(stdin_fd);
-
+    close_fd_safe(&stdin_fd);
     if (dup2(stdout_fd, STDOUT_FILENO) == -1)
         perror("MiNyanshell: dup2 restore stdout");
-    close(stdout_fd);
+    close_fd_safe(&stdout_fd);
 }
 
 void close_heredoc(t_cmd *cmd)
@@ -68,7 +81,7 @@ void close_heredoc(t_cmd *cmd)
         return ;
     if (cmd->in_fd != -1)
     {
-        close(cmd->in_fd);
+        close_fd_safe(&cmd->in_fd);
         cmd->in_fd = -1;
     }
 }

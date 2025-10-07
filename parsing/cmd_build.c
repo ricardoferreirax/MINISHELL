@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subcmd_build.c                                     :+:      :+:    :+:   */
+/*   cmd_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:56:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/05 20:47:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:48:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_cmd *cmd_new(void)
         return NULL;
     cmd->cmd_args = NULL;
     cmd->redirs   = NULL;
-    cmd->in_fd    = -1;     /* importante para heredoc */
+    cmd->in_fd    = -1;
     cmd->next     = NULL;
     return cmd;
 }

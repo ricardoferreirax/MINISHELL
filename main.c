@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 14:46:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:26:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void process_line(t_mini *mini, char *input)
     }
     fill_mini(mini, pipes);
     free_2d((void **)pipes);
-    status = ft_execution(mini->head, mini);
+    status = execute_pipeline(mini->head, mini);
     mini->last_status = status;
     free_cmd_list(mini->head);
     mini->head = NULL;

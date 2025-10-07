@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:14:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:37:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <signal.h>
+
+#define CONTINUE -1
+#define NO_CMD 0
+#define ERROR 1
+#define NOT_BUILTIN -1
 
 typedef struct s_UwU   t_mini;
 typedef struct s_0w0   t_subcmd;
@@ -42,17 +47,17 @@ typedef struct s_redir
     struct s_redir *next;
 }   t_redir;
 
-int ft_execution(t_cmd *cmd_list, t_mini *mini);
+int execute_pipeline(t_cmd *cmd_list, t_mini *mini);
 int process_all_heredocs(t_cmd *cmd_list, t_mini *mini);
 int apply_redirs_in_child(t_cmd *cmd);
-int execute_pipeline(t_cmd *cmds, t_mini *mini);
+int execute_multiple_cmds(t_cmd *cmds, t_mini *mini);
+int execute_external_cmd(t_cmd *cmd, t_mini *mini);
 int execute_single_cmd(t_cmd *cmd, t_mini *mini);
-int run_redirs_without_cmd(t_cmd *cmd, t_mini *mini);
-int run_external_single(t_cmd *cmd, t_mini *mini);
+int execute_redirs_without_cmd(t_cmd *cmd, t_mini *mini);
+void execute_external_in_child(t_cmd *cmd, char **envyan_array);
 char	*handle_cmd_path(char *cmd, char **envp);
 void child_execute_cmd(t_cmd *cmd, t_pipeline *pp);
 int execute_builtin(t_cmd *cmd, t_mini *mini);
-void execute_external_cmd(t_cmd *cmd, char **envyan_array);
 bool is_builtin(char *cmd);
 int wait_for_single(pid_t pid);
 int safe_dup2_and_close(int oldfd, int newfd);
@@ -70,5 +75,6 @@ void warn_heredoc_eof(char *lim);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void free_str_array(char **arr);
+void close_all_heredoc_fds(t_cmd *head);
 
 #endif

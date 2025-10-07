@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 15:08:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 20:02:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static int execute_cmds(t_cmd *cmd_list, t_mini *mini)
     if (num_cmds == 1)
     {
         status = execute_single_cmd(cmd_list, mini);
-        if (status == -1)                                 // se não era builtin
-            status = run_external_single(cmd_list, mini); // tenta executar como comando externo
+        if (status == NOT_BUILTIN)
+            status = execute_external_cmd(cmd_list, mini);
         return (status);
     }
-    return (execute_pipeline(cmd_list, mini));            // num_cmds > 1
+    return (execute_multiple_cmds(cmd_list, mini));
 }
 
 static int pre_execution(t_cmd *head, t_mini *mini)
@@ -53,38 +53,39 @@ static int pre_execution(t_cmd *head, t_mini *mini)
     t_cmd *first;
 
     if (!head)
-        return (0);
-    if (process_all_heredocs(head, mini) != 0)  // processa TODOS os heredocs do pipeline antes de executar
-        return (1);
-    first = head;  // primeiro comando do pipeline
-    if ((!first->cmd_args || !first->cmd_args[0]) && first->redirs && !first->next) // só redireções (sem args e sem pipeline)
-        return run_redirs_without_cmd(first, mini);
-    if ((!first->cmd_args || !first->cmd_args[0]) && !first->redirs) // comando vazio (sem args e sem redirs)
-        return (0);
-    return (-1); // it's totally fineeee
+        return (NO_CMD);
+    if (process_all_heredocs(head, mini) != 0)
+        return (ERROR);
+    first = head;  // primeiro comando da pipeline
+    if ((!first->cmd_args || !first->cmd_args[0]) && first->redirs && !first->next)
+        return (execute_redirs_without_cmd(first, mini));
+    if ((!first->cmd_args || !first->cmd_args[0]) && !first->redirs)
+        return (NO_CMD);
+    return (CONTINUE);
 }
 
-int ft_execution(t_cmd *cmd_list, t_mini *mini)
+int execute_pipeline(t_cmd *cmd_list, t_mini *mini)
 {
     int pre_exec;
     int status;
 
     if (!mini || !cmd_list)
     {
-        if (mini)
-            mini->last_status = 0;
+        mini->last_status = 0;
         return (0);
     }
     // set_noninteractive_signals();
     pre_exec = pre_execution(cmd_list, mini);
-    if (pre_exec != -1)
+    if (pre_exec != CONTINUE)
     {
         // set_signals();
+        close_all_heredoc_fds(cmd_list);
         mini->last_status = pre_exec;
         return (pre_exec);
     }
     status = execute_cmds(cmd_list, mini);
     mini->last_status = status;
     // set_interactive_signals();
+    close_all_heredoc_fds(cmd_list);
     return (status);
 }

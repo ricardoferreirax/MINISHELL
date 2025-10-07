@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 15:09:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:31:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int create_pipe_and_fork(t_cmd *cmd, t_pipeline *pp)
     return (0);
 }
 
-int execute_pipeline(t_cmd *cmds, t_mini *mini)
+int execute_multiple_cmds(t_cmd *cmds, t_mini *mini)
 {
     t_pipeline pp;
     t_cmd     *current_cmd;

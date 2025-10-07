@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 15:12:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:44:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/execution.h"
 
-static void run_cmd_child(t_cmd *cmd, t_mini *mini)
+static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 {
     int status;
     char **envyan_array;
@@ -35,7 +35,7 @@ static void run_cmd_child(t_cmd *cmd, t_mini *mini)
     envyan_array = envyan_to_array(mini->envyan);
     if (!envyan_array)
         exit(1);
-    execute_external_cmd(cmd, envyan_array);
+    execute_external_in_child(cmd, envyan_array);
 }
 
 static void first_child(t_cmd *cmd, t_pipeline *pp)
@@ -46,7 +46,7 @@ static void first_child(t_cmd *cmd, t_pipeline *pp)
             error_exit("MiNyanShell: dup2 failed (pipe write)");
         close_fd_safe(&pp->pipefd[0]);
     }
-    run_cmd_child(cmd, pp->mini);
+    execute_child_cmd(cmd, pp->mini);
 }
 
 static void middle_child(t_cmd *cmd, t_pipeline *pp)
@@ -59,14 +59,14 @@ static void middle_child(t_cmd *cmd, t_pipeline *pp)
             error_exit("MiNyanShell: dup2 failed (pipe write)");
         close_fd_safe(&pp->pipefd[0]);
     }
-    run_cmd_child(cmd, pp->mini);
+    execute_child_cmd(cmd, pp->mini);
 }
 
 static void last_child(t_cmd *cmd, t_pipeline *pp)
 {
     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
         error_exit("MiNyanShell: dup2 failed (pipe read)");
-    run_cmd_child(cmd, pp->mini);
+    execute_child_cmd(cmd, pp->mini);
 }
 
 void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)

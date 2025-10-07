@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 15:10:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:14:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,23 @@ int apply_redirs_in_child(t_cmd *cmd)
         last_out_fd = -1;
     }
     return (0);
+}
+
+int execute_redirs_without_cmd(t_cmd *cmd, t_mini *mini)
+{
+    int orig_stdin;
+    int orig_stdout;
+    int result;
+
+    if (!cmd)
+        return (0);
+    orig_stdin  = dup(STDIN_FILENO);
+    orig_stdout = dup(STDOUT_FILENO);
+    if (orig_stdin == -1 || orig_stdout == -1)
+        return (perror("MiNyanShell: dup original fds"), 1);
+    result = apply_redirs_in_child(cmd);
+    reset_fds(orig_stdin, orig_stdout);
+    close_heredoc(cmd);
+    mini->last_status = result;
+    return (result);
 }
