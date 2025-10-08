@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 16:38:58 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/08 19:55:09 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	**pre_parse(char *pipe)
 	inquote = false;
 	j = 0;
 	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe));
-	printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
+	//printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
 	while (pipe[i])
 	{
 		if (pipe[i] == '\'' && !indquote)
@@ -163,13 +163,14 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes && pipes[i] && curr)
 	{
 		tokens = pre_parse(pipes[i]);
+		//tokens = split_ignore_quotes(pipes[i], ' ');
 		j = 0;
 		while (tokens[j] != NULL)
 		{
-			ft_printf("token n%d : %s\n", j, tokens[j]);
+			//ft_printf("token n%d : %s\n", j, tokens[j]);
 			if(!parse(curr, tokens, &j))
 				break;
-			j++;
+			//j++;
 		}
 		curr = curr->next;
 		i++;
