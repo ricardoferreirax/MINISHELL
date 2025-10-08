@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   envyan_to_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:37:12 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:19:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:42:22 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
 static char	*create_envyan_array_entry(char *key, char *value)
@@ -33,20 +32,20 @@ static char	*create_envyan_array_entry(char *key, char *value)
 	return (entry);
 }
 
-static int	process_standard_envyan_entry(t_envyan *current, char **env_array, int index)
+static int	process_envyan_entry_to_array(t_envyan *current, char **env_array, int index)
 {
 	if (current->value == NULL)
 		return (index);
 	env_array[index] = create_envyan_array_entry(current->key, current->value);
 	if (!env_array[index])
 	{
-		cleanup_env_array(env_array, index);
+		clean_envyan_array(env_array, index);
 		return (-1);
 	}
 	return (index + 1);
 }
 
-static int	count_envyan_vars(t_envyan *envyan)
+static int	count_envyan_entries(t_envyan *envyan)
 {
 	int	count;
 
@@ -61,12 +60,12 @@ static int	count_envyan_vars(t_envyan *envyan)
 
 char	**envyan_to_array(t_envyan *envyan)
 {
-	int		count;
+	int			count;
 	t_envyan	*current;
 	char	**env_array;
 	int		i;
 
-	count = count_envyan_vars(envyan);
+	count = count_envyan_entries(envyan);
 	env_array = malloc(sizeof(char *) * (count + 1));
 	if (!env_array)
 		return (NULL);
@@ -74,7 +73,7 @@ char	**envyan_to_array(t_envyan *envyan)
 	i = 0;
 	while (current)
 	{
-		i = process_standard_envyan_entry(current, env_array, i);
+		i = process_envyan_entry_to_array(current, env_array, i);
 		if (i == -1)
 			return (NULL);
 		current = current->next;

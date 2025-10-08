@@ -3,68 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   set_envyan.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:25:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:22:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:42:32 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
-static void	handle_first_node_replacement(t_envyan *env_head, t_envyan *new_node)
+static int add_envyan_key_value(t_mini *mini, char *key, char *value)
 {
-	char	*temp_key;
-	char	*temp_value;
-	t_envyan	*temp_next;
+    t_envyan *new_entry;
 
-	temp_key = env_head->key;
-	temp_value = env_head->value;
-	temp_next = env_head->next;
-	env_head->key = new_node->key;
-	env_head->value = new_node->value;
-	env_head->next = new_node->next;
-	new_node->key = temp_key;
-	new_node->value = temp_value;
-	new_node->next = temp_next;
-	env_head->next = new_node;
+    if (!mini || !key)
+        return (1);
+    new_entry = malloc(sizeof(t_envyan));
+    if (!new_entry)
+        return (1);
+    new_entry->key = ft_strdup(key);
+    if (!new_entry->key)
+        return (free(new_entry), 1);
+    if (value)
+    {
+        new_entry->value = ft_strdup(value);
+        if (!new_entry->value)
+            return (free(new_entry->key), free(new_entry), 1);
+    }
+    else
+        new_entry->value = NULL;
+    new_entry->next = mini->envyan;
+    mini->envyan = new_entry;
+    return (0);
 }
 
-static void	update_envyan_var(t_envyan *env, char *value)
+static int replace_envyan_value(t_mini *mini, char *key, char *value)
 {
-	free(env->value);
-	if (value)
-		env->value = ft_strdup(value);
-	else
-		env->value = NULL;
+    t_envyan *current;
+    char     *dup;
+
+    if (!mini || !key)
+        return (-1);
+    current = mini->envyan;
+    while (current)
+    {
+        if (current->key && ft_strcmp(current->key, key) == 0)
+        {
+            dup = NULL;
+            if (value)
+            {
+                dup = ft_strdup(value);
+                if (!dup)
+                    return (-1);
+            }
+            if (current->value)
+                free(current->value);
+            current->value = dup;
+            return (1);
+        }
+        current = current->next;
+    }
+    return (0);
 }
 
-void	set_env_value(t_envyan *env_head, char *key, char *value)
+int set_envyan_key_value(t_mini *mini, char *key, char *value)
 {
-	t_envyan	*envyan;
-	t_envyan	*prev;
-	t_envyan	*new_node;
+    int status;
 
-	envyan = env_head;
-	prev = NULL;
-	if (!env_head)
-		return ;
-	while (envyan)
-	{
-		if (ft_strncmp(envyan->key, key, ft_strlen(key) + 1) == 0)
-		{
-			update_envyan_var(envyan, value);
-			return ;
-		}
-		prev = envyan;
-		envyan = envyan->next;
-	}
-	new_node = create_envyan_node(key, value);
-	if (!new_node)
-		return ;
-	if (prev)
-		prev->next = new_node;
-	else
-		handle_first_node_replacement(env_head, new_node);
+    if (!mini || !key || !value)
+        return (1);
+    status = replace_envyan_value(mini, key, value);
+    if (status == 1)
+        return (0);
+    if (status == -1)
+        return (1);
+    return (add_envyan_key_value(mini, key, value));
 }

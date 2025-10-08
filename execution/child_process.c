@@ -6,98 +6,76 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/30 17:21:29 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:49:49 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "execution.h"
+#include "../include/execution.h"
+#include "../include/envyan.h"
 
-static void	setup_child_pipes(t_cmd *cmd, t_pipeline *pp)
+static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 {
-	if (pp->prev_pipefd != -1)
-	{
-		if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-			exit(1);
-		pp->prev_pipefd = -1;
-	}
-	if (cmd->next)
-	{
-		if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
-			exit(1);
-		close(pp->pipefd[0]);
-	}
+    int status;
+    char **envyan_array;
+
+    if (apply_redirs_in_child(cmd) != 0)
+        exit(1);
+    if (!cmd->args || !cmd->args[0])
+        exit(0);
+    if (cmd->args[0][0] == '\0')
+    {
+        cmd_not_found_msg(cmd->args[0]);
+        exit(127);
+    }
+    if (is_builtin(cmd->args[0]))
+    {
+        status = execute_builtin(cmd, mini);
+        exit(status);
+    }
+    envyan_array = envyan_to_array(mini->envyan);
+    if (!envyan_array)
+        exit(1);
+    execute_external_in_child(cmd, envyan_array);
 }
 
-void	child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
+static void first_child(t_cmd *cmd, t_pipeline *pp)
 {
-	t_subcmd	*subcmd;
-
-	// set_child_signals();               /* SIGINT/SIGQUIT default no filho */
-	setup_child_pipes(cmd, pp);
-	subcmd = cmd->head;
-	if (apply_redirs_in_child(subcmd) != 0)
-		exit(1);
-	if (!subcmd->args || !subcmd->args[0])
-		exit(0);
-	if (subcmd->args[0][0] == '\0') // string vazia (“command not found”)
-	{
-		cmd_not_found_msg(subcmd->args[0]);
-		exit(127);
-	}
-	if (is_builtin(subcmd->args[0]))
-		// Na pipeline,os builtins executam no child
-	{
-		execute_builtin(subcmd, pp->mini);
-		exit(pp->mini->last_status);
-	}
-	execute_external_cmd(subcmd, pp->mini);
+    if (cmd->next)
+    {
+        if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
+            error_exit("MiNyanShell: dup2 failed (pipe write)");
+        close_fd_safe(&pp->pipefd[0]);
+    }
+    execute_child_cmd(cmd, pp->mini);
 }
 
-// static void first_child(t_cmd *cmd, t_pipeline *pp)
-// {
-//     t_subcmd *subcmd;
+static void middle_child(t_cmd *cmd, t_pipeline *pp)
+{
+    if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+        error_exit("MiNyanShell: dup2 failed (pipe read)");
+    if (cmd->next)
+    {
+        if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
+            error_exit("MiNyanShell: dup2 failed (pipe write)");
+        close_fd_safe(&pp->pipefd[0]);
+    }
+    execute_child_cmd(cmd, pp->mini);
+}
 
-//     subcmd = cmd->head;
-//     if (cmd->next)
-//     {
-//         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
-//             error_exit("MiNyanShell :3 : dup2 failed (pipe write)");
-//         close(pp->pipefd[0]);
-//     }
-//     execute_subcommand(subcmd, pp->mini);
-// }
+static void last_child(t_cmd *cmd, t_pipeline *pp)
+{
+    if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+        error_exit("MiNyanShell: dup2 failed (pipe read)");
+    execute_child_cmd(cmd, pp->mini);
+}
 
-// static void middle_child(t_cmd *cmd, t_pipeline *pp)
-// {
-//     t_subcmd *subcmd;
-
-//     subcmd = cmd->head;
-//     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-//         error_exit("MiNyanShell :3 : dup2 failed (pipe read)");
-//     if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
-//         error_exit("MiNyanShell :3 : dup2 failed (pipe write)");
-//     close(pp->pipefd[0]);
-//     execute_subcommand(subcmd, pp->mini);
-// }
-
-// static void last_child(t_cmd *cmd, t_pipeline *pp)
-// {
-//     t_subcmd *subcmd;
-
-//     subcmd = cmd->head;
-//     if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-//         error_exit("MiNyanShell :3 : dup2 failed (pipe read)");
-
-//     execute_subcommand(subcmd, pp->mini);
-// }
-
-// void child_process(t_cmd *cmd, t_pipeline *pp)
-// {
-//     if (pp->prev_pipefd == -1 && cmd == pp->mini->head)
-//         first_child(cmd, pp);
-//     else if (cmd->next)
-//         middle_child(cmd, pp);
-//     else if (!cmd->next)
-//         last_child(cmd, pp);
-// }
+void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
+{
+    // set_child_signals();  // SIGINT/SIGQUIT default no child
+    if (pp->prev_pipefd == -1) // não há pipe anterior - é o primeiro comando
+        first_child(cmd, pp);
+    else if (!cmd->next) 
+        last_child(cmd, pp);  // não há próximo - último comando
+    else
+        middle_child(cmd, pp);  // tem pipe anterior e também há próximo
+}

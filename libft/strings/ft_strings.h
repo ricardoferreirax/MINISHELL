@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strings.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:00:40 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/08/19 14:33:34 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/08 17:03:56 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include "stdlib.h"
 # include "unistd.h"
 
+int				ft_atoi(const char *s);
 int				ft_count_words(char const *s, char c);
+char			*ft_itoa(int n);
 char			**ft_split(char const *s, char c);
 char			*ft_strchr(const char *s, int b);
 int				ft_strcmp(char *s1, char *s2);

@@ -6,17 +6,27 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/02 15:04:30 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:38:58 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../MiNyanShell.h"
-#include "parsing.h"
-#include <readline/readline.h>
-#include <string.h>
+#include "../include/parsing.h"
 
-t_cmd	*cmd_new(void);
 int		arr_size(void **arr);
+
+t_cmd	*cmd_new(void)
+{
+	t_cmd	*cmd;
+
+	cmd = (t_cmd *)calloc(1, sizeof(*cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->args = NULL;
+	cmd->redirs = NULL;
+	cmd->in_fd = -1;
+	cmd->next = NULL;
+	return (cmd);
+}
 
 char	**init_mini(t_mini *nyan, char *cmd)
 {
@@ -157,12 +167,9 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		while (tokens[j] != NULL)
 		{
 			ft_printf("token n%d : %s\n", j, tokens[j]);
+			if(!parse(curr, tokens, &j))
+				break;
 			j++;
-		}
-		if (tokens)
-		{
-			// fill_subcmd(curr, tokens);
-			// free_2d((void **)tokens);
 		}
 		curr = curr->next;
 		i++;

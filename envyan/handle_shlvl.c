@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   handle_shlvl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:12:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 02:43:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:42:29 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
 static int has_numeric_chars(char *s)
@@ -85,6 +84,11 @@ t_envyan *process_shlvl(t_envyan **env_list, t_envyan **current, int shlvl)
     shlvl = shlvl + 1;
     if (shlvl < 0)
         shlvl = 0;
+    if (shlvl > 999)
+    {
+        ft_putendl_fd("Minyanshell: shell level (1000) too high, resetting to 1", 2);
+        shlvl = 1;
+    }
     shlvl_str = ft_itoa(shlvl);
     if (!shlvl_str)
         return (*env_list);
