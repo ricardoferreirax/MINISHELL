@@ -6,11 +6,10 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 20:02:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:23:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
 
 static int number_of_cmds(t_cmd *cmd_list)
@@ -57,9 +56,9 @@ static int pre_execution(t_cmd *head, t_mini *mini)
     if (process_all_heredocs(head, mini) != 0)
         return (ERROR);
     first = head;  // primeiro comando da pipeline
-    if ((!first->cmd_args || !first->cmd_args[0]) && first->redirs && !first->next)
+    if ((!first->args || !first->args[0]) && first->redirs && !first->next)
         return (execute_redirs_without_cmd(first, mini));
-    if ((!first->cmd_args || !first->cmd_args[0]) && !first->redirs)
+    if ((!first->args || !first->args[0]) && !first->redirs)
         return (NO_CMD);
     return (CONTINUE);
 }

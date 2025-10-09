@@ -6,23 +6,16 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 14:46:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:18:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVYAN_H
 # define ENVYAN_H
 
-# include "MiNyanShell.h"
+#include "MiNyanShell.h"
 
 typedef struct s_UwU t_mini; 
-
-typedef struct s_envyan
-{
-	char			*key;
-	char			*value;
-	struct s_envyan	*next;
-}	t_envyan;
 
 t_envyan	*init_envyan(char **envp);
 void	process_envyan_entry(char *entry, t_envyan **env_list, t_envyan **current);
@@ -35,5 +28,6 @@ char	**envyan_to_array(t_envyan *envyan);
 void	clean_envyan_array(char **envyan_array, int index);
 int set_envyan_key_value(t_mini *mini, char *key, char *value);
 void	free_envyan(t_envyan *envyan);
+void	cleanup_env_array(char **envyan_array, int index);
 
 #endif

@@ -6,13 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 19:23:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 19:58:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:22:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
-#include "errno.h"
 
 int execute_single_cmd(t_cmd *cmd, t_mini *mini)
 {
@@ -20,13 +18,13 @@ int execute_single_cmd(t_cmd *cmd, t_mini *mini)
     int orig_stdout;
     int status;
 
-    if (!cmd || !cmd->cmd_args || !cmd->cmd_args[0])
+    if (!cmd || !cmd->args || !cmd->args[0])
 	{
 		close_heredoc(cmd);
 		mini->last_status = 0;
 		return (0);
 	}
-    if (!is_builtin(cmd->cmd_args[0]))
+    if (!is_builtin(cmd->args[0]))
 		return (NOT_BUILTIN);
     orig_stdin  = dup(STDIN_FILENO);
     orig_stdout = dup(STDOUT_FILENO);

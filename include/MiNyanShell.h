@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/10/06 00:50:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:17:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 # define MINYANSHELL_H
 
 # include "../libft/libft.h"
-# include "envyan.h"
-/* # include "parsing/parsing.h"
-# include <readline/history.h>
-# include <readline/readline.h> */
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct s_redir t_redir;
+typedef struct s_OwO t_cmd;
 
 typedef enum e_token_type
 {
@@ -36,12 +35,27 @@ typedef enum e_token_type
 	REDIR_HEREDOC,
 }						t_redir_type;
 
-typedef struct s_command
+typedef struct s_envyan
 {
-	char						**cmd_args;
+	char			*key;
+	char			*value;
+	struct s_envyan	*next;
+}	t_envyan;
+
+typedef struct s_redir
+{
+	char *file;
+	char *delimiter;
+	t_redir_type type;
+	struct s_redir *next;
+}   t_redir;
+
+typedef struct s_OwO
+{
+	char						**args;
 	t_redir						*redirs;
 	int							in_fd;
-	struct s_command			*next;
+	t_cmd						*next;
 }								t_cmd;
 
 typedef struct s_UwU

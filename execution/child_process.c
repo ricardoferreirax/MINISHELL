@@ -6,12 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 17:44:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:21:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
+#include "../include/envyan.h"
 
 static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 {
@@ -20,14 +20,14 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 
     if (apply_redirs_in_child(cmd) != 0)
         exit(1);
-    if (!cmd->cmd_args || !cmd->cmd_args[0])
+    if (!cmd->args || !cmd->args[0])
         exit(0);
-    if (cmd->cmd_args[0][0] == '\0')
+    if (cmd->args[0][0] == '\0')
     {
-        cmd_not_found_msg(cmd->cmd_args[0]);
+        cmd_not_found_msg(cmd->args[0]);
         exit(127);
     }
-    if (is_builtin(cmd->cmd_args[0]))
+    if (is_builtin(cmd->args[0]))
     {
         status = execute_builtin(cmd, mini);
         exit(status);

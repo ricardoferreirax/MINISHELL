@@ -6,13 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 22:31:07 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 00:36:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:26:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
-#include "../include/builtin.h"
 #include "../include/envyan.h"
 
 static int print_pwd_from_envyan(t_envyan *envyan)
@@ -36,7 +34,7 @@ int ft_pwd(t_cmd *cmd, t_mini *mini)
     int   status;
 
     (void)cmd;
-    if (cmd && cmd->cmd_args && cmd->cmd_args[1] && cmd->cmd_args[1][0] == '-')
+    if (cmd && cmd->args && cmd->args[1] && cmd->args[1][0] == '-')
     {
         ft_putstr_fd("MiNyanShell: pwd: options are not supported\n", STDERR_FILENO);
         mini->last_status = 1;

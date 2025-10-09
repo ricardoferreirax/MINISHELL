@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 19:50:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:43:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void free_cmd_list(t_cmd *head)
             close(cur->in_fd); 
             cur->in_fd = -1; 
         }
-        free_argv(cur->cmd_args);
+        free_argv(cur->args);
         free_redirs(cur->redirs);
         free(cur);
         cur = next;

@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 10:45:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:20:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
-#include "../include/builtin.h"
-#include "../libft/libft.h"
 
 bool	is_builtin(char *cmd)
 {
@@ -34,25 +31,25 @@ int execute_builtin(t_cmd *cmd, t_mini *mini)
 {
     int status;
 
-    if (!cmd || !cmd->cmd_args || !cmd->cmd_args[0])
+    if (!cmd || !cmd->args || !cmd->args[0])
     {
         mini->last_status = 1;
         return (1);
     }
-    if (ft_strcmp(cmd->cmd_args[0], "echo") == 0)
+    if (ft_strcmp(cmd->args[0], "echo") == 0)
         status = ft_echo(cmd);
-    else if (ft_strcmp(cmd->cmd_args[0], "pwd") == 0)
+    else if (ft_strcmp(cmd->args[0], "pwd") == 0)
         status = ft_pwd(cmd, mini);
-    else if (ft_strcmp(cmd->cmd_args[0], "env") == 0)
+    else if (ft_strcmp(cmd->args[0], "env") == 0)
         status = ft_env(cmd, mini);
-    else if (ft_strcmp(cmd->cmd_args[0], "cd") == 0)
-        status = ft_cd(mini, cmd->cmd_args);
-    /* else if (ft_strcmp(cmd->cmd_args[0], "export") == 0)
-        status = ft_export(mini, cmd->cmd_args);
-    else if (ft_strcmp(cmd->cmd_args[0], "unset") == 0)
-        status = ft_unset(mini, cmd->cmd_args);
-    else if (ft_strcmp(cmd->cmd_args[0], "exit") == 0)
-        status = ft_exit(mini, cmd->cmd_args);*/
+    else if (ft_strcmp(cmd->args[0], "cd") == 0)
+        status = ft_cd(mini, cmd->args);
+    /* else if (ft_strcmp(cmd->args[0], "export") == 0)
+        status = ft_export(mini, cmd->args);
+    else if (ft_strcmp(cmd->args[0], "unset") == 0)
+        status = ft_unset(mini, cmd->args);
+    else if (ft_strcmp(cmd->args[0], "exit") == 0)
+        status = ft_exit(mini, cmd->args);*/
     else
         status = 1; // não era builtin
     mini->last_status = status;

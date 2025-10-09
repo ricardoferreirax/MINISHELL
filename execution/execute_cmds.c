@@ -6,28 +6,27 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 19:31:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:22:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
-#include "errno.h"
+#include "../include/envyan.h"
 
 void execute_external_in_child(t_cmd *cmd, char **envyan_array)
 {
     char *cmd_path;
 
-    if (!cmd || !cmd->cmd_args || !cmd->cmd_args[0])
+    if (!cmd || !cmd->args || !cmd->args[0])
         exit(0);
-    cmd_path = handle_cmd_path(cmd->cmd_args[0], envyan_array);
+    cmd_path = handle_cmd_path(cmd->args[0], envyan_array);
     if (!cmd_path)
     {
         free_str_array(envyan_array);
-        cmd_not_found_msg(cmd->cmd_args[0]);
+        cmd_not_found_msg(cmd->args[0]);
         exit(127);
     }
-    execve(cmd_path, cmd->cmd_args, envyan_array);
+    execve(cmd_path, cmd->args, envyan_array);
     perror("execve failed");
     free(cmd_path);
     free_str_array(envyan_array);
@@ -45,10 +44,10 @@ static void setup_and_exec_child_external(t_cmd *cmd, t_mini *mini)
     // set_child_signals();
     if (apply_redirs_in_child(cmd) != 0)
         exit(1);
-    if (!cmd->cmd_args || !cmd->cmd_args[0])
+    if (!cmd->args || !cmd->args[0])
         exit(0);
-    if (cmd->cmd_args[0][0] == '\0') {
-        cmd_not_found_msg(cmd->cmd_args[0]);
+    if (cmd->args[0][0] == '\0') {
+        cmd_not_found_msg(cmd->args[0]);
         exit(127);
     }
     envvyan = envyan_to_array(mini->envyan);
@@ -72,4 +71,3 @@ int execute_external_cmd(t_cmd *cmd, t_mini *mini)
 	mini->last_status = status;
     return (status);
 }
-

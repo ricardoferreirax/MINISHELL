@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_chararr.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/28 19:46:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/28 19:46:44 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/10/08 21:40:46 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/08 21:41:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory.h"
+#include "../include/MiNyanShell.h"
+#include "../include/envyan.h"
 
-void free_chararr(char **arr)
+void	cleanup_env_array(char **envyan_array, int index)
 {
-    int i;
+	int	i;
 
-    if (!arr) return;
-    i = 0;
-    while (arr[i]) {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = 0;
+	while (i < index)
+	{
+		free(envyan_array[i]);
+		i++;
+	}
+	free(envyan_array);
 }

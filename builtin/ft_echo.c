@@ -6,19 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:04:13 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/06 00:26:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:26:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
-#include "../include/builtin.h"
 
 static int is_valid_n_case(char **args)
 {
@@ -51,16 +43,16 @@ int ft_echo(t_cmd *cmd)
     int i;
     int n_index;
 
-    if (!cmd || !cmd->cmd_args)
+    if (!cmd || !cmd->args)
         return (0);
-    i = is_valid_n_case(cmd->cmd_args);
+    i = is_valid_n_case(cmd->args);
     n_index = i;
-    if (cmd->cmd_args[i])
+    if (cmd->args[i])
     {
-        while (cmd->cmd_args[i])
+        while (cmd->args[i])
         {
-            write(STDOUT_FILENO, cmd->cmd_args[i], ft_strlen(cmd->cmd_args[i]));
-            if (cmd->cmd_args[i + 1])
+            write(STDOUT_FILENO, cmd->args[i], ft_strlen(cmd->args[i]));
+            if (cmd->args[i + 1])
                 write(STDOUT_FILENO, " ", 1);
             i++;
         }

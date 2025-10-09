@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/07 19:30:32 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/09 09:40:30 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,35 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 
 SRC_FILES = \
-	main.c execution/execution.c execution/redirection.c \
-	execution/multiple_cmds.c execution/heredoc.c execution/builtin.c execution/cmd_path.c \
-	execution/child_process.c execution/execute_cmds.c utils/errors.c utils/pipe_utils.c \
-	utils/split_quotes.c builtin/ft_echo.c builtin/ft_pwd.c builtin/ft_env.c execution/execute_single.c \
-	parsing/parse.c parsing/pipeline_build.c parsing/redir.c parsing/split_ignore_quotes.c \
-	parsing/cmd_build.c parsing/validate_input.c parsing/utils.c \
-	envyan/envyan_init.c envyan/envyan_to_array.c envyan/envyan_utils.c envyan/set_envyan.c \
-	envyan/handle_shlvl.c builtin/cd/cd_cases.c builtin/cd/cd_utils.c builtin/cd/ft_cd.c \
+	main.c \
+	execution/execution.c \
+	execution/redirection.c \
+	execution/multiple_cmds.c \
+	execution/heredoc.c \
+	execution/builtin.c \
+	execution/cmd_path.c \
+	execution/child_process.c \
+	execution/execute_cmds.c \
+	execution/execute_single.c \
+	utils/errors.c \
+	utils/pipe_utils.c \
+	utils/split_quotes.c \
+	builtin/ft_echo.c \
+	builtin/ft_pwd.c \
+	builtin/ft_env.c \
+	builtin/ft_cd.c \
+	parsing/parse.c \
+	parsing/pipeline_build.c \
+	parsing/redir.c \
+	parsing/split_ignore_quotes.c \
+	parsing/cmd_build.c \
+	parsing/validate_input.c \
+	parsing/utils.c \
+	envyan/envyan_init.c \
+	envyan/envyan_to_array.c \
+	envyan/envyan_utils.c \
+	envyan/set_envyan.c \
+	envyan/handle_shlvl.c \
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

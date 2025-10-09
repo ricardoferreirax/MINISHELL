@@ -6,11 +6,10 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 19:14:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:24:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/execution.h"
 
 static int open_redir_fd(t_redir *redir, int *last_fd)
