@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 19:55:09 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:52:25 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**pre_parse(char *pipe)
 	indquote = false;
 	inquote = false;
 	j = 0;
-	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe));
+	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe) + 1);
 	//printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
 	while (pipe[i])
 	{
@@ -145,6 +145,7 @@ char	**pre_parse(char *pipe)
 		dest[i + j] = pipe[i];
 		i++;
 	}
+	dest[i + j] = '\0';
 	printf("dest before split: %s\n", dest);
 	final = split_ignore_quotes(dest, ' ');
 	free(dest);
