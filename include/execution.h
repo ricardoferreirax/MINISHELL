@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 09:19:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/10 21:19:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define NO_CMD 0
 # define ERROR 1
 # define NOT_BUILTIN -1
+#define  EXPORT_OK 0
+#define  EXPORT_ERROR 1
 
 typedef struct s_UwU	t_mini;
 typedef struct s_0w0	t_subcmd;
@@ -74,6 +76,12 @@ int						ft_echo(t_cmd *cmd);
 int						ft_pwd(t_cmd *cmd, t_mini *mini);
 int						ft_env(t_cmd *cmd, t_mini *mini);
 int						ft_cd(t_mini *mini, char **args);
+int						ft_export(t_cmd *cmd, t_mini *mini);
+void					assign_envyan_key(t_mini *mini, char *arg);
+int 					validate_export_arg(char *str);
+char					**create_export_array(t_envyan *head);
+void					sort_export_entries(char **env_array);
+void					free_export_array(char **array, int filled);
 
 int						execute_builtin(t_cmd *cmd, t_mini *mini);
 bool					is_builtin(char *cmd);

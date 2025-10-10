@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 00:29:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 14:46:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/10 20:20:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,6 @@ char *envyan_get_value(t_envyan *head, char *key)
     return (NULL);
 }
 
-void	clean_envyan_array(char **envyan_array, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i < index)
-	{
-		free(envyan_array[i]);
-		i++;
-	}
-	free(envyan_array);
-}
-
 void	add_envyan_node(t_envyan **env_list, t_envyan **current, t_envyan *new_node)
 {
 	if (!*env_list)
@@ -67,16 +54,16 @@ void	add_envyan_node(t_envyan **env_list, t_envyan **current, t_envyan *new_node
 	*current = new_node;
 }
 
-void	free_envyan(t_envyan *envyan)
+int envyan_key_exists(t_envyan *envyan, char *key)
 {
-	t_envyan	*tmp;
+    t_envyan *current;
 
-	while (envyan)
-	{
-		tmp = envyan;
-		envyan = envyan->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
+    current = envyan;
+    while (current)
+    {
+        if (ft_strcmp(current->key, key) == 0)
+            return (1);
+        current = current->next;
+    }
+    return (0);
 }

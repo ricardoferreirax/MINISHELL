@@ -6,104 +6,103 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 20:20:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 21:25:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/10 21:06:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
-#include "../include/builtin.h"
-#include "../include/envyan.h"
+#include "../../include/MiNyanShell.h"
+#include "../../include/execution.h"
+#include "../../include/envyan.h"
 
-static int export_ident_error(const char *s)
+static int handle_single_export(t_mini *mini, char *arg)
 {
-    ft_putstr_fd("MiNyanShell: export: `", STDERR_FILENO);
-    ft_putstr_fd((char *)s, STDERR_FILENO);
-    ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-    return 0;
-}
-
-static int is_argument_valid(char *str)
-{
-    int i;
-
-    if (!str || str[0] == '\0')
-        return (export_ident_error(str));
-
-    i = 0;
-    if (!ft_isalpha(str[0]) && str[0] != '_')
-        return (export_ident_error(str));
-    while (str[i] && str[i] != '=')
-    {
-        if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '+')
-            return (export_ident_error(str));
-        i++;
-    }
-    return (1);
-}
-
-static int process_export_arg(t_mini *mini, char *arg)
-{
-    if (!arg || arg[0] == '\0')
+    if (!mini || !arg || arg[0] == '\0')
         return (0);
-    if (!is_argument_valid(arg))
+    if (!validate_export_arg(arg))
         return (1);
-    if (!handle_append(mini, arg))
-        handle_assignment(mini, arg);
+    // if (handle_append(mini, arg))
+    //     return (EXPORT_OK);
+    assign_envyan_key(mini, arg);
     return (0);
 }
 
-static int write_export(t_cmd *cmd)
+static void print_and_free_export_array(char **export_entry)
 {
     int i;
 
-    i = 1;
-    while (cmd && cmd->cmd_args && cmd->cmd_args[i])
+    i = 0;
+    if (!export_entry)
+        return ;
+    while (export_entry[i])
     {
-        if (cmd->cmd_args[i][0] != '\0')
-            return (0);
+        ft_putstr_fd("declare -x ", STDOUT_FILENO);
+        ft_putendl_fd(export_entry[i], STDOUT_FILENO);
+        free(export_entry[i]);
         i++;
     }
-    return (1);
+    free(export_entry);
 }
 
-int	handle_no_args(t_mini *mini)
+static int export_print_sorted(t_mini *mini)
 {
-	char	**envyan_array;
-	int		i;
+    char **export_entry;
 
-	envyan_array = env_to_array_export(mini->envyan);
-	bubble_sort(envyan_array);
-	i = 0;
-	while (envyan_array[i])
-	{
-		printf("declare -x %s\n", envyan_array[i]);
-		free(envyan_array[i]);
-		i++;
-	}
-	free(envyan_array);
-	return (0);
+    if (!mini)
+        return (1);
+    if (!mini->envyan)
+    {
+        mini->last_status = 0;
+        return (0);
+    }
+    export_entry = create_export_array(mini->envyan);
+    if (!export_entry)
+    {
+        mini->last_status = 1;
+        return (1);
+    }
+    sort_export_entries(export_entry);
+    print_and_free_export_array(export_entry);
+    free(export_entry);
+    mini->last_status = 0;
+    return (0);
+}
+
+static int export_has_args(t_cmd *cmd)
+{
+    int i;
+
+    if (!cmd || !cmd->args || !cmd->args[1])
+        return (0);
+    i = 1;
+    while (cmd->args[i])
+    {
+        if (cmd->args[i][0] != '\0')
+            return (1);
+        i++;
+    }
+    return (0);
 }
 
 int ft_export(t_cmd *cmd, t_mini *mini)
 {
     int i;
-	int status;
-    int error_flag;
+    int had_error;
 
     if (!mini)
         return (1);
-    if (!cmd || !cmd->cmd_args || !cmd->cmd_args[1] || write_export(cmd))
-        return (handle_no_args(mini));
-    error_flag = 0;
+    if (!export_has_args(cmd))
+        return (export_print_sorted(mini));
+    had_error = 0;
     i = 1;
-    while (cmd->cmd_args[i])
-	{
-    	status = process_export_arg(mini, cmd->cmd_args[i]);
-    	if (status != 0)
-        	error_flag = 1;
-    	i++;
-	}
-    mini->last_status = (error_flag != 0);
-    return (error_flag);
+    while (cmd->args[i])
+    {
+        if (cmd->args[i][0] != '\0')
+        {
+            if (handle_single_export(mini, cmd->args[i]) != 0)
+                had_error = 1;
+        }
+        i++;
+    }
+    mini->last_status = had_error;
+    return (had_error);
 }

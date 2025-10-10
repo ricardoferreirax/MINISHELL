@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:25:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 13:22:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:37:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int set_envyan_key_value(t_mini *mini, char *key, char *value)
 {
     int status;
 
-    if (!mini || !key || !value)
+    if (!mini || !key)
         return (1);
     status = replace_envyan_value(mini, key, value);
     if (status == 1)

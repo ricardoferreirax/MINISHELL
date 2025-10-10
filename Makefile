@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/09 09:40:30 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/10 20:57:34 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,10 @@ SRC_FILES = \
 	builtin/ft_pwd.c \
 	builtin/ft_env.c \
 	builtin/ft_cd.c \
+	builtin/export/ft_export.c \
+	builtin/export/export_array.c \
+	builtin/export/export_utils.c \
+	builtin/export/sort_export.c \
 	parsing/parse.c \
 	parsing/pipeline_build.c \
 	parsing/redir.c \
@@ -46,6 +50,7 @@ SRC_FILES = \
 	envyan/envyan_init.c \
 	envyan/envyan_to_array.c \
 	envyan/envyan_utils.c \
+	envyan/envyan_clean.c \
 	envyan/set_envyan.c \
 	envyan/handle_shlvl.c \
 
