@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 21:27:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 10:42:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/11 13:10:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 static void add_value_to_entry(char *entry, t_envyan *var, int key_len)
 {
-    int value_len = ft_strlen(var->value);
-    int i = key_len;
+    int value_len;
+    int i;
 
+    if (!var || !var->value)
+        return ;
+    value_len = ft_strlen(var->value);
+    i = key_len;
     entry[i++] = '=';
     entry[i++] = '"';
     ft_strlcpy(entry + i, var->value, value_len + 1);
@@ -30,18 +34,19 @@ static char *create_export_entry(t_envyan *var)
 {
     char *entry;
     int key_len;
-    int value_len = 0;
+    int value_len;
     int total_len;
 
     if (!var || !var->key)
         return (NULL);
     key_len = ft_strlen(var->key);
+    value_len = 0;
     if (var->value)
         value_len = ft_strlen(var->value);
     total_len = key_len;
     if (var->value)
-        total_len += value_len + 4; // '=' + '"' + '"'
-    entry = malloc(total_len + 1);
+        total_len += value_len + 3; // '=' + '"' + '"'
+    entry = malloc(total_len + 1); // +1 para o '\0'
     if (!entry)
         return (NULL);
     ft_strlcpy(entry, var->key, key_len + 1);

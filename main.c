@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 12:27:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/11 12:51:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,14 @@ static void init_shell(t_mini *mini, char **envp)
     int shlvl;
 
     if (!mini)
-        return;
-
+        return ;
     mini->head = NULL;
     mini->envyan = init_envyan(envp);
-
-    /* obter último nó (pode ser NULL se lista vazia) */
     last_node = get_last_envyan(mini->envyan);
-
-    /* obter shlvl do envp (0 se não existir) */
     shlvl = get_shlvl_from_envp(envp);
-
-    /* processa/atualiza/insere SHLVL; process_shlvl atualiza a lista */
     mini->envyan = process_shlvl(&mini->envyan, &last_node, shlvl);
-
     mini->last_status = 0;
-    /* set_interactive_signals(); se necessário */
+    /* set_interactive_signals(); */
 }
 
 int main(int ac, char **av, char **envp)

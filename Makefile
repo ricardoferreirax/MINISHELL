@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/11 12:38:40 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/11 13:10:43 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC_FILES = \
 	parsing/validate_input.c \
 	parsing/utils.c \
 	envyan/envyan_init.c \
-	envyan/envyan_to_array.c \
+	envyan/envyan_array.c \
 	envyan/envyan_utils.c \
 	envyan/envyan_clean.c \
 	envyan/set_envyan.c \
