@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 20:20:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 21:06:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/11 10:19:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int export_print_sorted(t_mini *mini)
     }
     sort_export_entries(export_entry);
     print_and_free_export_array(export_entry);
-    free(export_entry);
     mini->last_status = 0;
     return (0);
 }
