@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/10 20:57:34 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/11 12:38:40 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC_FILES = \
 	builtin/ft_pwd.c \
 	builtin/ft_env.c \
 	builtin/ft_cd.c \
+	builtin/ft_unset.c \
 	builtin/export/ft_export.c \
 	builtin/export/export_array.c \
 	builtin/export/export_utils.c \
@@ -52,7 +53,7 @@ SRC_FILES = \
 	envyan/envyan_utils.c \
 	envyan/envyan_clean.c \
 	envyan/set_envyan.c \
-	envyan/handle_shlvl.c \
+	shlvl/handle_shlvl.c \
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

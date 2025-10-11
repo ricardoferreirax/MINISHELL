@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 00:29:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 20:20:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/11 12:42:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,36 @@ char *envyan_get_value(t_envyan *head, char *key)
     return (NULL);
 }
 
-void	add_envyan_node(t_envyan **env_list, t_envyan **current, t_envyan *new_node)
+t_envyan *get_last_envyan(t_envyan *head)
 {
-	if (!*env_list)
-		*env_list = new_node;
-	else
-		(*current)->next = new_node;
-	*current = new_node;
+    t_envyan *cur;
+
+    if (!head)
+        return NULL;
+    cur = head;
+    while (cur->next)
+        cur = cur->next;
+    return cur;
+}
+
+void add_envyan_node(t_envyan **head, t_envyan **last, t_envyan *new_node)
+{
+    if (!new_node || !head || !last)
+        return;
+
+    new_node->next = NULL;
+    if (!*head)
+    {
+        *head = new_node;
+        *last = new_node;
+    }
+    else
+    {
+        if (!*last)
+            *last = get_last_envyan(*head);
+        (*last)->next = new_node;
+        *last = new_node;
+    }
 }
 
 int envyan_key_exists(t_envyan *envyan, char *key)

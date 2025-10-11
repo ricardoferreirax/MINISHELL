@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 23:12:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/07 14:04:16 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/10/02 11:37:36 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/11 12:38:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,35 @@ int get_shlvl_from_envp(char **envp)
     return (0);
 }
 
-t_envyan *process_shlvl(t_envyan **env_list, t_envyan **current, int shlvl)
+static int update_shlvl_if_exists(t_envyan **env_list, char *tmp)
+{
+    t_envyan *current;
+
+    if (!env_list || !tmp)
+        return (0);
+    current = *env_list;
+    while (current)
+    {
+        if (current->key && ft_strcmp(current->key, "SHLVL") == 0)
+        {
+            if (current->value)
+                free(current->value);
+            current->value = ft_strdup(tmp);
+            free(tmp);
+            return (1);
+        }
+        current = current->next;
+    }
+    return (0);
+}
+
+t_envyan *process_shlvl(t_envyan **env_list, t_envyan **last, int shlvl)
 {
     t_envyan *new_node;
-    char     *shlvl_str;
+    char     *tmp;
 
+    if (!env_list)
+        return (NULL);
     shlvl = shlvl + 1;
     if (shlvl < 0)
         shlvl = 0;
@@ -90,13 +114,15 @@ t_envyan *process_shlvl(t_envyan **env_list, t_envyan **current, int shlvl)
         ft_putendl_fd("Minyanshell: shell level (1000) too high, resetting to 1", 2);
         shlvl = 1;
     }
-    shlvl_str = ft_itoa(shlvl);
-    if (!shlvl_str)
+    tmp = ft_itoa(shlvl);
+    if (!tmp)
         return (*env_list);
-    new_node = create_envyan_node("SHLVL", shlvl_str);
-    free(shlvl_str);
+    if (update_shlvl_if_exists(env_list, tmp))
+        return (*env_list);
+    new_node = create_envyan_node("SHLVL", tmp);
+    free(tmp);
     if (!new_node)
         return (*env_list);
-    add_envyan_node(env_list, current, new_node);
-    return (new_node);
+    add_envyan_node(env_list, last, new_node);
+    return (*env_list);
 }
