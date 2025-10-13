@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:37:36 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 12:38:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/13 21:46:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,26 +77,29 @@ int get_shlvl_from_envp(char **envp)
     return (0);
 }
 
-static int update_shlvl_if_exists(t_envyan **env_list, char *tmp)
+static int	update_shlvl_if_exists(t_envyan **env_list, char *tmp)
 {
-    t_envyan *current;
+	t_envyan	*cur;
+	char		*new_val;
 
-    if (!env_list || !tmp)
-        return (0);
-    current = *env_list;
-    while (current)
-    {
-        if (current->key && ft_strcmp(current->key, "SHLVL") == 0)
-        {
-            if (current->value)
-                free(current->value);
-            current->value = ft_strdup(tmp);
-            free(tmp);
-            return (1);
-        }
-        current = current->next;
-    }
-    return (0);
+	if (!env_list || !tmp)
+		return (0);
+	cur = *env_list;
+	while (cur)
+	{
+		if (cur->key && ft_strcmp(cur->key, "SHLVL") == 0)
+		{
+			new_val = ft_strdup(tmp);
+			free(tmp);
+			if (!new_val)
+				return (0);
+			free(cur->value);
+			cur->value = new_val;
+			return (1);
+		}
+		cur = cur->next;
+	}
+	return (0);
 }
 
 t_envyan *process_shlvl(t_envyan **env_list, t_envyan **last, int shlvl)

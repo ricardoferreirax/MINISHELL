@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 12:51:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:27:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ int main(int ac, char **av, char **envp)
     init_shell(&mini, envp);
     command_loop(&mini);
     rl_clear_history();
-    free_envyan(mini.envyan);
+    free_envyan(&mini.envyan);
     return (mini.last_status);
 }

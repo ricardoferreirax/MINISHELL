@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 20:18:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:29:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	**envyan_to_array(t_envyan *envyan);
 void	clean_envyan_array(char **envyan_array, int index);
 int 	set_envyan_key_value(t_mini *mini, char *key, char *value);
 int envyan_key_exists(t_envyan *envyan, char *key);
-void	free_envyan(t_envyan *envyan);
+void					free_envyan(t_envyan **head);
 
 #endif

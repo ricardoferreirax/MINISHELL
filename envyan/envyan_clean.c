@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envyan_free.c                                      :+:      :+:    :+:   */
+/*   envyan_clean.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:18:41 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 20:19:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:54:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
-void	free_envyan(t_envyan *envyan)
+void	free_envyan(t_envyan **head)
 {
-	t_envyan	*tmp;
+	t_envyan	*cur;
+	t_envyan	*next;
 
-	while (envyan)
+	if (!head || !*head)
+		return ;
+	cur = *head;
+	while (cur)
 	{
-		tmp = envyan;
-		envyan = envyan->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
+		next = cur->next;
+		free(cur->key);
+		free(cur->value);
+		free(cur);
+		cur = next;
 	}
+	*head = NULL;
 }
 
 void	clean_envyan_array(char **envyan_array, int index)
