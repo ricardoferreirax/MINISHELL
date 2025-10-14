@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/11 13:10:43 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/14 14:42:22 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,21 +55,23 @@ SRC_FILES = \
 	envyan/set_envyan.c \
 	shlvl/handle_shlvl.c \
 
-OBJ_FILES = $(SRC_FILES:.c=.o)
+OBJ_DIR   = objs
+OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -lreadline -lhistory -o $(NAME)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C libft
 
 clean:
-	rm -f $(OBJ_FILES)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -C libft clean
 
 fclean: clean
