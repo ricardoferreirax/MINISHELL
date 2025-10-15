@@ -6,12 +6,19 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/08 16:41:47 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/15 13:54:30 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> ricardo
 
 // bool	is_limiter_quoted(char *s)  // delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
 // {
@@ -56,7 +63,7 @@ static int heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
     return (0);
 }
 
-static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
+static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd)
 {
 	int	exit_code;
 	(void)mini;
@@ -66,7 +73,15 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
 	close_fd_safe(&pipefd[1]);
+<<<<<<< HEAD
 	exit(exit_code);
+=======
+    if (cmd->in_fd != -1)// se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
+    {
+        close_fd_safe(&cmd->in_fd);
+    }
+	minyanshell_child_cleanup_and_exit(mini, exit_code);
+>>>>>>> ricardo
 }
 
 static int parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2], pid_t pid)
@@ -107,7 +122,7 @@ static int handle_single_heredoc(t_cmd *cmd, t_redir *redir, t_mini *mini)
         return (perror("MiNyanShell: fork"), 1);
     }
     if (pid == 0)
-        child_heredoc(redir, mini, pipefd);
+        child_heredoc(redir, mini, pipefd,cmd);
     else
         return (parent_heredoc_control(cmd, mini, pipefd, pid));
     return (0);

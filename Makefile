@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/08 16:48:41 by pfreire-          #+#    #+#              #
-#    Updated: 2025/10/08 17:15:42 by pfreire-         ###   ########.fr        #
+#    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
+#    Updated: 2025/10/15 14:12:28 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,42 +32,47 @@ SRC_FILES = \
 	utils/errors.c \
 	utils/pipe_utils.c \
 	utils/split_quotes.c \
+	utils/clean_utils.c \
 	builtin/ft_echo.c \
 	builtin/ft_pwd.c \
 	builtin/ft_env.c \
-	builtin/cd/cd_cases.c \
-	builtin/cd/cd_utils.c \
-	builtin/cd/ft_cd.c \
-	parsing/aux_funcs.c \
-	parsing/fill_subcmd.c \
-	parsing/init_fill_mini.c \
+	builtin/ft_cd.c \
+	builtin/ft_unset.c \
+	builtin/export/ft_export.c \
+	builtin/export/export_array.c \
+	builtin/export/export_utils.c \
+	builtin/export/sort_export.c \
 	parsing/parse.c \
+	parsing/pipeline_build.c \
 	parsing/redir.c \
 	parsing/split_ignore_quotes.c \
-	parsing/utils.c \
+	parsing/cmd_build.c \
 	parsing/validate_input.c \
+	parsing/utils.c \
 	envyan/envyan_init.c \
-	envyan/envyan_to_array.c \
+	envyan/envyan_array.c \
 	envyan/envyan_utils.c \
+	envyan/envyan_clean.c \
 	envyan/set_envyan.c \
-	envyan/handle_shlvl.c
+	shlvl/handle_shlvl.c \
 
-
-OBJ_FILES = $(SRC_FILES:.c=.o)
+OBJ_DIR   = objs
+OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -lreadline -lhistory -o $(NAME)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C libft
 
 clean:
-	rm -f $(OBJ_FILES)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -C libft clean
 
 fclean: clean

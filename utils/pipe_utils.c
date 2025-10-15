@@ -6,10 +6,18 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/08 17:00:15 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+=======
+/*   Updated: 2025/10/15 13:51:36 by rmedeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/MiNyanShell.h"
+>>>>>>> ricardo
 #include "../include/execution.h"
 
 int wait_for_single(pid_t pid)
@@ -52,6 +60,7 @@ int safe_dup2_and_close(int oldfd, int newfd)
 
 void close_all_heredoc_fds(t_cmd *head)
 {
+<<<<<<< HEAD
     t_cmd *cur = head;
     while (cur)
     {
@@ -61,6 +70,19 @@ void close_all_heredoc_fds(t_cmd *head)
             cur->in_fd = -1; 
         }
         cur = cur->next;
+=======
+    t_cmd *current;
+
+	current = head;
+    while (current)
+    {
+        if (current->in_fd != -1) 
+        { 
+            close(current->in_fd); 
+            current->in_fd = -1; 
+        }
+        current = current->next;
+>>>>>>> ricardo
     }
 }
 
@@ -87,7 +109,11 @@ void close_heredoc(t_cmd *cmd)
 
 void close_fd_safe(int *fd)
 {
+<<<<<<< HEAD
     if (fd && *fd >= 0)
+=======
+    if (fd && *fd != -1)
+>>>>>>> ricardo
     {
         close(*fd);
         *fd = -1;
@@ -166,4 +192,9 @@ void free_str_array(char **arr)
         i++;
     }
     free(arr);
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> ricardo

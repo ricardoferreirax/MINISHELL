@@ -6,7 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/08 16:48:06 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/09 09:17:36 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +29,10 @@
 
 typedef struct s_redir t_redir;
 typedef struct s_OwO t_cmd;
+<<<<<<< HEAD
 
+=======
+>>>>>>> ricardo
 
 typedef enum e_token_type
 {

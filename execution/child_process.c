@@ -6,7 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/08 16:49:49 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/15 14:03:52 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +23,7 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     char **envyan_array;
 
     if (apply_redirs_in_child(cmd) != 0)
+<<<<<<< HEAD
         exit(1);
     if (!cmd->args || !cmd->args[0])
         exit(0);
@@ -26,16 +31,35 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     {
         cmd_not_found_msg(cmd->args[0]);
         exit(127);
+=======
+        minyanshell_child_cleanup_and_exit(mini, 1);
+    if (!cmd->args || !cmd->args[0])
+        minyanshell_child_cleanup_and_exit(mini, 0);
+    if (cmd->args[0][0] == '\0')
+    {
+        cmd_not_found_msg(cmd->args[0]);
+        minyanshell_child_cleanup_and_exit(mini, 127);
+>>>>>>> ricardo
     }
     if (is_builtin(cmd->args[0]))
     {
         status = execute_builtin(cmd, mini);
+<<<<<<< HEAD
         exit(status);
     }
     envyan_array = envyan_to_array(mini->envyan);
     if (!envyan_array)
         exit(1);
     execute_external_in_child(cmd, envyan_array);
+=======
+        minyanshell_child_cleanup_and_exit(mini, status);
+    }
+    envyan_array = envyan_to_array(mini->envyan);
+    if (!envyan_array)
+        minyanshell_child_cleanup_and_exit(mini, 1);
+
+    execute_external_in_child(cmd, envyan_array, mini);
+>>>>>>> ricardo
 }
 
 static void first_child(t_cmd *cmd, t_pipeline *pp)

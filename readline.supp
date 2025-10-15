@@ -1,0 +1,23 @@
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+{
+	readLine 1
+	Memcheck:Leak
+
+
+	match-leak-kinds: reachable
+
+	...
+
+	obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+}

@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute_single.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 19:23:04 by rmedeiro          #+#    #+#             */
 /*   Updated: 2025/10/08 16:41:39 by pfreire-         ###   ########.fr       */
+=======
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/07 19:23:04 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/09 09:22:38 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
