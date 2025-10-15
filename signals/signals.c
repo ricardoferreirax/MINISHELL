@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/09/27 14:59:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:52:32 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
-#include "../MiNyanShell.h"
 
 static void interactive_handler(int signum)
 {

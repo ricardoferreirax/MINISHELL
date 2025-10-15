@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 21:27:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 13:10:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:48:59 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
-#include "../include/envyan.h"
+#include "../../include/envyan.h"
 
 static void add_value_to_entry(char *entry, t_envyan *var, int key_len)
 {

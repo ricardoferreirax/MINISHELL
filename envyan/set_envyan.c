@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_envyan.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:25:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 16:42:32 by pfreire-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-=======
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 23:25:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 19:37:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:48:34 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
->>>>>>> ricardo
 #include "../include/envyan.h"
 
 static int add_envyan_key_value(t_mini *mini, char *key, char *value)
@@ -81,11 +71,7 @@ int set_envyan_key_value(t_mini *mini, char *key, char *value)
 {
     int status;
 
-<<<<<<< HEAD
-    if (!mini || !key || !value)
-=======
     if (!mini || !key)
->>>>>>> ricardo
         return (1);
     status = replace_envyan_value(mini, key, value);
     if (status == 1)

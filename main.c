@@ -3,25 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 17:20:14 by pfreire-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
-#include "include/MiNyanShell.h"
-#include "include/execution.h"
-#include "include/parsing.h"
-#include "include/envyan.h"
-#include <stdio.h>
-=======
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 10:12:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:46:33 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +15,10 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
-#include "../include/parsing.h"
-#include "../include/envyan.h"
->>>>>>> ricardo
+#include "include/MiNyanShell.h"
+#include "include/execution.h"
+#include "include/envyan.h"
+#include "include/parsing.h"
 
 static void process_line(t_mini *mini, char *input)
 {
@@ -50,11 +34,7 @@ static void process_line(t_mini *mini, char *input)
         ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n");
         return ;
     }
-<<<<<<< HEAD
-    if (forbidden_actions(input))
-=======
     if (!no_forbidden_actions(input))
->>>>>>> ricardo
     {
         ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
         return ;
@@ -68,13 +48,7 @@ static void process_line(t_mini *mini, char *input)
     fill_mini(mini, pipes);
     free_2d((void **)pipes);
     status = execute_pipeline(mini->head, mini);
-<<<<<<< HEAD
-    mini->last_status = status;
-    free_cmd_list(mini->head);
-    mini->head = NULL;
-=======
 	mini->last_status = status;
->>>>>>> ricardo
 }
 
 static void command_loop(t_mini *mini)
@@ -92,35 +66,24 @@ static void command_loop(t_mini *mini)
         if (input[0] != '\0')
             process_line(mini, input);
         free(input);
-<<<<<<< HEAD
-=======
 		cleanup_iteration(mini);
->>>>>>> ricardo
     }
 }
 
 static void init_shell(t_mini *mini, char **envp)
 {
-<<<<<<< HEAD
-=======
     t_envyan *last_node;
     int shlvl;
 
->>>>>>> ricardo
     if (!mini)
         return ;
     mini->head = NULL;
     mini->envyan = init_envyan(envp);
-<<<<<<< HEAD
-    mini->last_status = 0;
-    // set_interactive_signals();
-=======
     last_node = get_last_envyan(mini->envyan);
     shlvl = get_shlvl_from_envp(envp);
     mini->envyan = process_shlvl(&mini->envyan, &last_node, shlvl);
     mini->last_status = 0;
     /* set_interactive_signals(); */
->>>>>>> ricardo
 }
 
 int main(int ac, char **av, char **envp)
@@ -137,12 +100,7 @@ int main(int ac, char **av, char **envp)
     }
     init_shell(&mini, envp);
     command_loop(&mini);
-<<<<<<< HEAD
-    rl_clear_history();
-    free_envyan(mini.envyan);
-=======
     minyanshell_exit_cleanup(&mini);
     free_envyan(&mini.envyan);
->>>>>>> ricardo
     return (mini.last_status);
 }

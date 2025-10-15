@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   handle_shlvl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:37:36 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/13 21:46:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:52:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
 static int has_numeric_chars(char *s)

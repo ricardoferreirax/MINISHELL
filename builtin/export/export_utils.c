@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 16:52:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/10 21:22:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:50:27 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/MiNyanShell.h"
 #include "../../include/execution.h"
 #include "../../include/envyan.h"
 

@@ -6,19 +6,12 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:46:47 by rmedeiro          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/10/08 16:37:48 by pfreire-         ###   ########.fr       */
-=======
-/*   Updated: 2025/10/05 19:14:51 by rmedeiro         ###   ########.fr       */
->>>>>>> ricardo
+/*   Updated: 2025/10/15 14:51:53 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
 
-<<<<<<< HEAD
-bool	no_unclosed_quotes(char *str)
-=======
 bool no_forbidden_actions(char *str)
 {
     int  i;
@@ -49,7 +42,6 @@ bool no_forbidden_actions(char *str)
 }
 
 bool no_unclosed_quotes(char *str)
->>>>>>> ricardo
 {
     bool in_squote;
     bool in_dquote;

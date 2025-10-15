@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:56:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 09:27:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:51:16 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
 #include "../include/parsing.h"
 
 t_cmd *cmd_new(void)
