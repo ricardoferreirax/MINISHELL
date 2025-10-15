@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/13 16:29:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:03:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int						execute_multiple_cmds(t_cmd *cmds, t_mini *mini);
 int						execute_external_cmd(t_cmd *cmd, t_mini *mini);
 int						execute_single_cmd(t_cmd *cmd, t_mini *mini);
 int						execute_redirs_without_cmd(t_cmd *cmd, t_mini *mini);
-void					execute_external_in_child(t_cmd *cmd,
-							char **envyan_array);
+void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini);
 char					*handle_cmd_path(char *cmd, char **envp);
 void					child_execute_cmd(t_cmd *cmd, t_pipeline *pp);
 int						execute_builtin(t_cmd *cmd, t_mini *mini);
@@ -83,6 +82,11 @@ int 					validate_export_arg(char *str);
 char					**create_export_array(t_envyan *head);
 void					sort_export_entries(char **env_array);
 t_envyan *get_last_envyan(t_envyan *head);
+void minyanshell_exit_cleanup(t_mini *mini);
+void cleanup_iteration(t_mini *mini);
+void free_cmd_list(t_cmd **head_ptr);
+void free_envyan(t_envyan **head);
+void minyanshell_child_cleanup_and_exit(t_mini *mini, int status);
 
 int						execute_builtin(t_cmd *cmd, t_mini *mini);
 bool					is_builtin(char *cmd);

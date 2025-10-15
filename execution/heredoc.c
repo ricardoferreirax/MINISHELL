@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/14 15:45:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:54:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd
     {
         close_fd_safe(&cmd->in_fd);
     }
-	exit(exit_code);
+	minyanshell_child_cleanup_and_exit(mini, exit_code);
 }
 
 static int parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2], pid_t pid)

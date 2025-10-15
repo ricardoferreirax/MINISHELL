@@ -6,12 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/14 12:33:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:51:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiNyanShell.h"
-#include "execution.h"
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
 
 int wait_for_single(pid_t pid)
 {
@@ -53,15 +53,17 @@ int safe_dup2_and_close(int oldfd, int newfd)
 
 void close_all_heredoc_fds(t_cmd *head)
 {
-    t_cmd *cur = head;
-    while (cur)
+    t_cmd *current;
+
+	current = head;
+    while (current)
     {
-        if (cur->in_fd != -1) 
+        if (current->in_fd != -1) 
         { 
-            close(cur->in_fd); 
-            cur->in_fd = -1; 
+            close(current->in_fd); 
+            current->in_fd = -1; 
         }
-        cur = cur->next;
+        current = current->next;
     }
 }
 
@@ -88,7 +90,7 @@ void close_heredoc(t_cmd *cmd)
 
 void close_fd_safe(int *fd)
 {
-    if (fd && *fd >= 0)
+    if (fd && *fd != -1)
     {
         close(*fd);
         *fd = -1;
@@ -168,3 +170,4 @@ void free_str_array(char **arr)
     }
     free(arr);
 }
+

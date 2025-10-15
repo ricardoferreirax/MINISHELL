@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 09:21:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:03:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,24 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     char **envyan_array;
 
     if (apply_redirs_in_child(cmd) != 0)
-        exit(1);
+        minyanshell_child_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
-        exit(0);
+        minyanshell_child_cleanup_and_exit(mini, 0);
     if (cmd->args[0][0] == '\0')
     {
         cmd_not_found_msg(cmd->args[0]);
-        exit(127);
+        minyanshell_child_cleanup_and_exit(mini, 127);
     }
     if (is_builtin(cmd->args[0]))
     {
         status = execute_builtin(cmd, mini);
-        exit(status);
+        minyanshell_child_cleanup_and_exit(mini, status);
     }
     envyan_array = envyan_to_array(mini->envyan);
     if (!envyan_array)
-        exit(1);
-    execute_external_in_child(cmd, envyan_array);
+        minyanshell_child_cleanup_and_exit(mini, 1);
+
+    execute_external_in_child(cmd, envyan_array, mini);
 }
 
 static void first_child(t_cmd *cmd, t_pipeline *pp)
