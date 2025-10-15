@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 09:23:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:45:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
     return (0);
 }
 
-static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
+static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd)
 {
 	int	exit_code;
 	(void)mini;
@@ -65,6 +65,10 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2])
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
 	close_fd_safe(&pipefd[1]);
+    if (cmd->in_fd != -1)// se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
+    {
+        close_fd_safe(&cmd->in_fd);
+    }
 	exit(exit_code);
 }
 
@@ -106,7 +110,7 @@ static int handle_single_heredoc(t_cmd *cmd, t_redir *redir, t_mini *mini)
         return (perror("MiNyanShell: fork"), 1);
     }
     if (pid == 0)
-        child_heredoc(redir, mini, pipefd);
+        child_heredoc(redir, mini, pipefd,cmd);
     else
         return (parent_heredoc_control(cmd, mini, pipefd, pid));
     return (0);
