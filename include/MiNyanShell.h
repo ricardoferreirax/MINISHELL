@@ -6,7 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:49:56 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/16 14:45:01 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +68,7 @@ typedef struct s_UwU
 	t_envyan			*envyan;
 	int					last_status;
 }						t_mini;
+
 
 
 // typedef struct s_0w0

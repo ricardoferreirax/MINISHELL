@@ -6,18 +6,24 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:47:04 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/16 15:16:07 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
 #include "../include/envyan.h"
+#include "../include/signals.h"
 
 static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 {
     int status;
     char **envyan_array;
 
+    minyanshell_signals(CHILD_EXEC);
     if (apply_redirs_in_child(cmd) != 0)
         minyanshell_child_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
@@ -35,7 +41,6 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     envyan_array = envyan_to_array(mini->envyan);
     if (!envyan_array)
         minyanshell_child_cleanup_and_exit(mini, 1);
-
     execute_external_in_child(cmd, envyan_array, mini);
 }
 

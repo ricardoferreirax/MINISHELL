@@ -6,7 +6,11 @@
 #    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2025/10/15 14:55:09 by pfreire-         ###   ########.fr        #
+=======
+#    Updated: 2025/10/16 15:43:10 by rmedeiro         ###   ########.fr        #
+>>>>>>> ricardo
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +46,11 @@ SRC_FILES = \
 	builtin/export/export_array.c \
 	builtin/export/export_utils.c \
 	builtin/export/sort_export.c \
+<<<<<<< HEAD
 	parsing/aux_funcs.c \
+=======
+	signals/signals.c \
+>>>>>>> ricardo
 	parsing/parse.c \
 	parsing/pipeline_build.c \
 	parsing/redir.c \

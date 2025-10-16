@@ -6,11 +6,16 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:47:44 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/16 15:30:03 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
+#include "../include/signals.h"
 
 // bool	is_limiter_quoted(char *s)  // delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
 // {
@@ -61,7 +66,7 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd
 	(void)mini;
 
 	close_fd_safe(&pipefd[0]);               // child não lê
-	signal(SIGINT, SIG_DFL);          // Ctrl+C interrompe o heredoc
+	minyanshell_signals(CHILD_EXEC);
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
 	close_fd_safe(&pipefd[1]);
@@ -78,7 +83,7 @@ static int parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2], pid_t
 
     close_fd_safe(&pipefd[1]);
     exit_code = wait_for_single(pid);
-    if (exit_code == 130)
+    if (exit_code == 130) // sigint
     {
         mini->last_status = 130;
         close_fd_safe(&pipefd[0]);

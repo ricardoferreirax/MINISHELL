@@ -6,11 +6,16 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 11:33:30 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:47:35 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/16 15:27:39 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
+#include "../include/signals.h"
 
 static int number_of_cmds(t_cmd *cmd_list)
 {
@@ -73,18 +78,18 @@ int execute_pipeline(t_cmd *cmd_list, t_mini *mini)
         mini->last_status = 0;
         return (0);
     }
-    // set_noninteractive_signals();
+    minyanshell_signals(PARENT_WAIT);
     pre_exec = pre_execution(cmd_list, mini);
     if (pre_exec != CONTINUE)
     {
-        // set_signals();
         close_all_heredoc_fds(cmd_list);
+		minyanshell_signals(PROMPT);
         mini->last_status = pre_exec;
         return (pre_exec);
     }
     status = execute_cmds(cmd_list, mini);
+	close_all_heredoc_fds(cmd_list);
+	minyanshell_signals(PROMPT);
     mini->last_status = status;
-    // set_interactive_signals();
-    close_all_heredoc_fds(cmd_list);
     return (status);
 }

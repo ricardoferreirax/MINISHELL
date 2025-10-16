@@ -6,35 +6,66 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:56:16 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:52:32 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
+=======
+/*   Updated: 2025/10/16 16:39:52 by rmedeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void interactive_handler(int signum)
+#include "../include/MiNyanShell.h"
+#include "../include/signals.h"
+>>>>>>> ricardo
+
+t_mini *g_mini = NULL;
+
+void set_current_mini(t_mini *mini)
 {
-    
+    g_mini = mini;
 }
 
-static void non_interactive_handler(int signum)
+t_mini *get_current_mini(void)
 {
-    (void)signum; // Ignore the signal
+    return (g_mini);
 }
 
-void set_interactive_signals(void)
+void sigint_prompt_handler(int sig)
 {
-    signal(SIGINT,  interactive_handler);
-    signal(SIGQUIT, SIG_IGN);
+    if (sig == SIGINT)
+    {
+        write(STDOUT_FILENO, "\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+        if (get_current_mini())
+            get_current_mini()->last_status = 130;
+    }
 }
 
-void set_non_interactive_signals(void)
+void ignore_signal_handler(int sig)
 {
-    signal(SIGINT,  non_interactive_handler);
-    signal(SIGQUIT, non_interactive_handler);
+    (void)sig;
 }
 
-void set_child_signals(void)
+void minyanshell_signals(t_sigmode mode)
 {
-    
+    if (mode == PROMPT)
+    {
+        signal(SIGINT,  sigint_prompt_handler);
+        signal(SIGQUIT, SIG_IGN);
+    }
+    else if (mode == PARENT_WAIT)
+    {
+        signal(SIGINT,  ignore_signal_handler);
+        signal(SIGQUIT, ignore_signal_handler);
+    }
+    else if (mode == CHILD_EXEC)
+    {
+        signal(SIGINT,  SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+    }
 }

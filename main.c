@@ -6,7 +6,11 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:46:33 by pfreire-         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/16 16:36:19 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +19,18 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+<<<<<<< HEAD
 #include "include/MiNyanShell.h"
 #include "include/execution.h"
 #include "include/envyan.h"
 #include "include/parsing.h"
+=======
+#include "../include/MiNyanShell.h"
+#include "../include/execution.h"
+#include "../include/parsing.h"
+#include "../include/envyan.h"
+#include "../include/signals.h"
+>>>>>>> ricardo
 
 static void process_line(t_mini *mini, char *input)
 {
@@ -83,7 +95,8 @@ static void init_shell(t_mini *mini, char **envp)
     shlvl = get_shlvl_from_envp(envp);
     mini->envyan = process_shlvl(&mini->envyan, &last_node, shlvl);
     mini->last_status = 0;
-    /* set_interactive_signals(); */
+    set_current_mini(mini);
+	minyanshell_signals(PROMPT);
 }
 
 int main(int ac, char **av, char **envp)
@@ -101,6 +114,5 @@ int main(int ac, char **av, char **envp)
     init_shell(&mini, envp);
     command_loop(&mini);
     minyanshell_exit_cleanup(&mini);
-    free_envyan(&mini.envyan);
     return (mini.last_status);
 }
