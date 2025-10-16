@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/16 15:16:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:19:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     int status;
     char **envyan_array;
 
-    minyanshell_signals(CHILD_EXEC);
     if (apply_redirs_in_child(cmd) != 0)
         minyanshell_child_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
@@ -73,7 +72,7 @@ static void last_child(t_cmd *cmd, t_pipeline *pp)
 
 void child_execute_cmd(t_cmd *cmd, t_pipeline *pp)
 {
-    // set_child_signals();  // SIGINT/SIGQUIT default no child
+    minyanshell_signals(CHILD_EXEC);  // SIGINT/SIGQUIT no child
     if (pp->prev_pipefd == -1) // não há pipe anterior - é o primeiro comando
         first_child(cmd, pp);
     else if (!cmd->next) 
