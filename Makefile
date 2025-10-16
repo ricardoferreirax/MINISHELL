@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/15 14:12:28 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/15 14:55:09 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC_FILES = \
 	builtin/export/export_array.c \
 	builtin/export/export_utils.c \
 	builtin/export/sort_export.c \
+	parsing/aux_funcs.c \
 	parsing/parse.c \
 	parsing/pipeline_build.c \
 	parsing/redir.c \
