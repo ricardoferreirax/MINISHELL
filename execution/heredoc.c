@@ -7,9 +7,13 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2025/10/15 14:47:44 by pfreire-         ###   ########.fr       */
 =======
 /*   Updated: 2025/10/16 15:30:03 by rmedeiro         ###   ########.fr       */
+>>>>>>> ricardo
+=======
+/*   Updated: 2025/10/16 17:24:10 by rmedeiro         ###   ########.fr       */
 >>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
@@ -70,7 +74,7 @@ static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
 	close_fd_safe(&pipefd[1]);
-    if (cmd->in_fd != -1)// se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
+    if (cmd->in_fd != -1)// se já havia um in_fd, fecha o anterior
     {
         close_fd_safe(&cmd->in_fd);
     }
