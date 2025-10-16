@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/10/09 09:17:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:45:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_UwU
 	t_envyan			*envyan;
 	int					last_status;
 }						t_mini;
+
 
 
 // typedef struct s_0w0

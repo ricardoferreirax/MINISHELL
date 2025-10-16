@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/15 14:05:46 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/16 15:43:10 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC_FILES = \
 	builtin/export/export_array.c \
 	builtin/export/export_utils.c \
 	builtin/export/sort_export.c \
+	signals/signals.c \
 	parsing/parse.c \
 	parsing/pipeline_build.c \
 	parsing/redir.c \

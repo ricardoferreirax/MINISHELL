@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 14:03:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:26:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int						execute_builtin(t_cmd *cmd, t_mini *mini);
 bool					is_builtin(char *cmd);
 int						wait_for_single(pid_t pid);
 int						safe_dup2_and_close(int oldfd, int newfd);
-void					reset_fds(int stdin_fd, int stdout_fd);
+int reset_fds(int orig_stdin, int orig_stdout);
 void					close_heredoc(t_cmd *cmd);
 void					close_fd_safe(int *fd);
 int						safe_fork(t_cmd *cmd, t_pipeline *pp);

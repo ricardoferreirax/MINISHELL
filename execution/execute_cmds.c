@@ -6,12 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 13:58:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:15:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
 #include "../include/envyan.h"
+#include "../include/signals.h"
 
 void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini)
 {
@@ -40,8 +41,8 @@ void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini)
 static void setup_and_exec_child_external(t_cmd *cmd, t_mini *mini)
 {
     char **envvyan;
-	
-    // set_child_signals();
+
+    minyanshell_signals(CHILD_EXEC);
     if (apply_redirs_in_child(cmd) != 0)
         minyanshell_child_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
@@ -62,13 +63,21 @@ int execute_external_cmd(t_cmd *cmd, t_mini *mini)
     pid_t pid;
     int   status;
 
+    minyanshell_signals(PARENT_WAIT);
     pid = fork();
     if (pid == -1)
+    {
+        minyanshell_signals(PROMPT);
         return (perror("MiNyanShell: fork failed"), 1);
+    }
     if (pid == 0)
+    {
+        minyanshell_signals(CHILD_EXEC);
         setup_and_exec_child_external(cmd, mini);
+    }
     close_heredoc(cmd);
     status = wait_for_single(pid);
-	mini->last_status = status;
+    minyanshell_signals(PROMPT);
+    mini->last_status = status;
     return (status);
 }

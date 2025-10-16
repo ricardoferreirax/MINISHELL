@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 13:51:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:31:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,31 @@ void close_all_heredoc_fds(t_cmd *head)
     }
 }
 
-void reset_fds(int stdin_fd, int stdout_fd)
+int reset_fds(int orig_stdin, int orig_stdout)
 {
-    if (dup2(stdin_fd, STDIN_FILENO) == -1)
-        perror("MiNyanshell: dup2 restore stdin");
-    close_fd_safe(&stdin_fd);
-    if (dup2(stdout_fd, STDOUT_FILENO) == -1)
-        perror("MiNyanshell: dup2 restore stdout");
-    close_fd_safe(&stdout_fd);
+    if (orig_stdin != -1) 
+	{
+        if (dup2(orig_stdin, STDIN_FILENO) == -1) 
+		{
+            perror("dup2 stdin");
+            close(orig_stdin);
+            return (-1);
+        }
+        close(orig_stdin);
+    }
+    if (orig_stdout != -1) 
+	{
+        if (dup2(orig_stdout, STDOUT_FILENO) == -1) 
+		{
+            perror("dup2 stdout");
+            close(orig_stdout);
+            return (-1);
+        }
+        close(orig_stdout);
+    }
+    return (0);
 }
+
 
 void close_heredoc(t_cmd *cmd)
 {
