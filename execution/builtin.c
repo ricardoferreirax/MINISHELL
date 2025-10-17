@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/11 10:54:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/17 03:37:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ int execute_builtin(t_cmd *cmd, t_mini *mini)
         status = ft_export(cmd, mini);
    else if (ft_strcmp(cmd->args[0], "unset") == 0)
         status = ft_unset(cmd, mini);
-    /*else if (ft_strcmp(cmd->args[0], "exit") == 0)
-        status = ft_exit(mini, cmd->args);*/
+    else if (ft_strcmp(cmd->args[0], "exit") == 0)
+        status = ft_exit(cmd, mini);
     else
         status = 1; // não era builtin
     mini->last_status = status;
     return (status);
 }
+

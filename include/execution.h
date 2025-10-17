@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/16 16:26:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/17 03:39:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int						ft_env(t_cmd *cmd, t_mini *mini);
 int						ft_cd(t_mini *mini, char **args);
 int						ft_unset(t_cmd *cmd, t_mini *mini);
 int						ft_export(t_cmd *cmd, t_mini *mini);
+int						ft_exit(t_cmd *cmd, t_mini *mini);
 void					assign_envyan_key(t_mini *mini, char *arg);
 int 					validate_export_arg(char *str);
 char					**create_export_array(t_envyan *head);
