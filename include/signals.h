@@ -6,11 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:55:39 by rmedeiro          #+#    #+#             */
-<<<<<<< HEAD:signals/signals.h
-/*   Updated: 2025/10/15 14:52:52 by pfreire-         ###   ########.fr       */
-=======
 /*   Updated: 2025/10/16 15:01:45 by rmedeiro         ###   ########.fr       */
->>>>>>> ricardo:include/signals.h
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +14,7 @@
 # define SIGNALS_H
 
 # include <signal.h>
-<<<<<<< HEAD:signals/signals.h
-# include <unistd.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-=======
-    
 typedef struct s_UwU t_mini;
->>>>>>> ricardo:include/signals.h
 
 typedef enum e_sigmode
 {
