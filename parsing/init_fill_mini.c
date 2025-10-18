@@ -99,42 +99,46 @@ int	pre_parse_size_count(char *str)
 	return (size);
 }
 
-char *expander_helper(char *str, t_envyan *envyan)
+char	*expander_helper(char *str, t_envyan *envyan)
 {
-	while(envyan != NULL)
+	char	*expanded;
+
+	while (envyan != NULL)
 	{
-		if(ft_strcmp(envyan->key, str) == 0)
+		if (ft_strcmp(envyan->key, str) == 0)
 		{
-			char *expanded = ft_strdup(envyan->value);
-			return(expanded);
+			expanded = ft_strdup(envyan->value);
+			return (expanded);
 		}
 		envyan = envyan->next;
 	}
-	return ((void *)1);
+	expanded = ft_strdup("");
+	return (expanded);
 }
 
-char **expanser(char *str, t_envyan *envyan)
+char	**expanser(char *str, t_envyan *envyan)
 {
-	char **out;
+	char	**out;
+	int		i;
+	char	*temp;
 
 	out = split_ignore_quotes(str, ' ');
-	int i = 0;
-
-	while(out[i] != NULL)
+	i = 0;
+	while (out[i] != NULL)
 	{
-		if(out[i][0] == '$')
+		if (out[i][0] == '$')
 		{
-			char *temp = ft_strdup(out[i]);
+			temp = ft_strdup(out[i]);
 			free(out);
 			out[i] = expander_helper(temp, envyan);
-			if(strcmp(out[i], (void*)1))
+			if (strcmp(out[i], (void *)1))
 			{
-				//what should i do?
+				// what should i do?
 			}
 		}
 		i++;
 	}
-	return out;
+	return (out);
 }
 
 char	**pre_parse(char *pipe, t_envyan envyan)
@@ -151,7 +155,7 @@ char	**pre_parse(char *pipe, t_envyan envyan)
 	inquote = false;
 	j = 0;
 	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe) + 1);
-	//printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
+	// printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
 	while (pipe[i])
 	{
 		if (pipe[i] == '\'' && !indquote)
@@ -202,14 +206,14 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes && pipes[i] && curr)
 	{
 		tokens = pre_parse(pipes[i], *nyan->envyan);
-		//tokens = split_ignore_quotes(pipes[i], ' ');
+		// tokens = split_ignore_quotes(pipes[i], ' ');
 		j = 0;
 		while (tokens[j] != NULL)
 		{
-			//ft_printf("token n%d : %s\n", j, tokens[j]);
-			if(!parse(curr, tokens, &j))
-				break;
-			//j++;
+			// ft_printf("token n%d : %s\n", j, tokens[j]);
+			if (!parse(curr, tokens, &j))
+				break ;
+			// j++;
 		}
 		curr = curr->next;
 		i++;
