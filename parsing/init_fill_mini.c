@@ -99,7 +99,45 @@ int	pre_parse_size_count(char *str)
 	return (size);
 }
 
-char	**pre_parse(char *pipe)
+char *expander_helper(char *str, t_envyan *envyan)
+{
+	while(envyan != NULL)
+	{
+		if(ft_strcmp(envyan->key, str) == 0)
+		{
+			char *expanded = ft_strdup(envyan->value);
+			return(expanded);
+		}
+		envyan = envyan->next;
+	}
+	return ((void *)1);
+}
+
+char **expanser(char *str, t_envyan *envyan)
+{
+	char **out;
+
+	out = split_ignore_quotes(str, ' ');
+	int i = 0;
+
+	while(out[i] != NULL)
+	{
+		if(out[i][0] == '$')
+		{
+			char *temp = ft_strdup(out[i]);
+			free(out);
+			out[i] = expander_helper(temp, envyan);
+			if(strcmp(out[i], (void*)1))
+			{
+				//what should i do?
+			}
+		}
+		i++;
+	}
+	return out;
+}
+
+char	**pre_parse(char *pipe, t_envyan envyan)
 {
 	int		i;
 	char	*dest;
@@ -147,7 +185,7 @@ char	**pre_parse(char *pipe)
 	}
 	dest[i + j] = '\0';
 	printf("dest before split: %s\n", dest);
-	final = split_ignore_quotes(dest, ' ');
+	final = expanser(dest, &envyan);
 	free(dest);
 	return (final);
 }
@@ -163,7 +201,7 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	i = 0;
 	while (pipes && pipes[i] && curr)
 	{
-		tokens = pre_parse(pipes[i]);
+		tokens = pre_parse(pipes[i], *nyan->envyan);
 		//tokens = split_ignore_quotes(pipes[i], ' ');
 		j = 0;
 		while (tokens[j] != NULL)
