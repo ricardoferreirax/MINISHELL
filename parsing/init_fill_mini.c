@@ -99,6 +99,35 @@ int	pre_parse_size_count(char *str)
 	return (size);
 }
 
+void expanser_helper(char *str, char *temp)
+{
+	if(str)
+		free(str);
+}
+
+char	**expanser(char *str)
+{
+	char	**final;
+	int		i;
+	char	*temp;
+
+	final = split_ignore_quotes(str, ' ');
+	i = 0;
+	while (final[i] != NULL)
+	{
+		if (final[i][0] == '$')
+		{
+			temp = ft_strdup(final[i]);
+			free(final[i]);
+			final[i] = NULL;
+			expanser_helper(&final[i], temp);
+			free(temp);
+		}
+	}
+
+	return (final);
+}
+
 char	**pre_parse(char *pipe)
 {
 	int		i;
@@ -113,7 +142,7 @@ char	**pre_parse(char *pipe)
 	inquote = false;
 	j = 0;
 	dest = malloc(sizeof(char *) * pre_parse_size_count(pipe) + 1);
-	//printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
+	// printf("Size of pipe: %d\n", pre_parse_size_count(pipe));
 	while (pipe[i])
 	{
 		if (pipe[i] == '\'' && !indquote)
@@ -137,11 +166,6 @@ char	**pre_parse(char *pipe)
 				j++;
 			}
 		}
-		if (!inquote && pipe[i] == '$')
-		{
-			// must copy the expanded string $XXXX
-			j += ft_strlcat(dest, dest, 100);
-		}
 		dest[i + j] = pipe[i];
 		i++;
 	}
@@ -164,14 +188,14 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes && pipes[i] && curr)
 	{
 		tokens = pre_parse(pipes[i]);
-		//tokens = split_ignore_quotes(pipes[i], ' ');
+		// tokens = split_ignore_quotes(pipes[i], ' ');
 		j = 0;
 		while (tokens[j] != NULL)
 		{
-			//ft_printf("token n%d : %s\n", j, tokens[j]);
-			if(!parse(curr, tokens, &j))
-				break;
-			//j++;
+			// ft_printf("token n%d : %s\n", j, tokens[j]);
+			if (!parse(curr, tokens, &j))
+				break ;
+			// j++;
 		}
 		curr = curr->next;
 		i++;

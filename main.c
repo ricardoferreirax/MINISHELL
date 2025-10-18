@@ -6,11 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/10/15 14:46:33 by pfreire-         ###   ########.fr       */
-=======
 /*   Updated: 2025/10/16 16:36:19 by rmedeiro         ###   ########.fr       */
->>>>>>> ricardo
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +15,11 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-<<<<<<< HEAD
 #include "include/MiNyanShell.h"
 #include "include/execution.h"
-#include "include/envyan.h"
 #include "include/parsing.h"
-=======
-#include "../include/MiNyanShell.h"
-#include "../include/execution.h"
-#include "../include/parsing.h"
-#include "../include/envyan.h"
-#include "../include/signals.h"
->>>>>>> ricardo
+#include "include/envyan.h"
+#include "include/signals.h"
 
 static void process_line(t_mini *mini, char *input)
 {
