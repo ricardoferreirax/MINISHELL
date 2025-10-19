@@ -1,18 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmds.c                                     :+:      :+:    :+:   */
+/*   external_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 16:15:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/16 15:15:17 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/10/18 22:25:55 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/10/19 08:26:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
 #include "../include/envyan.h"
 #include "../include/signals.h"
+
+int is_external_resolved(t_cmd *cmd, t_mini *mini)
+{
+    char **envyan;
+    char  *path;
+
+    if (!cmd || !cmd->args || !cmd->args[0])
+        return (EXT_ERROR);
+    envyan = envyan_to_array(mini->envyan);
+    if (!envyan)
+        return (EXT_ERROR);
+    path = handle_cmd_path(cmd->args[0], envyan);
+    if (!path)
+    {
+        free_str_array(envyan);
+        return (NOT_FOUND);
+    }
+    free(path);
+    free_str_array(envyan);
+    return (HAS_BINARY);
+}
 
 void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini)
 {
@@ -40,7 +61,7 @@ void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini)
 
 static void setup_and_exec_child_external(t_cmd *cmd, t_mini *mini)
 {
-    char **envvyan;
+    char **envyan;
 
     minyanshell_signals(CHILD_EXEC);
     if (apply_redirs_in_child(cmd) != 0)
@@ -52,10 +73,10 @@ static void setup_and_exec_child_external(t_cmd *cmd, t_mini *mini)
         cmd_not_found_msg(cmd->args[0]);
         minyanshell_child_cleanup_and_exit(mini, 127);
     }
-    envvyan = envyan_to_array(mini->envyan);
-    if (!envvyan)
+    envyan = envyan_to_array(mini->envyan);
+    if (!envyan)
         minyanshell_child_cleanup_and_exit(mini, 1);
-    execute_external_in_child(cmd, envvyan, mini);
+    execute_external_in_child(cmd, envyan, mini);
 }
 
 int execute_external_cmd(t_cmd *cmd, t_mini *mini)

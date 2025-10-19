@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/17 02:39:03 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/10/18 23:12:26 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,13 @@ SRC_FILES = \
 	execution/heredoc.c \
 	execution/builtin.c \
 	execution/cmd_path.c \
+	execution/prepare_child.c \
 	execution/child_process.c \
-	execution/execute_cmds.c \
+	execution/external_cmds.c \
 	execution/execute_single.c \
 	utils/errors.c \
 	utils/pipe_utils.c \
+	utils/close_utils.c \
 	utils/split_quotes.c \
 	utils/clean_utils.c \
 	builtin/ft_echo.c \

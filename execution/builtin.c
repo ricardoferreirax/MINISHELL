@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/17 03:37:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/19 08:47:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,17 @@ int execute_builtin(t_cmd *cmd, t_mini *mini)
     return (status);
 }
 
+int builtin_has_io(char *name)
+{
+    if (!name) 
+		return (0);
+    if (ft_strcmp(name, "echo") == 0) 
+		return (1);
+    if (ft_strcmp(name, "pwd")  == 0) 
+		return (1);
+    if (ft_strcmp(name, "env")  == 0) 
+		return (1);
+    if (ft_strcmp(name, "export")== 0) 
+		return (1);
+    return (0);
+}

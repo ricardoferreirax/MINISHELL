@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:51:23 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/17 03:40:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/18 23:13:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
         if (mini->envyan)
             free_envyan(&mini->envyan);
     }
-    exit(status);
+    _exit(status);
 }

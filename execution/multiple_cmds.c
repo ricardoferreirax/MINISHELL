@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 10:57:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 09:24:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/10/18 21:53:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ int execute_multiple_cmds(t_cmd *cmds, t_mini *mini)
         current_cmd = current_cmd->next;
     }
     wait_for_children(mini, pp.pid);
-    // set_interactive_signals();       voltar ao modo prompt
+    // set_interactive_signals();       // (volta ao modo prompt)
     return (mini->last_status);
 }
