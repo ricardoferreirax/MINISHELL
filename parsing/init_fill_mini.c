@@ -116,6 +116,8 @@ char	*expander_helper(char *str, t_envyan *envyan)
 	return (expanded);
 }
 
+
+//below it is wrong. it doesn't hangel echo h$USER where the ouput is hpedro or echo h"ello" hwere the output is hello
 char	**expanser(char *str, t_envyan *envyan)
 {
 	char	**out;
@@ -131,10 +133,20 @@ char	**expanser(char *str, t_envyan *envyan)
 			temp = ft_strdup(out[i]);
 			free(out);
 			out[i] = expander_helper(temp, envyan);
-			if (strcmp(out[i], (void *)1))
+		}
+		else if(out[i][0] == '\"')
+		{
+			temp = ft_strdup(out[i]);
+			free(out[i]);
+			unsigned int k = 1;
+			out[i] = malloc(sizeof(char) * (ft_strlen(temp) - 2));
+			while(k < (ft_strlen(temp) - 1))
 			{
-				// what should i do?
+				out[i][k - 1] = temp[k];
+				k++;
 			}
+			out[i][k] = '\0';
+			free(temp);
 		}
 		i++;
 	}
@@ -179,16 +191,10 @@ char	**pre_parse(char *pipe, t_envyan envyan)
 				j++;
 			}
 		}
-		if (!inquote && pipe[i] == '$')
-		{
-			// must copy the expanded string $XXXX
-			j += ft_strlcat(dest, dest, 100);
-		}
 		dest[i + j] = pipe[i];
 		i++;
 	}
 	dest[i + j] = '\0';
-	printf("dest before split: %s\n", dest);
 	final = expanser(dest, &envyan);
 	free(dest);
 	return (final);

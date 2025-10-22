@@ -20,24 +20,6 @@ LIBFT   = libft/libft.a
 
 SRC_FILES = \
 	main.c \
-	execution/execution.c \
-	execution/redirection.c \
-	execution/multiple_cmds.c \
-	execution/heredoc.c \
-	execution/builtin.c \
-	execution/cmd_path.c \
-	execution/child_process.c \
-	execution/execute_cmds.c \
-	execution/execute_single.c \
-	utils/errors.c \
-	utils/pipe_utils.c \
-	utils/split_quotes.c \
-	builtin/ft_echo.c \
-	builtin/ft_pwd.c \
-	builtin/ft_env.c \
-	builtin/cd/cd_cases.c \
-	builtin/cd/cd_utils.c \
-	builtin/cd/ft_cd.c \
 	parsing/aux_funcs.c \
 	parsing/fill_subcmd.c \
 	parsing/init_fill_mini.c \
