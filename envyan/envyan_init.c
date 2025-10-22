@@ -30,10 +30,11 @@ static void	split_envyan_entry(char *entry, char **key, char **value)
 	}
 }
 
-void	process_envyan_entry(char *entry, t_envyan **env_list, t_envyan **current)
+void	process_envyan_entry(char *entry, t_envyan **env_list,
+		t_envyan **current)
 {
-	char	*key;
-	char	*value;
+	char		*key;
+	char		*value;
 	t_envyan	*new_node;
 
 	split_envyan_entry(entry, &key, &value);
@@ -47,8 +48,8 @@ t_envyan	*init_envyan(char **envp)
 {
 	t_envyan	*envyan_list;
 	t_envyan	*node;
-	int		        i;
-	int		    shlvl;
+	int			i;
+	int			shlvl;
 
 	envyan_list = NULL;
 	node = NULL;
@@ -59,8 +60,8 @@ t_envyan	*init_envyan(char **envp)
 	while (envp[i])
 	{
 		if (!(ft_strncmp(envp[i], "SHLVL=", 6) == 0))
-            process_envyan_entry(envp[i], &envyan_list, &node);
-        i++;
+			process_envyan_entry(envp[i], &envyan_list, &node);
+		i++;
 	}
 	node = process_shlvl(&envyan_list, &node, shlvl);
 	return (envyan_list);

@@ -107,17 +107,20 @@ char	*expander_helper(char *str, t_envyan *envyan)
 	{
 		if (ft_strcmp(envyan->key, str) == 0)
 		{
+
 			expanded = ft_strdup(envyan->value);
 			return (expanded);
 		}
 		envyan = envyan->next;
 	}
+	ft_printf("didn't find in PATH");
+	sleep(1);
 	expanded = ft_strdup("");
 	return (expanded);
 }
 
 
-//below it is wrong. it doesn't hangel echo h$USER where the ouput is hpedro or echo h"ello" hwere the output is hello
+//below it is wrong. it doesn't hangel echo h$USER where the ouput is hpedro or echo h"ello" hwere the output is 
 char	**expanser(char *str, t_envyan *envyan)
 {
 	char	**out;
@@ -195,7 +198,9 @@ char	**pre_parse(char *pipe, t_envyan envyan)
 		i++;
 	}
 	dest[i + j] = '\0';
-	final = expanser(dest, &envyan);
+	final = split_ignore_quotes(dest, ' ');
+	//cannot cuking expand here bitch
+//	final = expanser(dest, &envyan);
 	free(dest);
 	return (final);
 }
@@ -224,4 +229,6 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		curr = curr->next;
 		i++;
 	}
+	//expnade HERE and do it with the list mf
+	//
 }
