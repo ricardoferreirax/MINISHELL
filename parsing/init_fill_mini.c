@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include <string.h>
 
 int		arr_size(void **arr);
 
@@ -90,7 +91,7 @@ int	add_spaces_size_count(char *str)
 	return (size);
 }
 
-//char	*str_expand(char *str, t_envyan env)
+// char	*str_expand(char *str, t_envyan env)
 //{
 //	int		i;
 //	int		size;
@@ -123,31 +124,67 @@ int	add_spaces_size_count(char *str)
 //	return (dest);
 //}
 //// below it is wrong. it doesn't hangel echo h$USER where the ouput is hpedro or echo h"ello" where the output is hello
-//char	**expanser(t_cmd *cmd, t_envyan *envyan)
-//{
-//	int		i;
-//	bool	inquote;
-//	int		j;
-//
-//	while (cmd)
-//	{
-//		i = 0;
-//		while (cmd->args[i] != NULL)
-//		{
-//			j = 0;
-//			if (cmd->args[i][j] == '\'')
-//				inquote = !inquote;
-//			while (cmd->args[i][j] != '\0')
-//			{
-//				if (cmd->args[i][j] == '$')
-//				{
-//					// copy everything after $ and pass it to a function to return the desired string
-//					// then copy everything to the cmd->args
-//				}
-//			}
-//		}
-//	}
-//}
+
+char	*find_expanded(char *cmd_args, t_envyan *envyan)
+{
+	char	*temp;
+	char	*result;
+	int		i;
+
+	i = 0;
+	temp = malloc(sizeof(char) * ft_strlen(cmd_args));
+	result = ft_strdup("");
+	cmd_args++;
+	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z') || (cmd_args[i] >= 'A'
+			&& cmd_args[i] <= 'Z') || (cmd_args[i] == '_')))
+	{
+		temp[i] = cmd_args[i];
+		i++;
+	}
+	while (envyan)
+	{
+		if (ft_strcmp(temp, envyan->key) == 0)
+		{
+			if (result)
+				free(result);
+			result = ft_strdup(envyan->value);
+			break ;
+		}
+		envyan = envyan->next;
+	}
+	return (result);
+}
+
+void expanser(t_cmd *cmd, t_envyan *envyan)
+{
+	int		i;
+	bool	inquote;
+	int		j;
+	char	*expanded;
+
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->args[i] != NULL)
+		{
+			j = 0;
+			if (cmd->args[i][j] == '\'')
+				inquote = !inquote;
+			while (cmd->args[i][j] != '\0')
+			{
+				if (cmd->args[i][j] == '$' && !inquote)
+				{
+					expanded = find_expanded(cmd->args[i] + j, envyan);
+					ft_printf(expanded);
+					exit(0);
+				}
+				j++;
+			}
+			i++;
+		}
+	}
+	return (exit(1));
+}
 
 char	**add_spaces(char *pipe)
 {
@@ -179,12 +216,13 @@ char	**add_spaces(char *pipe)
 			}
 			dest[j + i] = pipe[i];
 			i++;
-			if ((!inquote && !indquote) && (pipe[i] != ' ' && pipe[i] != '>' && pipe[i] != '<'))
+			if ((!inquote && !indquote) && (pipe[i] != ' ' && pipe[i] != '>'
+					&& pipe[i] != '<'))
 			{
 				dest[j + i] = ' ';
 				j++;
 			}
-			continue;
+			continue ;
 		}
 		dest[i + j] = pipe[i];
 		i++;
@@ -219,6 +257,7 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		curr = curr->next;
 		i++;
 	}
+	curr = nyan->head;
 	// expnade HERE and do it with the list mf
-	//expanser(curr, nyan->envyan);
+	expanser(curr, nyan->envyan);
 }

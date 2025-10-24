@@ -87,6 +87,16 @@ static void	init_shell(t_mini *mini, char **envp)
 	// set_interactive_signals();
 }
 
+void print_env(t_envyan *env)
+{
+	while(env)
+	{
+		ft_printf("Key: %s\n", env->key);
+		ft_printf("Value : %s\n", env->value);
+		env = env->next;
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_mini	mini;
@@ -100,6 +110,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 	init_shell(&mini, envp);
+	print_env(mini.envyan);
 	command_loop(&mini);
 	rl_clear_history();
 	free_envyan(mini.envyan);
