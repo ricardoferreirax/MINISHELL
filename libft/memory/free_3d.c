@@ -12,9 +12,14 @@
 
 #include "memory.h"
 
+/**
+ * @brief Frees a NULL-terminated 3D array.
+ *
+ * @param arr Pointer to the 3D array to free.
+ */
 void	free_3d(void ***arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!arr)

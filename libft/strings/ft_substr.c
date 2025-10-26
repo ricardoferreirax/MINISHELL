@@ -12,6 +12,16 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Extracts a substring from a string.
+ *
+ * Allocates memory for the substring, null-terminated.
+ *
+ * @param s Input string.
+ * @param start Start index.
+ * @param len Maximum length of substring.
+ * @return Pointer to newly allocated substring, or NULL on failure.
+ */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;

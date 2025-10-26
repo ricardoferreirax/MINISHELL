@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is printable.
+ *
+ * Determines whether the given character is printable, including
+ * space (' ') but excluding control characters.
+ *
+ * @param a Character to check.
+ * @return 1 if the character is printable, 0 otherwise.
+ */
 int	ft_isprint(int a)
 {
 	if (a >= 32 && a <= 126)

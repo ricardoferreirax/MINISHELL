@@ -34,16 +34,26 @@ void	ft_case(char a, va_list *arg, int *n)
 		ft_putlchar('%', n);
 }
 
-/// @brief Prints string to standard output
-/// @param format string
-/// @param %c for a single char, %s for string, 
-//  %p for an adress in hex,
-//	%d for decimal number, 
-//	%i for integer in base 10, 
-//  %u for an unsigned interger. 
-//	%x for lowercas hexadecimal number,
-//	%X for upercase hexadicimal number
-/// @return
+/**
+ * @brief Mimics the standard printf function,
+	writing formatted output to stdout.
+ *
+ * Supports format specifiers for characters, strings, integers,
+	unsigned integers,
+ * hexadecimal (uppercase and lowercase), pointers, and the percent symbol.
+ *
+ * Example usage:
+ * @code
+ * int n = 42;
+ * ft_printf("Number: %d\n", n);
+ * @endcode
+ *
+
+ * @param format Format string containing literal characters and format
+ specifiers.
+ * @param ... Arguments corresponding to the format specifiers.
+ * @return The total number of characters written, excluding the null byte.
+ */
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;

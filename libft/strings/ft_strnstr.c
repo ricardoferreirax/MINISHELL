@@ -12,6 +12,14 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Locates the first occurrence of a substring within n characters.
+ *
+ * @param str String to search in.
+ * @param to_find Substring to search for.
+ * @param n Maximum number of characters to search.
+ * @return Pointer to the first occurrence, or NULL if not found.
+ */
 char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {
 	size_t	i;
@@ -26,7 +34,7 @@ char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 	{
 		j = 0;
 		while (str[i + j] == to_find[j] && to_find[j] != '\0' && str[i
-			+ j] != '\0' && i + j < n)
+				+ j] != '\0' && i + j < n)
 			j++;
 		if (to_find[j] == '\0')
 			return ((char *)str + i);

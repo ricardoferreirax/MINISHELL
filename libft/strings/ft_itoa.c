@@ -34,6 +34,14 @@ static int	numberlen(int num)
 	return (len);
 }
 
+/**
+ * @brief Converts an integer to a null-terminated string.
+ *
+ * Allocates memory for the string, including the sign if negative.
+ *
+ * @param n Integer to convert.
+ * @return Pointer to the newly allocated string, or NULL on allocation failure.
+ */
 char	*ft_itoa(int n)
 {
 	int			len;

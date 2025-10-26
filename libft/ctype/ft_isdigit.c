@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is a digit.
+ *
+ * Determines whether the given character represents a decimal digit
+ * ('0'–'9').
+ *
+ * @param i Character to check.
+ * @return 1 if the character is a digit, 0 otherwise.
+ */
 int	ft_isdigit(int i)
 {
 	if (i >= 48 && i <= 57)

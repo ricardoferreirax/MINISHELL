@@ -12,6 +12,14 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Calculates the length of a string.
+ *
+ * Returns 0 if the string is NULL.
+ *
+ * @param str Input string.
+ * @return Number of characters before the null terminator.
+ */
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;

@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character has a graphical representation.
+ *
+ * Determines whether the given character is printable and not a space
+ * (i.e., has a visible glyph).
+ *
+ * @param c Character to check.
+ * @return 1 if the character has a graphical representation, 0 otherwise.
+ */
 int	ft_isgraph(int c)
 {
 	if (ft_isprint(c) && c != ' ')

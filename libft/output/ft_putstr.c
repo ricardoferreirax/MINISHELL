@@ -12,6 +12,13 @@
 
 #include "output.h"
 
+/**
+ * @brief Prints a string to stdout.
+ *
+ * Prints "(null)" if the string is NULL.
+ *
+ * @param str String to print.
+ */
 void	ft_putstr(char *str)
 {
 	int	i;

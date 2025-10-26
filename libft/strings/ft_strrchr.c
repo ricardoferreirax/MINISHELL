@@ -12,6 +12,13 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Locates the last occurrence of a character in a string.
+ *
+ * @param a Input string.
+ * @param b Character to search for (converted to char).
+ * @return Pointer to the last occurrence, or NULL if not found.
+ */
 char	*ft_strrchr(const char *a, int b)
 {
 	int	i;

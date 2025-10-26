@@ -34,6 +34,29 @@ void	ft_dcase(int out, char a, va_list *arg, int *n)
 		ft_dputchar(out, '%', n);
 }
 
+/**
+ * @brief Mimics the standard dprintf function,
+	writing formatted output to the given file descriptor.
+ *
+ * Supports the same format specifiers as ft_printf: characters, strings,
+	integers,
+ * unsigned integers, hexadecimal (uppercase and lowercase), pointers,
+	and percent.
+ *
+ * Example usage:
+ * @code
+ * int fd = open("output.txt", O_WRONLY | O_CREAT, 0644);
+ * ft_dprintf(fd, "Error code: %d\n", err);
+ * close(fd);
+ * @endcode
+ *
+ * @param fd File descriptor where the output should be written.
+
+ * @param format Format string containing literal characters and format
+ specifiers.
+ * @param ... Arguments corresponding to the format specifiers.
+ * @return The total number of characters written, excluding the null byte.
+ */
 int	ft_dprintf(int out, const char *format, ...)
 {
 	va_list	args;

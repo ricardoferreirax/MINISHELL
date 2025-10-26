@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is a blank character.
+ *
+ * Determines whether the given character is a space (' ') or a
+ * horizontal tab ('\t', ASCII 9).
+ *
+ * @param c Character to check.
+ * @return 1 if the character is a blank, 0 otherwise.
+ */
 int	ft_isblank(int c)
 {
 	if (c == ' ' || c == 9)

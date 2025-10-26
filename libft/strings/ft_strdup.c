@@ -11,21 +11,14 @@
 /* ************************************************************************** */
 
 #include "ft_strings.h"
-
-static char	*ft_strcpy(char *dest, const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
+/**
+ * @brief Duplicates a string.
+ *
+ * Allocates memory for the copy, including the null terminator.
+ *
+ * @param src Input string.
+ * @return Pointer to newly allocated string, or NULL on failure.
+ */
 char	*ft_strdup(const char *src)
 {
 	char	*buffer;

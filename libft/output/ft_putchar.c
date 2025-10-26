@@ -12,8 +12,11 @@
 
 #include "output.h"
 
-/// @brief Prints char to std output
-/// @param c
+/**
+ * @brief Prints a single character to stdout.
+ *
+ * @param c Character to print.
+ */
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);

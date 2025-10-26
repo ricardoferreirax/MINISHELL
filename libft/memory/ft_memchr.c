@@ -12,11 +12,14 @@
 
 #include "memory.h"
 
-/// @brief Searchs for the first occurency of a int in memory in x bytes
-/// @param a memory to search through
-/// @param b int to be localized
-/// @param c bytes to be searched
-/// @return pointer to index or NULL if fails to find
+/**
+ * @brief Searches for the first occurrence of a byte in memory.
+ *
+ * @param ptr Pointer to the memory area.
+ * @param value Byte to search for (converted to unsigned char).
+ * @param num Number of bytes to examine.
+ * @return Pointer to the first occurrence, or NULL if not found.
+ */
 void	*ft_memchr(const void *a, int b, size_t c)
 {
 	size_t			i;

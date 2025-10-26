@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is lowercase.
+ *
+ * Determines whether the given character is a lowercase letter
+ * ('a'–'z').
+ *
+ * @param c Character to check.
+ * @return 1 if the character is lowercase, 0 otherwise.
+ */
 int	ft_islower(int c)
 {
 	if (c >= 97 && c <= 122)

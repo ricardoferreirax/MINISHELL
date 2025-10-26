@@ -12,6 +12,13 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Compares two strings lexicographically.
+ *
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @return Negative if s1 < s2, 0 if equal, positive if s1 > s2.
+ */
 int	ft_strcmp(char *s1, char *s2)
 {
 	unsigned int	i;

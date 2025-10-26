@@ -12,11 +12,15 @@
 
 #include "memory.h"
 
-/// @brief Compares 2 memories fo x bytes and returns the difference
-/// @param s1 memory to be compared
-/// @param s2 memory to compare
-/// @param n bytes to compare
-/// @return 0 if they are equal, positive if s1 is bigger than s2 and vice versa
+/**
+ * @brief Compares two memory areas.
+ *
+ * @param s1 Pointer to the first memory area.
+ * @param s2 Pointer to the second memory area.
+ * @param n Number of bytes to compare.
+ * @return An integer less than, equal to, or greater than zero if s1 is found
+ * to be less than, equal to, or greater than s2.
+ */
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t			i;

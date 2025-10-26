@@ -16,6 +16,21 @@
 # define BUFFER_SIZE 1
 #endif
 
+/**
+ * @brief Reads the next line from a file descriptor.
+ *
+ * Reads from the given file descriptor until a newline character (`\n`)
+ * or end-of-file is encountered. Returns the line read, including the
+ * newline character if present. Uses a static buffer of size `BUFFER_SIZE`
+ * to optimize reads.
+ *
+ * @param fd File descriptor to read from.
+ * @return Pointer to a dynamically allocated string containing the line,
+ *         or NULL on error or end-of-file.
+ *
+ * @note The returned string must be freed by the caller.
+ * @note `BUFFER_SIZE` can be defined at compile time; defaults to 1.
+ */
 char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
@@ -23,6 +38,7 @@ char	*get_next_line(int fd)
 	int			i;
 
 	line = NULL;
+	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (1)

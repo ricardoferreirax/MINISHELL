@@ -12,11 +12,19 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Applies a function to each character of a string, with the index.
+ *
+ * @param s String to modify.
+ * @param f Function to apply: receives index and pointer to character.
+ */
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	int	i;
 
 	i = 0;
+	if (!s || !f)
+		return ;
 	while (s[i] != '\0')
 	{
 		f(i, &s[i]);

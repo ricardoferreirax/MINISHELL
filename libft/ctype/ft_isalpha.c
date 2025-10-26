@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is alphabetic.
+ *
+ * Determines whether the given character is an uppercase or lowercase
+ * letter (A–Z, a–z).
+ *
+ * @param a Character to check.
+ * @return 1 if the character is alphabetic, 0 otherwise.
+ */
 int	ft_isalpha(int a)
 {
 	if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z'))

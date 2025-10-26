@@ -12,6 +12,11 @@
 
 #include "output.h"
 
+/**
+ * @brief Prints an unsigned integer to stdout.
+ *
+ * @param nb Unsigned integer to print.
+ */
 void	ft_putunbr(unsigned int nb)
 {
 	if (nb >= 10)

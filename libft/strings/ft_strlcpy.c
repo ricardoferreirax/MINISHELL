@@ -12,6 +12,14 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Copies src to dest, up to size-1 characters, null-terminated.
+ *
+ * @param dest Destination buffer.
+ * @param scr Source string.
+ * @param size Size of the destination buffer.
+ * @return Length of source string.
+ */
 unsigned int	ft_strlcpy(char *dest, const char *scr, size_t size)
 {
 	size_t	i;

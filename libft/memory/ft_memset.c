@@ -12,6 +12,14 @@
 
 #include "memory.h"
 
+/**
+ * @brief Fills a memory area with a constant byte.
+ *
+ * @param ptr Pointer to the memory area.
+ * @param value Byte to set (converted to unsigned char).
+ * @param size Number of bytes to fill.
+ * @return Pointer to the memory area.
+ */
 void	*ft_memset(void *a, int c, size_t i)
 {
 	size_t			j;

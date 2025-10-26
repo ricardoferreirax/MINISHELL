@@ -21,10 +21,10 @@ void	ft_putlnbr(int nb, int *n)
 	}
 	if (nb < 0)
 	{
-		ft_putlchar ('-', n);
+		ft_putlchar('-', n);
 		nb = nb * -1;
 	}
 	if (nb >= 10)
-		ft_putlnbr (nb / 10, n);
-	ft_putlchar ((nb % 10) + '0', n);
+		ft_putlnbr(nb / 10, n);
+	ft_putlchar((nb % 10) + '0', n);
 }

@@ -12,6 +12,15 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Appends src to dest, ensuring null-termination and max size.
+ *
+ * @param dest Destination buffer.
+ * @param src Source string.
+ * @param size Total size of destination buffer.
+ * @return Total length of string it tried to create
+ * (length of initial dest + src).
+ */
 unsigned int	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	i;

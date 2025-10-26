@@ -12,6 +12,11 @@
 
 #include "output.h"
 
+/**
+ * @brief Prints an unsigned integer in uppercase hexadecimal to stdout.
+ *
+ * @param nb Unsigned integer to print.
+ */
 void	ft_putnbr_hex(unsigned int nb)
 {
 	char	*hex;

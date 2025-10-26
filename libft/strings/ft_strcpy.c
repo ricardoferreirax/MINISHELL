@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 10:27:34 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/08/19 11:54:40 by pfreire-         ###   ########.fr       */
+/*   Created: 2025/10/26 11:57:18 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/10/26 11:57:36 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "output.h"
+#include "ft_strings.h"
 
-/**
- * @brief Prints a string to the specified file descriptor.
- *
- * @param s String to print.
- * @param fd File descriptor to write to.
- */
-void	ft_putstr_fd(char *s, int fd)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (src[i] != '\0')
 	{
-		ft_putchar_fd(s[i], fd);
+		dest[i] = src[i];
 		i++;
 	}
+	dest[i] = '\0';
+	return (dest);
 }

@@ -12,6 +12,11 @@
 
 #include "memory.h"
 
+/**
+ * @brief Frees a NULL-terminated 2D array.
+ *
+ * @param arr Pointer to the 2D array to free.
+ */
 void	free_2d(void **arr)
 {
 	int	i;

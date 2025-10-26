@@ -12,6 +12,13 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Locates the first occurrence of a character in a string.
+ *
+ * @param s Input string.
+ * @param b Character to search for (converted to char).
+ * @return Pointer to the first occurrence of b in s, or NULL if not found.
+ */
 char	*ft_strchr(const char *s, int b)
 {
 	int	i;

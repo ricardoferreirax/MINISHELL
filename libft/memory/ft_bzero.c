@@ -12,9 +12,12 @@
 
 #include "memory.h"
 
-/// @brief Alocate memory with 0 in every index
-/// @param a buffer to alocate
-/// @param i size of buffer
+/**
+ * @brief Sets a memory area to zero.
+ *
+ * @param ptr Pointer to the memory area.
+ * @param size Number of bytes to set to zero.
+ */
 void	ft_bzero(void *a, size_t i)
 {
 	ft_memset(a, 0, i);

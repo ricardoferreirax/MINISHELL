@@ -12,10 +12,13 @@
 
 #include "memory.h"
 
-/// @brief Alocate memory of size x to n menbers of an array
-/// @param nmemb number of members
-/// @param size size of each member
-/// @return buffer whit size and 0 in each index
+/**
+ * @brief Allocates memory for an array and initializes it to zero.
+ *
+ * @param nmemb Number of elements.
+ * @param size Size of each element in bytes.
+ * @return Pointer to the allocated memory, or NULL on failure.
+ */
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*buffer;

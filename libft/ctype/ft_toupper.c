@@ -12,6 +12,16 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Converts a lowercase letter to uppercase.
+ *
+ * If the given character is a lowercase letter ('a'–'z'), converts it
+ * to the corresponding uppercase letter ('A'–'Z'). Otherwise,
+	returns it unchanged.
+ *
+ * @param a Character to convert.
+ * @return Uppercase equivalent if lowercase, else the original character.
+ */
 int	ft_toupper(int a)
 {
 	if (a >= 'a' && a <= 'z')

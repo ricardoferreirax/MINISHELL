@@ -12,6 +12,15 @@
 
 #include "output.h"
 
+/**
+
+ * @brief Prints a string followed by a newline to the specified file descriptor.
+ *
+ * Does nothing if the string is NULL.
+ *
+ * @param s String to print.
+ * @param fd File descriptor to write to.
+ */
 void	ft_putendl_fd(char *s, int fd)
 {
 	if (!s)

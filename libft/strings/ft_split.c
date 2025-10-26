@@ -12,6 +12,16 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Splits a string into an array of strings using a delimiter.
+ *
+ * Allocates memory for each substring and the array of pointers.
+ *
+ * @param s Input string.
+ * @param c Delimiter character.
+ * @return Null-terminated array of substrings, or NULL on allocation failure.
+ */
+
 char	**ft_split(char const *s, char c)
 {
 	char	**array;

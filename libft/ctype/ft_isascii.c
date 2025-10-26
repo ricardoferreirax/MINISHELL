@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a value is a valid ASCII character.
+ *
+ * Determines whether the given integer falls within the ASCII range
+ * (0–127 inclusive).
+ *
+ * @param a Integer value to check.
+ * @return 1 if the value is a valid ASCII character, 0 otherwise.
+ */
 int	ft_isascii(int a)
 {
 	if (a >= 0 && a <= 127)

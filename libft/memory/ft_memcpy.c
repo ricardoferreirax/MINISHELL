@@ -12,6 +12,14 @@
 
 #include "memory.h"
 
+/**
+ * @brief Copies a memory area to another.
+ *
+ * @param dest Pointer to the destination memory.
+ * @param src Pointer to the source memory.
+ * @param n Number of bytes to copy.
+ * @return Pointer to the destination memory.
+ */
 void	*ft_memcpy(void *dest, const void *src, size_t i)
 {
 	size_t			j;

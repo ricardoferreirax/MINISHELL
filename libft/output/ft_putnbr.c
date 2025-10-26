@@ -12,6 +12,14 @@
 
 #include "output.h"
 
+/**
+ * @brief Prints an integer to stdout.
+ *
+ * Handles negative numbers and the minimum integer value.
+ *
+ * @param nb Integer to print.
+ */
+
 void	ft_putnbr(int nb)
 {
 	if (nb == -2147483648)

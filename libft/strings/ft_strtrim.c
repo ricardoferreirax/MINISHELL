@@ -26,6 +26,13 @@ static int	ft_iset(const char *set, char a)
 	return (false);
 }
 
+/**
+ * @brief Trims all characters in set from the start and end of s1.
+ *
+ * @param s1 Input string.
+ * @param set Set of characters to trim.
+ * @return Newly allocated trimmed string, or NULL on failure.
+ */
 char	*ft_strtrim(const char *s1, char const *set)
 {
 	int		i;

@@ -22,8 +22,13 @@ static void	ft_putnbr_hexadrs(unsigned long nb)
 	ft_putchar(hex[nb % 16]);
 }
 
-/// @brief Prints the hex adress of a pointer
-/// @param ptr pointer
+/**
+ * @brief Prints the hexadecimal address of a pointer to stdout.
+ *
+ * Prints "(nil)" if the pointer is NULL.
+ *
+ * @param ptr Pointer to print.
+ */
 void	ft_printhex(void *ptr)
 {
 	unsigned long	i;

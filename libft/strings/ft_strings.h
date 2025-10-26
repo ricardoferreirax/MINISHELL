@@ -37,5 +37,6 @@ char			*ft_strrchr(const char *a, int b);
 char			*ft_strtrim(const char *s1, char const *set);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_wordcpy(const char **s, char c);
+char			*ft_strcpy(char *dest, const char *src);
 
 #endif

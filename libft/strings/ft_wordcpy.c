@@ -12,6 +12,14 @@
 
 #include "ft_strings.h"
 
+/**
+ * @brief Copies the next word from a string (delimited by c)
+ * and advances pointer.
+ *
+ * @param s Pointer to input string (will be updated to point after copied word).
+ * @param c Delimiter character.
+ * @return Newly allocated word string, or NULL on allocation failure.
+ */
 char	*ft_wordcpy(const char **s, char c)
 {
 	char	*dest;

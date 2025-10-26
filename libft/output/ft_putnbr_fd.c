@@ -12,7 +12,15 @@
 
 #include "output.h"
 
-static void	ft_putstaticnbr(int nb, int fd)
+/**
+ * @brief Prints an integer to the specified file descriptor.
+ *
+ * Handles negative numbers and the minimum integer value.
+ *
+ * @param n Integer to print.
+ * @param fd File descriptor to write to.
+ */
+void	ft_putnbr_fd(int nb, int fd)
 {
 	if (nb == -2147483648)
 	{
@@ -26,16 +34,11 @@ static void	ft_putstaticnbr(int nb, int fd)
 	}
 	if (nb >= 10)
 	{
-		ft_putstaticnbr(nb / 10, fd);
-		ft_putstaticnbr(nb % 10, fd);
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putnbr_fd(nb % 10, fd);
 	}
 	if (nb < 10)
 	{
 		ft_putchar_fd(nb + '0', fd);
 	}
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	ft_putstaticnbr(n, fd);
 }

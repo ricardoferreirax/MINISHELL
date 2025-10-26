@@ -12,10 +12,15 @@
 
 #include "ft_strings.h"
 
-/// @brief Count number of words in a string separated by a delimiter
-/// @param s string
-/// @param c delimiter
-/// @return number of words
+/**
+ * @brief Counts the number of words in a string separated by a delimiter.
+ *
+ * Consecutive delimiters are treated as a single separator.
+ *
+ * @param s Input string.
+ * @param c Delimiter character.
+ * @return Number of words in the string.
+ */
 int	ft_count_words(char const *s, char c)
 {
 	int		i;

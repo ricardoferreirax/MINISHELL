@@ -12,6 +12,15 @@
 
 #include "ctype.h"
 
+/**
+ * @brief Checks if a character is a control character.
+ *
+ * Determines whether the given character is a non-printable control
+ * character in the ASCII table (0–31 or 127).
+ *
+ * @param c Character to check.
+ * @return 1 if the character is a control character, 0 otherwise.
+ */
 int	ft_iscntrl(int c)
 {
 	if (c < 32 || c == 127)

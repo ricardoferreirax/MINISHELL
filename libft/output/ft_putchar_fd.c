@@ -12,9 +12,12 @@
 
 #include "output.h"
 
-/// @brief Prints char in fd
-/// @param c char
-/// @param fd File Decriptor
+/**
+ * @brief Prints a single character to the specified file descriptor.
+ *
+ * @param c Character to print.
+ * @param fd File descriptor to write to.
+ */
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
