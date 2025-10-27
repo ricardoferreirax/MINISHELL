@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include <stddef.h>
 #include <string.h>
 
 int		arr_size(void **arr);
@@ -91,39 +92,6 @@ int	add_spaces_size_count(char *str)
 	return (size);
 }
 
-// char	*str_expand(char *str, t_envyan env)
-//{
-//	int		i;
-//	int		size;
-//	char	*dest;
-//	// need to alocate enough memory for the var_name;
-//	char	*var_name = NULL;
-//	int		j;
-//
-//	i = 0;
-//	size = 0;
-//	while (str[i] != '\0')
-//	{
-//		if (str[i] == '$')
-//		{
-//			if (str[i + 1] == '?')
-//			{
-//			}
-//			else
-//			{
-//				i++;
-//				j = 0;
-//				while (ft_isalpha(str[i + j]) || ft_isdigit(str[i + j]) || str[i
-//					+ j] == '_')
-//						j++;
-//				var_name = malloc(sizeof(char) * j);
-//			}
-//		}
-//		size++;
-//	}
-//	return (dest);
-//}
-//// below it is wrong. it doesn't hangel echo h$USER where the ouput is hpedro or echo h"ello" where the output is hello
 
 char	*find_expanded(char *cmd_args, t_envyan *envyan)
 {
@@ -132,7 +100,7 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 	int		i;
 
 	i = 0;
-	temp = malloc(sizeof(char) * ft_strlen(cmd_args));
+	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
 	result = ft_strdup("");
 	cmd_args++;
 	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z') || (cmd_args[i] >= 'A'
@@ -141,6 +109,7 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 		temp[i] = cmd_args[i];
 		i++;
 	}
+	temp[i] = '\0';
 	while (envyan)
 	{
 		if (ft_strcmp(temp, envyan->key) == 0)
@@ -155,12 +124,46 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 	return (result);
 }
 
+char *insert_expanded(char *args, int j, char *expanded)
+{
+	size_t i = 0;
+	int skip_len = 1;
+	while(args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j + skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j + skip_len] <= 'Z') || args[j + skip_len] == '_'))
+		skip_len++;
+	char *result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 2));
+	size_t k = 0;
+	while(k < (size_t)j)
+	{
+		result[i] = args[k];
+		i++;
+		k++;
+	}
+	size_t e = 0;
+	while(e < ft_strlen(expanded))
+	{
+		result[i] = expanded[e];
+		i++;
+		e++;
+	}
+	k += skip_len;
+	while(k < ft_strlen(args))
+	{
+		result[i] = args[k];
+		i++;
+		k++;
+	}
+	result[i] = '\0';
+	return result;
+}
+
+
 void expanser(t_cmd *cmd, t_envyan *envyan)
 {
 	int		i;
 	bool	inquote;
 	int		j;
 	char	*expanded;
+	char *temp;
 
 	while (cmd)
 	{
@@ -168,22 +171,29 @@ void expanser(t_cmd *cmd, t_envyan *envyan)
 		while (cmd->args[i] != NULL)
 		{
 			j = 0;
-			if (cmd->args[i][j] == '\'')
-				inquote = !inquote;
+			inquote = false;
 			while (cmd->args[i][j] != '\0')
 			{
+				if (cmd->args[i][j] == '\'')
+					inquote = !inquote;
 				if (cmd->args[i][j] == '$' && !inquote)
 				{
 					expanded = find_expanded(cmd->args[i] + j, envyan);
-					ft_printf(expanded);
-					exit(0);
+					ft_printf("Expanded: %s\n", expanded);
+					temp = insert_expanded(cmd->args[i], j, expanded);
+					ft_printf("Temp: %s \n", temp);
+					free(cmd->args[i]);
+					cmd->args[i] = ft_strdup(temp);
+					j--;
 				}
 				j++;
 			}
+			ft_printf("%s ", cmd->args[i]);
 			i++;
 		}
+		printf("\n");
+		cmd = cmd->next;
 	}
-	return (exit(1));
 }
 
 char	**add_spaces(char *pipe)

@@ -41,6 +41,7 @@ static void	process_line(t_mini *mini, char *input)
 		perror("init_mini");
 		return ;
 	}
+	ft_printf("nyan.head: %p\n", mini->head);
 	fill_mini(mini, pipes);
 	free_2d((void **)pipes);
 	while (mini->head)
@@ -110,7 +111,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 	init_shell(&mini, envp);
-	print_env(mini.envyan);
+	//print_env(mini.envyan);
 	command_loop(&mini);
 	rl_clear_history();
 	free_envyan(mini.envyan);
