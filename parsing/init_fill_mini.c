@@ -161,6 +161,7 @@ void expanser(t_cmd *cmd, t_envyan *envyan)
 {
 	int		i;
 	bool	inquote;
+	bool	indquote;
 	int		j;
 	char	*expanded;
 	char *temp;
@@ -172,26 +173,25 @@ void expanser(t_cmd *cmd, t_envyan *envyan)
 		{
 			j = 0;
 			inquote = false;
+			indquote = false;
 			while (cmd->args[i][j] != '\0')
 			{
-				if (cmd->args[i][j] == '\'')
+				if (cmd->args[i][j] == '\'' && !indquote)
 					inquote = !inquote;
+				if(cmd->args[i][j] == '\"' && !indquote)
+					indquote = !indquote;
 				if (cmd->args[i][j] == '$' && !inquote)
 				{
 					expanded = find_expanded(cmd->args[i] + j, envyan);
-					ft_printf("Expanded: %s\n", expanded);
 					temp = insert_expanded(cmd->args[i], j, expanded);
-					ft_printf("Temp: %s \n", temp);
 					free(cmd->args[i]);
 					cmd->args[i] = ft_strdup(temp);
 					j--;
 				}
 				j++;
 			}
-			ft_printf("%s ", cmd->args[i]);
 			i++;
 		}
-		printf("\n");
 		cmd = cmd->next;
 	}
 }
@@ -238,7 +238,6 @@ char	**add_spaces(char *pipe)
 		i++;
 	}
 	dest[i + j] = '\0';
-	ft_printf("%s \n", dest);
 	final = split_ignore_quotes(dest, ' ');
 	free(dest);
 	return (final);
@@ -259,15 +258,12 @@ void	fill_mini(t_mini *nyan, char **pipes)
 		j = 0;
 		while (tokens[j] != NULL)
 		{
-			// ft_printf("token n%d : %s\n", j, tokens[j]);
 			if (!parse(curr, tokens, &j))
 				break ;
-			// j++;
 		}
 		curr = curr->next;
 		i++;
 	}
 	curr = nyan->head;
-	// expnade HERE and do it with the list mf
 	expanser(curr, nyan->envyan);
 }

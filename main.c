@@ -18,7 +18,6 @@
 
 static void	process_line(t_mini *mini, char *input)
 {
-	int i;
 	char	**pipes;
 
 	if (!input || !mini)
@@ -41,21 +40,8 @@ static void	process_line(t_mini *mini, char *input)
 		perror("init_mini");
 		return ;
 	}
-	ft_printf("nyan.head: %p\n", mini->head);
 	fill_mini(mini, pipes);
 	free_2d((void **)pipes);
-	while (mini->head)
-	{
-		i = 0;
-		printf("Args: \n");
-		while (mini->head->args[i] != NULL)
-		{
-			printf("%s ", mini->head->args[i]);
-			i++;
-		}
-		printf("\n");
-		mini->head = mini->head->next;
-	}
 	free_cmd_list(mini->head);
 	mini->head = NULL;
 }
