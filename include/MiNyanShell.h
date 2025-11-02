@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/10/08 16:48:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:45:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 typedef struct s_redir t_redir;
 typedef struct s_OwO t_cmd;
-
 
 typedef enum e_token_type
 {
@@ -65,6 +64,7 @@ typedef struct s_UwU
 	t_envyan			*envyan;
 	int					last_status;
 }						t_mini;
+
 
 
 // typedef struct s_0w0

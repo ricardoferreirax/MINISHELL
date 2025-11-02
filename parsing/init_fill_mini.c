@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/09 10:52:25 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/02 12:31:59 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	add_spaces_size_count(char *str)
 	}
 	return (size);
 }
-
 
 char	*find_expanded(char *cmd_args, t_envyan *envyan)
 {
