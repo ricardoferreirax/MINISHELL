@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:31:59 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:10:17 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 
 	i = 0;
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
+	if(!temp)
+		return NULL;
 	result = ft_strdup("");
 	cmd_args++;
 	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z') || (cmd_args[i] >= 'A'
@@ -120,6 +122,7 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 		}
 		envyan = envyan->next;
 	}
+	free(temp);
 	return (result);
 }
 
@@ -130,6 +133,8 @@ char *insert_expanded(char *args, int j, char *expanded)
 	while(args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j + skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j + skip_len] <= 'Z') || args[j + skip_len] == '_'))
 		skip_len++;
 	char *result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 2));
+	if(!result)
+		return NULL;
 	size_t k = 0;
 	while(k < (size_t)j)
 	{
@@ -182,9 +187,24 @@ void expanser(t_cmd *cmd, t_envyan *envyan)
 				if (cmd->args[i][j] == '$' && !inquote)
 				{
 					expanded = find_expanded(cmd->args[i] + j, envyan);
+					if (!expanded)
+					{
+						//free all
+						exit(69);
+					}
 					temp = insert_expanded(cmd->args[i], j, expanded);
+					if (!temp)
+					{
+						//free all
+						exit(69);
+					}
 					free(cmd->args[i]);
 					cmd->args[i] = ft_strdup(temp);
+					if (!cmd->args[i])
+					{
+						//free all
+						exit(69);
+					}
 					j--;
 				}
 				j++;
@@ -254,6 +274,11 @@ void	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes && pipes[i] && curr)
 	{
 		tokens = add_spaces(pipes[i]);
+		if(!tokens)
+		{
+			free_2d((void **)tokens);
+			exit(69);
+		}
 		j = 0;
 		while (tokens[j] != NULL)
 		{

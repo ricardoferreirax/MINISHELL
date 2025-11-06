@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:31:54 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:10:18 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ static void	process_line(t_mini *mini, char *input)
         ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
         return ;
     }
+	if (!good_syntax(input))
+	{
+		ft_dprintf(2, "invalid Syntax nyan~\n");
+		return ;
+	}
     pipes = init_mini(mini, input);
     if (!pipes)
     {

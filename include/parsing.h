@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:42:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:32:02 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:59:19 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ char	*skip_whitespaces(char *str);
 bool no_unclosed_quotes(char *str);
 bool no_forbidden_actions(char *str);
 void free_redirs(t_redir *redir);
+bool good_syntax(char *str);
 
 #endif

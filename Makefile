@@ -50,6 +50,7 @@ SRC_FILES = \
 	parsing/validate_input.c \
 	parsing/utils.c \
 	parsing/fill_subcmd.c \
+	parsing/good_syntax.c \
 	envyan/envyan_init.c \
 	envyan/envyan_array.c \
 	envyan/envyan_utils.c \
