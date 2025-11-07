@@ -13,6 +13,13 @@
 #include "../include/parsing.h"
 #include "../include/execution.h"
 
+int count_whitespaces(char *str)
+{
+	int i = 0;
+	while((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
+		i++;
+	return i;
+}
 
 void free_argv(char **argv)
 {

@@ -25,7 +25,7 @@ char	**split_ignore_quotes(char *str, char c);
 t_cmd *cmd_new(void);
 int add_arg(t_cmd *cmd, const char *token);
 int arr_size(void **arr);
-char	*skip_whitespaces(char *str);
+int count_whitespaces(char *str);
 bool no_unclosed_quotes(char *str);
 bool no_forbidden_actions(char *str);
 void free_redirs(t_redir *redir);
