@@ -18,7 +18,7 @@
 
 int parse(t_cmd *cmd, char **tokens, int *i);
 char **init_mini(t_mini *nyan, char *cmdline);
-void fill_mini(t_mini *nyan, char **pipes);
+int fill_mini(t_mini *nyan, char **pipes);
 int redir_append(t_cmd *cmd, t_redir_type redir_type, char *arg);
 bool is_redir(char *str);
 char	**split_ignore_quotes(char *str, char c);
