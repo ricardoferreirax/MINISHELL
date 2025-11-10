@@ -92,22 +92,27 @@ int	add_spaces_size_count(char *str)
 	return (size);
 }
 
-char	*find_expanded(char *cmd_args, t_envyan *envyan)
+char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 {
 	char	*temp;
 	char	*result;
 	int		i;
+	char	*status;
 
 	i = 0;
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
-	if(!temp)
-		return NULL;
-	result = ft_strdup("");
-	if(!result)
-		return(free(temp), NULL);
+	if (!temp)
+		return (NULL);
+	status = ft_itoa(lst_status);
+	result = ft_strdup(status);
+	if (!result)
+		return (free(temp), NULL);
+	if (strcmp(cmd_args, "$?") == 0)
+		return (result);
 	cmd_args++;
-	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z') || (cmd_args[i] >= 'A'
-			&& cmd_args[i] <= 'Z') || (cmd_args[i] == '_')))
+	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z')
+			|| (cmd_args[i] >= 'A' && cmd_args[i] <= 'Z')
+			|| (cmd_args[i] == '_')))
 	{
 		temp[i] = cmd_args[i];
 		i++;
@@ -128,51 +133,60 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan)
 	return (result);
 }
 
-char *insert_expanded(char *args, int j, char *expanded)
+char	*insert_expanded(char *args, int j, char *expanded)
 {
-	size_t i = 0;
-	int skip_len = 1;
-	char *result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 2));
-	if(!result)
-		return NULL;
-	while(args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j + skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j + skip_len] <= 'Z') || args[j + skip_len] == '_'))
+	size_t	i;
+	int		skip_len;
+	char	*result;
+	size_t	k;
+	size_t	e;
+
+	i = 0;
+	skip_len = 1;
+	result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 2));
+	if (!result)
+		return (NULL);
+	while (args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j
+				+ skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j
+				+ skip_len] <= 'Z') || args[j + skip_len] == '_' || (skip_len == 1 && args[j + skip_len] == '?') ))
 		skip_len++;
-	size_t k = 0;
-	while(k < (size_t)j)
+	k = 0;
+	while (k < (size_t)j)
 	{
 		result[i] = args[k];
 		i++;
 		k++;
 	}
-	size_t e = 0;
-	while(e < ft_strlen(expanded))
+	e = 0;
+	while (e < ft_strlen(expanded))
 	{
 		result[i] = expanded[e];
 		i++;
 		e++;
 	}
 	k += skip_len;
-	while(k < ft_strlen(args))
+	while (k < ft_strlen(args))
 	{
 		result[i] = args[k];
 		i++;
 		k++;
 	}
 	result[i] = '\0';
-	return result;
+	return (result);
 }
 
-
-int expanser(t_cmd *cmd, t_envyan *envyan)
+int	expanser(t_mini *mini)
 {
 	int		i;
 	bool	inquote;
 	bool	indquote;
 	int		j;
 	char	*expanded;
-	char *temp;
+	char	*temp;
+	t_cmd	*cmd;
 
-	while (cmd)
+	cmd = mini->head;
+	while (cmd && cmd->args)
 	{
 		i = 0;
 		while (cmd->args[i] != NULL)
@@ -184,18 +198,19 @@ int expanser(t_cmd *cmd, t_envyan *envyan)
 			{
 				if (cmd->args[i][j] == '\'' && !indquote)
 					inquote = !inquote;
-				if(cmd->args[i][j] == '\"' && !indquote)
+				if (cmd->args[i][j] == '\"' && !indquote)
 					indquote = !indquote;
 				if (cmd->args[i][j] == '$' && !inquote)
 				{
-					expanded = find_expanded(cmd->args[i] + j, envyan);
+					expanded = find_expanded(cmd->args[i] + j, mini->envyan,
+							mini->last_status);
 					if (!expanded)
-						return(-1);
+						return (-1);
 					temp = insert_expanded(cmd->args[i], j, expanded);
 					if (!temp)
 					{
 						free(expanded);
-						return(-1);
+						return (-1);
 					}
 					free(cmd->args[i]);
 					cmd->args[i] = ft_strdup(temp);
@@ -203,7 +218,7 @@ int expanser(t_cmd *cmd, t_envyan *envyan)
 					{
 						free(temp);
 						free(expanded);
-						return(-1);
+						return (-1);
 					}
 					j--;
 				}
@@ -230,8 +245,8 @@ char	**add_spaces(char *pipe)
 	inquote = false;
 	j = 0;
 	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 1);
-	if(!dest)
-		return NULL;
+	if (!dest)
+		return (NULL);
 	while (pipe[i])
 	{
 		if (pipe[i] == '\'' && !indquote)
@@ -277,10 +292,10 @@ int	fill_mini(t_mini *nyan, char **pipes)
 	while (pipes && pipes[i] && curr)
 	{
 		tokens = add_spaces(pipes[i]);
-		if(!tokens)
+		if (!tokens)
 		{
 			free_2d((void **)tokens);
-			return(-1);
+			return (-1);
 		}
 		j = 0;
 		while (tokens[j] != NULL)
@@ -292,7 +307,7 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		i++;
 	}
 	curr = nyan->head;
-	if(expanser(curr, nyan->envyan))
+	if (expanser(nyan))
 		return (-1);
 	return (0);
 }
