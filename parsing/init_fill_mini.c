@@ -171,20 +171,40 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
-int	expanser(char **final,)
+int	expanser(char **final, t_envyan *env, int status)
 {
+	char *temp;
+	char *expanded;
 	int i = 0;
+	bool  inquote = false;
+	bool indquote = false;
 	while(final[i])
 	{
 		int k = 0;
 		while(final[i][k] != '\0')
 		{
-			if(final[i][k] = '$')
+			if(final[i][k] == '\'' && !indquote)
 			{
-
+				inquote = !inquote;
+				final[i][k] = ' ';
 			}
+			if(final[i][k] == '\"' && !inquote)
+			{
+				indquote = !indquote;
+				final[i][k] = ' ';
+			}
+			if(final[i][k] == '$' && !inquote)
+			{
+				expanded = find_expanded(final[i] + k,  env, status);
+				temp = insert_expanded(final[i], k, expanded);
+				free(final[i]);
+				final[i] = ft_strdup(temp);
+			}
+			k++;
 		}
+		i++;
 	}
+	return 0;
 }
 
 char	**add_spaces(char *pipe)
@@ -232,9 +252,18 @@ char	**add_spaces(char *pipe)
 	}
 	dest[i + j] = '\0';
 	final = split_ignore_quotes(dest, ' ');
-	expanser(final);
 	free(dest);
 	return (final);
+}
+
+void print2darr(char **txt)
+{
+	int i = 0;
+	while(txt[i])
+	{
+		printf("%d: %s\n", i + 1, txt[i]);
+		i++;
+	}
 }
 
 int	fill_mini(t_mini *nyan, char **pipes)
@@ -254,6 +283,8 @@ int	fill_mini(t_mini *nyan, char **pipes)
 			free_2d((void **)tokens);
 			return (-1);
 		}
+		expanser(tokens, nyan->envyan, nyan->last_status);
+		print2darr(tokens);
 		j = 0;
 		while (tokens[j] != NULL)
 		{
