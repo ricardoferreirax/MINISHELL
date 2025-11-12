@@ -97,18 +97,13 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 	char	*temp;
 	char	*result;
 	int		i;
-	char	*status;
 
 	i = 0;
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
 	if (!temp)
 		return (NULL);
-	status = ft_itoa(lst_status);
-	result = ft_strdup(status);
-	if (!result)
-		return (free(temp), NULL);
 	if (strcmp(cmd_args, "$?") == 0)
-		return (result);
+		return (ft_itoa(lst_status));
 	cmd_args++;
 	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z')
 			|| (cmd_args[i] >= 'A' && cmd_args[i] <= 'Z')
@@ -118,6 +113,7 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 		i++;
 	}
 	temp[i] = '\0';
+	result = NULL;
 	while (envyan)
 	{
 		if (ft_strcmp(temp, envyan->key) == 0)
@@ -175,60 +171,20 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
-int	expanser(t_mini *mini)
+int	expanser(char **final,)
 {
-	int		i;
-	bool	inquote;
-	bool	indquote;
-	int		j;
-	char	*expanded;
-	char	*temp;
-	t_cmd	*cmd;
-
-	cmd = mini->head;
-	while (cmd && cmd->args)
+	int i = 0;
+	while(final[i])
 	{
-		i = 0;
-		while (cmd->args[i] != NULL)
+		int k = 0;
+		while(final[i][k] != '\0')
 		{
-			j = 0;
-			inquote = false;
-			indquote = false;
-			while (cmd->args[i][j] != '\0')
+			if(final[i][k] = '$')
 			{
-				if (cmd->args[i][j] == '\'' && !indquote)
-					inquote = !inquote;
-				if (cmd->args[i][j] == '\"' && !indquote)
-					indquote = !indquote;
-				if (cmd->args[i][j] == '$' && !inquote)
-				{
-					expanded = find_expanded(cmd->args[i] + j, mini->envyan,
-							mini->last_status);
-					if (!expanded)
-						return (-1);
-					temp = insert_expanded(cmd->args[i], j, expanded);
-					if (!temp)
-					{
-						free(expanded);
-						return (-1);
-					}
-					free(cmd->args[i]);
-					cmd->args[i] = ft_strdup(temp);
-					if (!cmd->args[i])
-					{
-						free(temp);
-						free(expanded);
-						return (-1);
-					}
-					j--;
-				}
-				j++;
+
 			}
-			i++;
 		}
-		cmd = cmd->next;
 	}
-	return (0);
 }
 
 char	**add_spaces(char *pipe)
@@ -276,6 +232,7 @@ char	**add_spaces(char *pipe)
 	}
 	dest[i + j] = '\0';
 	final = split_ignore_quotes(dest, ' ');
+	expanser(final);
 	free(dest);
 	return (final);
 }
@@ -307,7 +264,5 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		i++;
 	}
 	curr = nyan->head;
-	if (expanser(nyan))
-		return (-1);
 	return (0);
 }
