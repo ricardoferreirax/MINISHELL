@@ -139,12 +139,13 @@ char	*insert_expanded(char *args, int j, char *expanded)
 
 	i = 0;
 	skip_len = 1;
-	result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 2));
+	result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 3));
 	if (!result)
 		return (NULL);
 	while (args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j
 				+ skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j
-				+ skip_len] <= 'Z') || args[j + skip_len] == '_' || (skip_len == 1 && args[j + skip_len] == '?') ))
+				+ skip_len] <= 'Z') || args[j + skip_len] == '_'
+			|| (skip_len == 1 && args[j + skip_len] == '?')))
 		skip_len++;
 	k = 0;
 	while (k < (size_t)j)
@@ -168,43 +169,69 @@ char	*insert_expanded(char *args, int j, char *expanded)
 		k++;
 	}
 	result[i] = '\0';
+	result[i + 1] = '\0';
 	return (result);
+}
+
+int remove_placeholder(char *str)
+{
+	int i = 0;
+	int k = 0;
+	char *final = malloc(sizeof(char *) * ft_strlen(str));
+	if(!final)
+		return -1;
+	while(str && str[i + k])
+	{
+		if(str[i + k] == 1)
+			k++;
+		final[i] = str[i + k];
+		i++;
+	}
+	free(str);
+	str = final;
+	return 0;
 }
 
 int	expanser(char **final, t_envyan *env, int status)
 {
-	char *temp;
-	char *expanded;
-	int i = 0;
-	bool  inquote = false;
-	bool indquote = false;
-	while(final[i])
+	char	*temp;
+	char	*expanded;
+	int		i;
+	bool	inquote;
+	bool	indquote;
+	int		k;
+
+	i = 0;
+	inquote = false;
+	indquote = false;
+	while (final[i])
 	{
-		int k = 0;
-		while(final[i][k] != '\0')
+		k = 0;
+		while (final[i][k] != '\0')
 		{
-			if(final[i][k] == '\'' && !indquote)
+			if (final[i][k] == '\'' && !indquote)
 			{
 				inquote = !inquote;
-				final[i][k] = ' ';
+				final[i][k] = 1;
 			}
-			if(final[i][k] == '\"' && !inquote)
+			if (final[i][k] == '\"' && !inquote)
 			{
 				indquote = !indquote;
-				final[i][k] = ' ';
+				final[i][k] = 1;
 			}
-			if(final[i][k] == '$' && !inquote)
+			if (final[i][k] == '$' && !inquote)
 			{
-				expanded = find_expanded(final[i] + k,  env, status);
+				expanded = find_expanded(final[i] + k, env, status);
 				temp = insert_expanded(final[i], k, expanded);
 				free(final[i]);
 				final[i] = ft_strdup(temp);
 			}
 			k++;
 		}
+		remove_placeholder(final[i]);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
 char	**add_spaces(char *pipe)
@@ -256,10 +283,12 @@ char	**add_spaces(char *pipe)
 	return (final);
 }
 
-void print2darr(char **txt)
+void	print2darr(char **txt)
 {
-	int i = 0;
-	while(txt[i])
+	int	i;
+
+	i = 0;
+	while (txt[i])
 	{
 		printf("%d: %s\n", i + 1, txt[i]);
 		i++;

@@ -66,10 +66,11 @@ static char	*word_copy_ignorequotes(char **s, char c)
 			indquote = !indquote;
 		(*s)++;
 	}
-	dest = malloc(sizeof(char) * (counter + 1));
+	dest = malloc(sizeof(char) * (counter + 2));
 	if (!dest)
 		return (NULL);
 	ft_strlcpy(dest, ((*s) - counter), counter + 1);
+	dest[counter + 2] = '\0';
 	return (dest);
 }
 

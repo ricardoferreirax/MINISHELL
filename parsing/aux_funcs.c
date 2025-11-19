@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/02 12:32:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/17 12:20:21 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,26 @@ char	*skip_whitespaces(char *str)
 	return (str);
 }
 
+void	sneaky_print(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (1)
+	{
+		if (str[i] == '\0')
+		{
+			if (str[i + 1] == '\0')
+			{
+				break ;
+			}
+			else if (str[i + 1] == 1)
+			{
+				ft_putchar(str[i]);
+				break ;
+			}
+		}
+		putchar(str[i]);
+		i++;
+	}
+}
