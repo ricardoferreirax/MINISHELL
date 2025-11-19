@@ -173,23 +173,20 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
-int remove_placeholder(char *str)
+void remove_placeholder(char *s)
 {
-	int i = 0;
-	int k = 0;
-	char *final = malloc(sizeof(char *) * ft_strlen(str));
-	if(!final)
-		return -1;
-	while(str && str[i + k])
+	char *read = s;
+	char *write = s;
+	while(*read)
 	{
-		if(str[i + k] == 1)
-			k++;
-		final[i] = str[i + k];
-		i++;
+		if(*read != '\1')
+		{
+			*write = *read;
+			write++;
+		}
+		read++;
 	}
-	free(str);
-	str = final;
-	return 0;
+	*write = '\0';
 }
 
 int	expanser(char **final, t_envyan *env, int status)
@@ -212,12 +209,12 @@ int	expanser(char **final, t_envyan *env, int status)
 			if (final[i][k] == '\'' && !indquote)
 			{
 				inquote = !inquote;
-				final[i][k] = 1;
+				final[i][k] = '\1';
 			}
 			if (final[i][k] == '\"' && !inquote)
 			{
 				indquote = !indquote;
-				final[i][k] = 1;
+				final[i][k] = '\1';
 			}
 			if (final[i][k] == '$' && !inquote)
 			{
