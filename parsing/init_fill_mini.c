@@ -145,8 +145,9 @@ char	*insert_expanded(char *args, int j, char *expanded)
 		return (NULL);
 	while (args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j
 				+ skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j
-				+ skip_len] <= 'Z') || args[j + skip_len] == '_'
-			|| (skip_len == 1 && args[j + skip_len] == '?')))
+				+ skip_len] <= 'Z') || args[j + skip_len] == '_'))
+		skip_len++;
+	if((skip_len == 1 && args[j + skip_len] == '?'))
 		skip_len++;
 	k = 0;
 	while (k < (size_t)j)
@@ -190,7 +191,26 @@ void	remove_placeholder(char *s)
 		}
 		read++;
 	}
-	*write = '\0';
+	*write++ = '\0';
+	if(*(read + 1) == '\0')
+		*write = '\0';
+	else
+		*write = '\1';
+
+}
+
+char *ft_strdup_with_ending(char *str)
+{
+	char *dup = malloc(sizeof(char) * (ft_strlen(str) + 2));
+	int i = 0;
+	while(str[i] != '\0')
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	dup[i] = '\0';
+	dup[i + 1] = '\1';
+	return dup;
 }
 
 int	expanser(char **final, t_envyan *env, int status)
@@ -223,7 +243,7 @@ int	expanser(char **final, t_envyan *env, int status)
 				expanded = find_expanded(final[i] + k, env, status);
 				temp = insert_expanded(final[i], k, expanded);
 				free(final[i]);
-				final[i] = ft_strdup(temp);
+				final[i] = ft_strdup_with_ending(temp);
 			}
 			k++;
 		}
@@ -447,14 +467,13 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		expanser(tokens, nyan->envyan, nyan->last_status);
 		retokens = retokenize(tokens);
 		tokens = remove_quote(retokens);
-		// print2darr(retokens);
 		print_arr(retokens);
 		j = 0;
 		if(!retokens)
 			printf("you're stupid\n"), exit(-1);
-		while (retokens[j] != NULL)
+		while (tokens[j] != NULL)
 		{
-			if (!parse(curr, retokens, &j))
+			if (!parse(curr, tokens, &j))
 				break ;
 		}
 		curr = curr->next;

@@ -51,17 +51,3 @@ int redir_append(t_cmd *cmd, t_redir_type redir_type, char *arg)
     return (0);
 }
 
-bool is_redir(char *str)
-{
-    if (!str)
-        return false;
-    if (ft_strcmp(str, "<") == 0)
-        return true;
-    if (ft_strcmp(str, ">") == 0)
-        return true;
-    if (ft_strcmp(str, ">>") == 0)
-        return true;
-    if (ft_strcmp(str, "<<") == 0)
-        return true;
-    return false;
-}
