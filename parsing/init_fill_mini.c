@@ -13,6 +13,7 @@
 #include "../include/parsing.h"
 #include <stddef.h>
 #include <string.h>
+#include <unistd.h>
 
 int		arr_size(void **arr);
 
@@ -40,7 +41,7 @@ char	**init_mini(t_mini *nyan, char *cmd)
 
 	nyan->head = NULL;
 	prev = NULL;
-	pipes = split_ignore_quotes(cmd, '|');
+	pipes = split_ignore_quotes(cmd, '|', 0);
 	if (!pipes)
 		return (NULL);
 	i = 0;
@@ -173,13 +174,16 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
-void remove_placeholder(char *s)
+void	remove_placeholder(char *s)
 {
-	char *read = s;
-	char *write = s;
-	while(*read)
+	char	*read;
+	char	*write;
+
+	read = s;
+	write = s;
+	while (*read)
 	{
-		if(*read != '\1')
+		if (*read != '\1')
 		{
 			*write = *read;
 			write++;
@@ -209,12 +213,10 @@ int	expanser(char **final, t_envyan *env, int status)
 			if (final[i][k] == '\'' && !indquote)
 			{
 				inquote = !inquote;
-				final[i][k] = '\1';
 			}
 			if (final[i][k] == '\"' && !inquote)
 			{
 				indquote = !indquote;
-				final[i][k] = '\1';
 			}
 			if (final[i][k] == '$' && !inquote)
 			{
@@ -225,7 +227,6 @@ int	expanser(char **final, t_envyan *env, int status)
 			}
 			k++;
 		}
-		remove_placeholder(final[i]);
 		i++;
 	}
 	return (0);
@@ -244,7 +245,7 @@ char	**add_spaces(char *pipe)
 	indquote = false;
 	inquote = false;
 	j = 0;
-	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 1);
+	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 2);
 	if (!dest)
 		return (NULL);
 	while (pipe[i])
@@ -275,7 +276,8 @@ char	**add_spaces(char *pipe)
 		i++;
 	}
 	dest[i + j] = '\0';
-	final = split_ignore_quotes(dest, ' ');
+	dest[i + j + 1] = '\0';
+	final = split_ignore_quotes(dest, ' ', 0);
 	free(dest);
 	return (final);
 }
@@ -291,12 +293,145 @@ void	print2darr(char **txt)
 		i++;
 	}
 }
+void	print_arr(char **arr)
+{
+	int		i;
+	char	*s;
+	int		j;
+
+	i = 0;
+	while (arr[i])
+	{
+		s = arr[i];
+		j = 0;
+		while (s[j] != '\0')
+		{
+			ft_printf("%c", s[j]);
+			j++;
+		}
+		if (s[j + 1] == '\0')
+			ft_printf("\\0\\0");
+		else if(s[j + 1] == '\1')
+			ft_printf("\\0\\1");
+		else
+			ft_printf("*garbage data noises*");
+		ft_printf("\n");
+		i++;
+	}
+}
+char	**arr_join(char **s1, char **s2)
+{
+	char	**joined;
+	int		i;
+	int		k;
+
+	joined = malloc(sizeof(char *) - (arr_size((void **)s1)
+				* arr_size((void **)s2)));
+	if (!s1)
+		return (s2);
+	i = 0;
+	while (s1[i])
+	{
+		joined[i] = ft_strdup(s1[i]);
+		i++;
+	}
+	k = 0;
+	while (s2[k])
+	{
+		joined[i + k] = ft_strdup(s2[k]);
+		k++;
+	}
+	return (joined);
+}
+
+char	**retokenize(char **tokens)
+{
+	char	**retokens;
+	int		word_count = 0;
+	int		i;
+	int rtk_increment = 0;
+
+	i = 0;
+	while (tokens[i])
+	{
+		word_count += count_words_ignore_quotes(tokens[i], ' ');
+		i++;
+	}
+	retokens = malloc(sizeof(char *) * (word_count + 1));
+	i = 0;
+	while(tokens[i])
+	{
+		if(count_words_ignore_quotes(tokens[i], ' ') == 1)
+		{
+			int k = 0;
+			retokens[rtk_increment] = malloc(sizeof(char) * (ft_strlen(tokens[i]) + 2));
+			while(tokens[i][k] != '\0')
+			{
+				retokens[rtk_increment][k] = tokens[i][k];
+				k++;
+			}
+			retokens[rtk_increment][k] = '\0';
+			retokens[rtk_increment][k + 1] = '\0';
+			rtk_increment++;
+		}
+		else
+		{
+			char **temp = split_ignore_quotes(tokens[i], ' ', 1);
+			int k = 0;
+			while(temp[k])
+			{
+				int l = 0;
+				retokens[rtk_increment] = malloc(sizeof(char) * (ft_strlen(temp[k]) + 2));
+				while(temp[k][l] != '\0')
+				{
+					retokens[rtk_increment][l] = temp[k][l];
+					l++;
+				}
+				retokens[rtk_increment][l] = '\0';
+				retokens[rtk_increment][l + 1] = '\1';
+				rtk_increment++;
+				k++;
+			}
+		}
+		i++;
+	}
+	retokens[rtk_increment] = NULL;
+	return (retokens);
+}
+char **remove_quote(char **arr)
+{
+	int i = 0;
+	while(arr[i])
+	{
+		int j = 0;
+		bool inquote = false;
+		bool indquote = false;
+		while(arr[i][j] != '\0')
+		{
+			if(arr[i][j] == '\'' && !indquote)
+			{
+				arr[i][j] = '\1';
+				inquote = !inquote;
+			}
+			if(arr[i][j] == '\"' && !inquote)
+			{
+				arr[i][j] = '\1';
+				indquote = !indquote;
+			}
+			j++;
+		}
+		remove_placeholder(arr[i]);
+		i++;
+	}
+	return arr;
+}
 
 int	fill_mini(t_mini *nyan, char **pipes)
 {
 	int		i;
 	t_cmd	*curr;
 	char	**tokens;
+	char	**retokens;
 	int		j;
 
 	curr = nyan->head;
@@ -306,15 +441,20 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		tokens = add_spaces(pipes[i]);
 		if (!tokens)
 		{
+			i++;
 			free_2d((void **)tokens);
-			return (-1);
 		}
 		expanser(tokens, nyan->envyan, nyan->last_status);
-		print2darr(tokens);
+		retokens = retokenize(tokens);
+		tokens = remove_quote(retokens);
+		// print2darr(retokens);
+		print_arr(retokens);
 		j = 0;
-		while (tokens[j] != NULL)
+		if(!retokens)
+			printf("you're stupid\n"), exit(-1);
+		while (retokens[j] != NULL)
 		{
-			if (!parse(curr, tokens, &j))
+			if (!parse(curr, retokens, &j))
 				break ;
 		}
 		curr = curr->next;

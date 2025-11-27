@@ -21,7 +21,7 @@ char **init_mini(t_mini *nyan, char *cmdline);
 int fill_mini(t_mini *nyan, char **pipes);
 int redir_append(t_cmd *cmd, t_redir_type redir_type, char *arg);
 bool is_redir(char *str);
-char	**split_ignore_quotes(char *str, char c);
+char	**split_ignore_quotes(char *str, char c, int i);
 t_cmd *cmd_new(void);
 int add_arg(t_cmd *cmd, const char *token);
 int arr_size(void **arr);
@@ -30,5 +30,5 @@ bool no_unclosed_quotes(char *str);
 bool no_forbidden_actions(char *str);
 void free_redirs(t_redir *redir);
 bool good_syntax(char *str);
-
+int	count_words_ignore_quotes(char *str, char c);
 #endif
