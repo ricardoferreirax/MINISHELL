@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "ctype/ctype.h"
 #include <stddef.h>
 #include <string.h>
 #include <unistd.h>
@@ -103,12 +104,16 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
 	if (!temp)
 		return (NULL);
-	if (strncmp(cmd_args, "$?", 2) == 0)
-		return (ft_itoa(lst_status));
 	cmd_args++;
-	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z')
-			|| (cmd_args[i] >= 'A' && cmd_args[i] <= 'Z')
-			|| (cmd_args[i] == '_')))
+	// if (strncmp(cmd_args, "$?", 2) == 0)
+	// 	return (ft_itoa(lst_status));
+	if(cmd_args[0] == '?')
+		return(ft_itoa(lst_status));
+	if(cmd_args[0] == '0')
+		return("MiNyanShell nyan~ :3");
+	if(ft_isdigit(cmd_args[0]))
+		return("");
+	while (cmd_args[i] != '\0' && (ft_isalpha(cmd_args[i]) || (cmd_args[i] == '_')))
 	{
 		temp[i] = cmd_args[i];
 		i++;
@@ -143,12 +148,10 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 3));
 	if (!result)
 		return (NULL);
-	while (args[j + skip_len] != '\0' && ((args[j + skip_len] >= 'a' && args[j
-				+ skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j
-				+ skip_len] <= 'Z') || args[j + skip_len] == '_'))
+	while (args[j + skip_len] != '\0' && (ft_isalpha(args[j + skip_len]) || args[j + skip_len] == '_'))
 		skip_len++;
-	// if((skip_len == 1 && args[j + skip_len] == '?'))
-	// 	skip_len++;
+	if((skip_len == 1 && (args[j + skip_len] == '?' || ft_isdigit(args[j + skip_len]))))
+		skip_len++;
 	k = 0;
 	while (k < (size_t)j)
 	{
@@ -192,25 +195,27 @@ void	remove_placeholder(char *s)
 		read++;
 	}
 	*write++ = '\0';
-	if(*(read + 1) == '\0')
+	if (*(read + 1) == '\0')
 		*write = '\0';
 	else
 		*write = '\1';
-
 }
 
-char *ft_strdup_with_ending(char *str)
+char	*ft_strdup_with_ending(char *str)
 {
-	char *dup = malloc(sizeof(char) * (ft_strlen(str) + 2));
-	int i = 0;
-	while(str[i] != '\0')
+	char	*dup;
+	int		i;
+
+	dup = malloc(sizeof(char) * (ft_strlen(str) + 2));
+	i = 0;
+	while (str[i] != '\0')
 	{
 		dup[i] = str[i];
 		i++;
 	}
 	dup[i] = '\0';
 	dup[i + 1] = '\1';
-	return dup;
+	return (dup);
 }
 
 int	expanser(char **final, t_envyan *env, int status)
@@ -331,7 +336,7 @@ void	print_arr(char **arr)
 		}
 		if (s[j + 1] == '\0')
 			ft_printf("\\0\\0");
-		else if(s[j + 1] == '\1')
+		else if (s[j + 1] == '\1')
 			ft_printf("\\0\\1");
 		else
 			ft_printf("*garbage data noises*");
@@ -367,10 +372,15 @@ char	**arr_join(char **s1, char **s2)
 char	**retokenize(char **tokens)
 {
 	char	**retokens;
-	int		word_count = 0;
+	int		word_count;
 	int		i;
-	int rtk_increment = 0;
+	int		rtk_increment;
+	int		k;
+	char	**temp;
+	int		l;
 
+	word_count = 0;
+	rtk_increment = 0;
 	i = 0;
 	while (tokens[i])
 	{
@@ -379,13 +389,14 @@ char	**retokenize(char **tokens)
 	}
 	retokens = malloc(sizeof(char *) * (word_count + 1));
 	i = 0;
-	while(tokens[i])
+	while (tokens[i])
 	{
-		if(count_words_ignore_quotes(tokens[i], ' ') == 1)
+		if (count_words_ignore_quotes(tokens[i], ' ') == 1)
 		{
-			int k = 0;
-			retokens[rtk_increment] = malloc(sizeof(char) * (ft_strlen(tokens[i]) + 2));
-			while(tokens[i][k] != '\0')
+			k = 0;
+			retokens[rtk_increment] = malloc(sizeof(char)
+					* (ft_strlen(tokens[i]) + 2));
+			while (tokens[i][k] != '\0')
 			{
 				retokens[rtk_increment][k] = tokens[i][k];
 				k++;
@@ -396,13 +407,14 @@ char	**retokenize(char **tokens)
 		}
 		else
 		{
-			char **temp = split_ignore_quotes(tokens[i], ' ', 1);
-			int k = 0;
-			while(temp[k])
+			temp = split_ignore_quotes(tokens[i], ' ', 1);
+			k = 0;
+			while (temp[k])
 			{
-				int l = 0;
-				retokens[rtk_increment] = malloc(sizeof(char) * (ft_strlen(temp[k]) + 2));
-				while(temp[k][l] != '\0')
+				l = 0;
+				retokens[rtk_increment] = malloc(sizeof(char)
+						* (ft_strlen(temp[k]) + 2));
+				while (temp[k][l] != '\0')
 				{
 					retokens[rtk_increment][l] = temp[k][l];
 					l++;
@@ -419,46 +431,53 @@ char	**retokenize(char **tokens)
 	return (retokens);
 }
 
-bool been_expanded(char *str)
+bool	been_expanded(char *str)
 {
-	int i = 0;
-	while(str && str[i])
+	int	i;
+
+	i = 0;
+	while (str && str[i])
 		i++;
-	if(str[i + 1] == '\1')
-		return true;
+	if (str[i + 1] == '\1')
+		return (true);
 	else
-		return false;
+		return (false);
 }
 
-char **remove_quote(char **arr)
+char	**remove_quote(char **arr)
 {
-	int i = 0;
-	while(arr[i])
+	int		i;
+	int		j;
+	bool	inquote;
+	bool	indquote;
+
+	i = 0;
+	while (arr[i])
 	{
-		if(!been_expanded(arr[i]))
+		if (!been_expanded(arr[i]))
 		{
-		int j = 0;
-		bool inquote = false;
-		bool indquote = false;
-		while(arr[i][j] != '\0')
-		{
-			if(arr[i][j] == '\'' && !indquote)
+			j = 0;
+			inquote = false;
+			indquote = false;
+			while (arr[i][j] != '\0')
 			{
-				arr[i][j] = '\1';
-				inquote = !inquote;
+				if (arr[i][j] == '\'' && !indquote)
+				{
+					arr[i][j] = '\1';
+					inquote = !inquote;
+				}
+				if (arr[i][j] == '\"' && !inquote)
+				{
+					arr[i][j] = '\1';
+					indquote = !indquote;
+				}
+				j++;
 			}
-			if(arr[i][j] == '\"' && !inquote)
-			{
-				arr[i][j] = '\1';
-				indquote = !indquote;
-			}
-			j++;
-		}
-		remove_placeholder(arr[i]);
+			remove_placeholder(arr[i]);
 		}
 		i++;
 	}
-	return arr;
+	return (arr);
 }
 
 int	fill_mini(t_mini *nyan, char **pipes)
@@ -484,7 +503,7 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		tokens = remove_quote(retokens);
 		print_arr(retokens);
 		j = 0;
-		if(!retokens)
+		if (!retokens)
 			printf("you're stupid\n"), exit(-1);
 		while (tokens[j] != NULL)
 		{
