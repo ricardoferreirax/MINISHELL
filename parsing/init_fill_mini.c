@@ -103,7 +103,7 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
 	if (!temp)
 		return (NULL);
-	if (strcmp(cmd_args, "$?") == 0)
+	if (strncmp(cmd_args, "$?", 2) == 0)
 		return (ft_itoa(lst_status));
 	cmd_args++;
 	while (cmd_args[i] != '\0' && ((cmd_args[i] >= 'a' && cmd_args[i] <= 'z')
@@ -147,8 +147,8 @@ char	*insert_expanded(char *args, int j, char *expanded)
 				+ skip_len] <= 'z') || (args[j + skip_len] >= 'A' && args[j
 				+ skip_len] <= 'Z') || args[j + skip_len] == '_'))
 		skip_len++;
-	if((skip_len == 1 && args[j + skip_len] == '?'))
-		skip_len++;
+	// if((skip_len == 1 && args[j + skip_len] == '?'))
+	// 	skip_len++;
 	k = 0;
 	while (k < (size_t)j)
 	{
@@ -418,11 +418,25 @@ char	**retokenize(char **tokens)
 	retokens[rtk_increment] = NULL;
 	return (retokens);
 }
+
+bool been_expanded(char *str)
+{
+	int i = 0;
+	while(str && str[i])
+		i++;
+	if(str[i + 1] == '\1')
+		return true;
+	else
+		return false;
+}
+
 char **remove_quote(char **arr)
 {
 	int i = 0;
 	while(arr[i])
 	{
+		if(!been_expanded(arr[i]))
+		{
 		int j = 0;
 		bool inquote = false;
 		bool indquote = false;
@@ -441,6 +455,7 @@ char **remove_quote(char **arr)
 			j++;
 		}
 		remove_placeholder(arr[i]);
+		}
 		i++;
 	}
 	return arr;
