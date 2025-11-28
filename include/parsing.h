@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:42:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/04 10:59:19 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:31:12 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "MiNyanShell.h"
 # include <stdbool.h>
+#include <stddef.h>
+#include <unistd.h>
+
 
 int parse(t_cmd *cmd, char **tokens, int *i);
 char **init_mini(t_mini *nyan, char *cmdline);
@@ -31,4 +34,13 @@ bool no_forbidden_actions(char *str);
 void free_redirs(t_redir *redir);
 bool good_syntax(char *str);
 int	count_words_ignore_quotes(char *str, char c);
+
+// expanser
+int	expanser(char **final, t_envyan *env, int status);
+
+//add spaces
+char	**add_spaces(char *pipe);
+
+//remove quotes
+char	**remove_quotes(char **arr);
 #endif

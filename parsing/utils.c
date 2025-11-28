@@ -6,35 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:22:27 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:39:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
 #include "../include/execution.h"
 
-int count_whitespaces(char *str)
-{
-	int i = 0;
-	while((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
-		i++;
-	return i;
-}
 
-void free_argv(char **argv)
-{
-    int i;
-
-    if (!argv)
-        return ;
-    i = 0;
-    while (argv[i])
-    {
-        free(argv[i]);
-        i++;
-    }
-    free(argv);
-}
 
 void free_redirs(t_redir *redir)
 {
@@ -64,7 +43,7 @@ void free_cmd_list(t_cmd **head_ptr)
     {
         next = current->next;
         close_fd_safe(&current->in_fd);
-        free_argv(current->args);
+        free_2d((void **)current->args);
         free_redirs(current->redirs);
         free(current);
         current = next;

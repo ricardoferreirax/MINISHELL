@@ -56,6 +56,12 @@ char	**init_mini(t_mini *nyan, char *cmd)
 	return (pipes);
 }
 
+
+
+
+
+
+
 void	print_arr(char **arr)
 {
 	int		i;
@@ -82,7 +88,6 @@ void	print_arr(char **arr)
 		i++;
 	}
 }
-
 char	**arr_join(char **s1, char **s2)
 {
 	char	**joined;
@@ -204,4 +209,3 @@ int	fill_mini(t_mini *nyan, char **pipes)
 	curr = nyan->head;
 	return (0);
 }
-

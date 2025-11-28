@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/04 14:10:18 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:23:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ static void	process_line(t_mini *mini, char *input)
         perror("init_mini");
         return ;
     }
-    fill_mini(mini, pipes);
+    if(fill_mini(mini, pipes))
+	{
+		ft_printf("Fuuuuuuuck something broke here i hope it doesn't leak\n");
+		exit(69);
+	}
     free_2d((void **)pipes);
     status = execute_pipeline(mini->head, mini);
 	mini->last_status = status;

@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/17 12:20:21 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:39:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ bool	forbidden_actions(char *str)
 	return (false);
 }
 
+int count_whitespaces(char *str)
+{
+	int i = 0;
+	while((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
+		i++;
+	return i;
+}
+
 char	*skip_whitespaces(char *str)
 {
 	if (str == NULL)
@@ -48,26 +56,3 @@ char	*skip_whitespaces(char *str)
 	return (str);
 }
 
-void	sneaky_print(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (1)
-	{
-		if (str[i] == '\0')
-		{
-			if (str[i + 1] == '\0')
-			{
-				break ;
-			}
-			else if (str[i + 1] == 1)
-			{
-				ft_putchar(str[i]);
-				break ;
-			}
-		}
-		putchar(str[i]);
-		i++;
-	}
-}
