@@ -34,6 +34,8 @@ bool no_forbidden_actions(char *str);
 void free_redirs(t_redir *redir);
 bool good_syntax(char *str);
 int	count_words_ignore_quotes(char *str, char c);
+bool	been_expanded(char *str);
+void	remove_placeholder(char *s);
 
 // expanser
 int	expanser(char **final, t_envyan *env, int status);

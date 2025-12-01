@@ -27,6 +27,7 @@ static void	process_line(t_mini *mini, char *input)
 {
 	char	**pipes;
 	int status;
+	int k = 0;
 
 
     if (!input || !mini)
@@ -54,13 +55,15 @@ static void	process_line(t_mini *mini, char *input)
         perror("init_mini");
         return ;
     }
-    if(fill_mini(mini, pipes))
+    if((k = fill_mini(mini, pipes)))
 	{
 		ft_printf("Fuuuuuuuck something broke here i hope it doesn't leak\n");
-		exit(69);
 	}
     free_2d((void **)pipes);
-    status = execute_pipeline(mini->head, mini);
+	if(k)
+		status = k;
+	else
+		status = execute_pipeline(mini->head, mini);
 	mini->last_status = status;
 }
 

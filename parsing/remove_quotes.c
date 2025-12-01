@@ -25,7 +25,7 @@ bool	been_expanded(char *str)
 		return (false);
 }
 
-static void	remove_placeholder(char *s)
+void	remove_placeholder(char *s)
 {
 	char	*read;
 	char	*write;

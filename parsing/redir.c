@@ -25,7 +25,11 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 	if (redir_type == REDIR_HEREDOC)
 		redir->delimiter = ft_strdup(arg);
 	else
+	{
+		if(been_expanded(arg))
+			return(ft_printf("Ambiguous redirection , where should i put this \"%s\" nyan~ :3?\n", arg), NULL);
 		redir->file = ft_strdup(arg);
+	}
 	return (redir);
 }
 

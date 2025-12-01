@@ -76,6 +76,8 @@ void	print_arr(char **arr)
 			ft_printf("\\0\\0");
 		else if (s[j + 1] == '\1')
 			ft_printf("\\0\\1");
+		else if (s[j + 1] == '\2')
+			ft_printf("\\0\\2");
 		else
 			ft_printf("*garbage data noises*");
 		ft_printf("\n");
@@ -141,7 +143,10 @@ char	**retokenize(char **tokens)
 				k++;
 			}
 			retokens[rtk_increment][k] = '\0';
-			retokens[rtk_increment][k + 1] = '\0';
+			if(is_redir(retokens[rtk_increment]))
+				retokens[rtk_increment][k+1] = '\2';
+			else
+				retokens[rtk_increment][k + 1] = '\0';
 			rtk_increment++;
 		}
 		else
@@ -196,7 +201,10 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		while (tokens[j] != NULL)
 		{
 			if (!parse(curr, tokens, &j))
-				break ;
+			{
+				ft_printf("NYAAAAN, a fatal error has occureded but i won't tell what it is nyan~ :3\n");
+				return 1;
+			}
 		}
 		curr = curr->next;
 		i++;

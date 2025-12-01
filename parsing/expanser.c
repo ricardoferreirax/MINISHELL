@@ -133,6 +133,11 @@ int	expanser(char **final, t_envyan *env, int status)
 	indquote = false;
 	while (final[i])
 	{
+		if(i > 0 && ft_strcmp(final[i - 1], "<<") == 0)
+		{
+			i++;
+			continue;
+		}
 		k = 0;
 		while (final[i][k] != '\0')
 		{
