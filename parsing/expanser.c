@@ -142,7 +142,7 @@ int	expanser(char **final, t_envyan *env, int status)
 			continue;
 		}
 		k = 0;
-		while (final[i][k] != '\0')
+		while (final[i] && final[i][k] != '\0')
 		{
 			if (final[i][k] == '\'' && !indquote)
 			{
