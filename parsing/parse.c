@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
-#include "print/printf/ft_printf.h"
 
 //for this to return true str must be double '\0' terminated and also be equal to base
 int sneaky_strcmp(char *str, char *base)
@@ -27,9 +26,24 @@ int sneaky_strcmp(char *str, char *base)
 	return 0;
 }
 
+
 bool is_redir(char *str)
 {
-	ft_printf("nao sei pq print agui mas ta ai: %s\n", str);
+    if (!str)
+        return false;
+    if (ft_strcmp(str, "<"))
+        return true;
+    if (ft_strcmp(str, ">"))
+        return true;
+    if (ft_strcmp(str, ">>"))
+        return true;
+    if (ft_strcmp(str, "<<"))
+        return true;
+    return false;
+}
+
+bool seaky_is_redir(char *str)
+{
     if (!str)
         return false;
     if (sneaky_strcmp(str, "<"))
@@ -47,9 +61,9 @@ int parse(t_cmd *cmd, char **tokens, int *i)
 {
     char *op;
 
-    if (tokens[*i] && !is_redir(tokens[*i]))
+    if (tokens[*i] && !seaky_is_redir(tokens[*i]))
     {
-        while (tokens[*i] && !is_redir(tokens[*i]))
+        while (tokens[*i] && !seaky_is_redir(tokens[*i]))
         {
             if (add_arg(cmd, tokens[*i]) != 0)
                 return (0);
@@ -57,11 +71,11 @@ int parse(t_cmd *cmd, char **tokens, int *i)
         }
         return (1);
     }
-    if (tokens[*i] && is_redir(tokens[*i]))
+    if (tokens[*i] && seaky_is_redir(tokens[*i]))
     {
         op = tokens[*i];
         (*i)++;
-        if (!tokens[*i] || is_redir(tokens[*i]))
+        if (!tokens[*i] || seaky_is_redir(tokens[*i]))
             return (0);
         if (sneaky_strcmp(op, "<<"))
         {

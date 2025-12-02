@@ -1023,5 +1023,1070 @@
     "directory": "/var/home/pedro/Code/42_MINISHELL",
     "file": "/var/home/pedro/Code/42_MINISHELL/shlvl/handle_shlvl.c",
     "output": "/var/home/pedro/Code/42_MINISHELL/objs/shlvl/handle_shlvl.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isalnum.o",
+      "ctype/ft_isalnum.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isalnum.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isalnum.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isalpha.o",
+      "ctype/ft_isalpha.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isalpha.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isalpha.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isascii.o",
+      "ctype/ft_isascii.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isascii.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isascii.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isdigit.o",
+      "ctype/ft_isdigit.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isdigit.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isdigit.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isprint.o",
+      "ctype/ft_isprint.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isprint.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isprint.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_tolower.o",
+      "ctype/ft_tolower.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_tolower.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_tolower.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_toupper.o",
+      "ctype/ft_toupper.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_toupper.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_toupper.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_iscntrl.o",
+      "ctype/ft_iscntrl.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_iscntrl.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_iscntrl.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isspace.o",
+      "ctype/ft_isspace.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isspace.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isspace.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isblank.o",
+      "ctype/ft_isblank.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isblank.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isblank.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isgraph.o",
+      "ctype/ft_isgraph.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isgraph.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isgraph.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_islower.o",
+      "ctype/ft_islower.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_islower.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_islower.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_ispunct.o",
+      "ctype/ft_ispunct.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_ispunct.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_ispunct.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "ctype/ft_isupper.o",
+      "ctype/ft_isupper.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isupper.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/ctype/ft_isupper.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/arr_size.o",
+      "memory/arr_size.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/arr_size.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/arr_size.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/free_2d.o",
+      "memory/free_2d.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/free_2d.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/free_2d.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/free_3d.o",
+      "memory/free_3d.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/free_3d.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/free_3d.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_bzero.o",
+      "memory/ft_bzero.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_bzero.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_bzero.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_calloc.o",
+      "memory/ft_calloc.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_calloc.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_calloc.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_memchr.o",
+      "memory/ft_memchr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memchr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memchr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_memcmp.o",
+      "memory/ft_memcmp.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memcmp.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memcmp.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_memcpy.o",
+      "memory/ft_memcpy.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memcpy.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memcpy.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_memmove.o",
+      "memory/ft_memmove.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memmove.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memmove.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "memory/ft_memset.o",
+      "memory/ft_memset.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memset.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/memory/ft_memset.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_printhex.o",
+      "output/ft_printhex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_printhex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_printhex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putchar.o",
+      "output/ft_putchar.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putchar.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putchar.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putchar_fd.o",
+      "output/ft_putchar_fd.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putchar_fd.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putchar_fd.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putendl_fd.o",
+      "output/ft_putendl_fd.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putendl_fd.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putendl_fd.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putnbr.o",
+      "output/ft_putnbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putnbr_fd.o",
+      "output/ft_putnbr_fd.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_fd.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_fd.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putnbr_hex.o",
+      "output/ft_putnbr_hex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_hex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_hex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putnbr_hexlow.o",
+      "output/ft_putnbr_hexlow.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_hexlow.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putnbr_hexlow.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putstr.o",
+      "output/ft_putstr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putstr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putstr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putstr_fd.o",
+      "output/ft_putstr_fd.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putstr_fd.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putstr_fd.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "output/ft_putunbr.o",
+      "output/ft_putunbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putunbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/output/ft_putunbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dprintf.o",
+      "print/dprintf/ft_dprintf.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dprintf.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dprintf.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dprinthex.o",
+      "print/dprintf/ft_dprinthex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dprinthex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dprinthex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputchar.o",
+      "print/dprintf/ft_dputchar.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputchar.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputchar.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputnbr.o",
+      "print/dprintf/ft_dputnbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputnbr_hex.o",
+      "print/dprintf/ft_dputnbr_hex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr_hex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr_hex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputnbr_hexlow.o",
+      "print/dprintf/ft_dputnbr_hexlow.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr_hexlow.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputnbr_hexlow.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputstr.o",
+      "print/dprintf/ft_dputstr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputstr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputstr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/dprintf/ft_dputunbr.o",
+      "print/dprintf/ft_dputunbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputunbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/dprintf/ft_dputunbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_printf.o",
+      "print/printf/ft_printf.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_printf.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_printf.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_printlhex.o",
+      "print/printf/ft_printlhex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_printlhex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_printlhex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlchar.o",
+      "print/printf/ft_putlchar.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlchar.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlchar.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlnbr.o",
+      "print/printf/ft_putlnbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlnbr_hex.o",
+      "print/printf/ft_putlnbr_hex.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr_hex.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr_hex.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlnbr_hexlow.o",
+      "print/printf/ft_putlnbr_hexlow.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr_hexlow.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlnbr_hexlow.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlstr.o",
+      "print/printf/ft_putlstr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlstr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlstr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "print/printf/ft_putlunbr.o",
+      "print/printf/ft_putlunbr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlunbr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/print/printf/ft_putlunbr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_atoi.o",
+      "strings/ft_atoi.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_atoi.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_atoi.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_count_words.o",
+      "strings/ft_count_words.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_count_words.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_count_words.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_itoa.o",
+      "strings/ft_itoa.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_itoa.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_itoa.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_split.o",
+      "strings/ft_split.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_split.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_split.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strchr.o",
+      "strings/ft_strchr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strchr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strchr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strcmp.o",
+      "strings/ft_strcmp.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strcmp.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strcmp.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strcpy.o",
+      "strings/ft_strcpy.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strcpy.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strcpy.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strdup.o",
+      "strings/ft_strdup.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strdup.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strdup.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_striteri.o",
+      "strings/ft_striteri.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_striteri.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_striteri.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strjoin.o",
+      "strings/ft_strjoin.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strjoin.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strjoin.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strlcat.o",
+      "strings/ft_strlcat.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlcat.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlcat.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strlcpy.o",
+      "strings/ft_strlcpy.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlcpy.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlcpy.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strlen.o",
+      "strings/ft_strlen.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlen.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strlen.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strmapi.o",
+      "strings/ft_strmapi.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strmapi.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strmapi.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strncmp.o",
+      "strings/ft_strncmp.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strncmp.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strncmp.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strnstr.o",
+      "strings/ft_strnstr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strnstr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strnstr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strrchr.o",
+      "strings/ft_strrchr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strrchr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strrchr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_strtrim.o",
+      "strings/ft_strtrim.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strtrim.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_strtrim.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_substr.o",
+      "strings/ft_substr.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_substr.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_substr.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-c",
+      "-o",
+      "strings/ft_wordcpy.o",
+      "strings/ft_wordcpy.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL/libft",
+    "file": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_wordcpy.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/libft/strings/ft_wordcpy.o"
   }
 ]

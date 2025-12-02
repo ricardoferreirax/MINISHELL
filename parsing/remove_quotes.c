@@ -44,6 +44,8 @@ void	remove_placeholder(char *s)
 	*write++ = '\0';
 	if (*(read + 1) == '\0')
 		*write = '\0';
+	else if(*(read + 1) == '\2')
+		*write = '\2';
 	else
 		*write = '\1';
 }

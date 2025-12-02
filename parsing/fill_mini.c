@@ -136,17 +136,17 @@ char	**retokenize(char **tokens)
 		{
 			k = 0;
 			retokens[rtk_increment] = malloc(sizeof(char)
-					* (ft_strlen(tokens[i]) + 2));
+					* (ft_strlen(tokens[i]) + 3));
 			while (tokens[i][k] != '\0')
 			{
 				retokens[rtk_increment][k] = tokens[i][k];
 				k++;
 			}
 			retokens[rtk_increment][k] = '\0';
-			// if(tokens[i][k + 1] == '\1')
-			// 	retokens[rtk_increment][k + 1] = '\2';
-			// else
-			retokens[rtk_increment][k + 1] = '\0';
+			if(is_redir(tokens[i]) && been_expanded(tokens[i]))
+				retokens[rtk_increment][k + 1] = '\2';
+			else
+				retokens[rtk_increment][k + 1] = '\0';
 			rtk_increment++;
 		}
 		else
@@ -192,9 +192,11 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		if (!tokens)
 			return(free_2d((void **)tokens), -1);
 		expanser(tokens, nyan->envyan, nyan->last_status);
+		print_arr(tokens);
 		retokens = retokenize(tokens);
-		tokens = remove_quotes(retokens);
 		print_arr(retokens);
+		tokens = remove_quotes(retokens);
+		print_arr(tokens);
 		j = 0;
 		if (!retokens)
 			printf("you're stupid\n"), exit(-1);
