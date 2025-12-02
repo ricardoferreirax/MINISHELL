@@ -49,7 +49,7 @@ SRC_FILES = \
 	parsing/aux_funcs.c \
 	parsing/expanser.c \
 	parsing/parse.c \
-	parsing/init_fill_mini.c \
+	parsing/fill_mini.c \
 	parsing/redir.c \
 	parsing/remove_quotes.c \
 	parsing/split_ignore_quotes.c \

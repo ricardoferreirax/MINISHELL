@@ -115,6 +115,9 @@ static char	*insert_expanded(char *args, int j, char *expanded)
 		k++;
 	}
 	result[i] = '\0';
+	// if(is_redir(expanded))
+	// 	result[i + 1] = '\2';
+	// else
 	result[i + 1] = '\0';
 	return (result);
 }
@@ -143,10 +146,12 @@ int	expanser(char **final, t_envyan *env, int status)
 		{
 			if (final[i][k] == '\'' && !indquote)
 			{
+				// final[i][k] = '\1';
 				inquote = !inquote;
 			}
 			if (final[i][k] == '\"' && !inquote)
 			{
+				// final[i][k] = '\2';
 				indquote = !indquote;
 			}
 			if (final[i][k] == '$' && !inquote)

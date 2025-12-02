@@ -692,12 +692,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/parsing/init_fill_mini.o",
-      "parsing/init_fill_mini.c"
+      "objs/parsing/fill_mini.o",
+      "parsing/fill_mini.c"
     ],
     "directory": "/var/home/pedro/Code/42_MINISHELL",
-    "file": "/var/home/pedro/Code/42_MINISHELL/parsing/init_fill_mini.c",
-    "output": "/var/home/pedro/Code/42_MINISHELL/objs/parsing/init_fill_mini.o"
+    "file": "/var/home/pedro/Code/42_MINISHELL/parsing/fill_mini.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/parsing/fill_mini.o"
   },
   {
     "arguments": [

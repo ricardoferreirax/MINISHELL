@@ -143,10 +143,10 @@ char	**retokenize(char **tokens)
 				k++;
 			}
 			retokens[rtk_increment][k] = '\0';
-			if(is_redir(retokens[rtk_increment]))
-				retokens[rtk_increment][k+1] = '\2';
-			else
-				retokens[rtk_increment][k + 1] = '\0';
+			// if(tokens[i][k + 1] == '\1')
+			// 	retokens[rtk_increment][k + 1] = '\2';
+			// else
+			retokens[rtk_increment][k + 1] = '\0';
 			rtk_increment++;
 		}
 		else

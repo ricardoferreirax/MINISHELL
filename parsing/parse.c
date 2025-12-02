@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "print/printf/ft_printf.h"
 
 //for this to return true str must be double '\0' terminated and also be equal to base
 int sneaky_strcmp(char *str, char *base)
@@ -28,6 +29,7 @@ int sneaky_strcmp(char *str, char *base)
 
 bool is_redir(char *str)
 {
+	ft_printf("nao sei pq print agui mas ta ai: %s\n", str);
     if (!str)
         return false;
     if (sneaky_strcmp(str, "<"))
