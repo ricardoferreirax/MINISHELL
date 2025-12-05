@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "strings/ft_strings.h"
 
-static char	*ft_strdup_with_ending(char *str)
+char	*ft_strdup_with_ending(char *str)
 {
 	char	*dup;
 	int		i;
@@ -33,23 +34,25 @@ static char	*ft_strdup_with_ending(char *str)
 	return (dup);
 }
 
-static char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
+char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 {
 	char	*temp;
 	char	*result;
 	int		i;
 
 	i = 0;
+	if(!cmd_args)
+		return(ft_strdup(""));
 	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
 	if (!temp)
-		return (NULL);
+		return(ft_strdup(""));
 	cmd_args++;
 	if(cmd_args[0] == '?')
 		return(ft_itoa(lst_status));
 	if(cmd_args[0] == '0')
-		return("MiNyanShell nyan~ :3");
+		return(ft_strdup("MiNyanShell nyan~ :3"));
 	if(ft_isdigit(cmd_args[0]))
-		return("");
+		return(ft_strdup(""));
 	while (cmd_args[i] != '\0' && (ft_isalpha(cmd_args[i]) || (cmd_args[i] == '_')))
 	{
 		temp[i] = cmd_args[i];
@@ -69,12 +72,14 @@ static char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 		envyan = envyan->next;
 	}
 	free(temp);
+	if(!result)
+		return(ft_strdup(""));
 	return (result);
 }
 
 
 
-static char	*insert_expanded(char *args, int j, char *expanded)
+char	*insert_expanded(char *args, int j, char *expanded)
 {
 	size_t	i;
 	int		skip_len;
@@ -91,7 +96,7 @@ static char	*insert_expanded(char *args, int j, char *expanded)
 		return (NULL);
 	while (args[j + skip_len] != '\0' && (ft_isalpha(args[j + skip_len]) || args[j + skip_len] == '_'))
 		skip_len++;
-	if((skip_len == 1 && (args[j + skip_len] == '?' || ft_isdigit(args[j + skip_len]))))
+	if((skip_len == 1 && ((args[j + skip_len] == '?' || ft_isdigit(args[j + skip_len])))))
 		skip_len++;
 	k = 0;
 	while (k < (size_t)j)

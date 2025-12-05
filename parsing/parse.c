@@ -13,6 +13,7 @@
 #include "../include/parsing.h"
 
 //for this to return true str must be double '\0' terminated and also be equal to base
+//this allows for equal strings to be treated differently
 int sneaky_strcmp(char *str, char *base)
 {
 	int i = 0;
@@ -42,7 +43,7 @@ bool is_redir(char *str)
     return false;
 }
 
-bool seaky_is_redir(char *str)
+bool sneaky_is_redir(char *str)
 {
     if (!str)
         return false;
@@ -61,9 +62,9 @@ int parse(t_cmd *cmd, char **tokens, int *i)
 {
     char *op;
 
-    if (tokens[*i] && !seaky_is_redir(tokens[*i]))
+    if (tokens[*i] && !sneaky_is_redir(tokens[*i]))
     {
-        while (tokens[*i] && !seaky_is_redir(tokens[*i]))
+        while (tokens[*i] && !sneaky_is_redir(tokens[*i]))
         {
             if (add_arg(cmd, tokens[*i]) != 0)
                 return (0);
@@ -71,11 +72,11 @@ int parse(t_cmd *cmd, char **tokens, int *i)
         }
         return (1);
     }
-    if (tokens[*i] && seaky_is_redir(tokens[*i]))
+    if (tokens[*i] && sneaky_is_redir(tokens[*i]))
     {
         op = tokens[*i];
         (*i)++;
-        if (!tokens[*i] || seaky_is_redir(tokens[*i]))
+        if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
             return (0);
         if (sneaky_strcmp(op, "<<"))
         {

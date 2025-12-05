@@ -50,6 +50,19 @@ void	remove_placeholder(char *s)
 		*write = '\1';
 }
 
+bool has_placeholder(char *str)
+{
+	int i = 0;
+	if(!str)
+		return false;
+	while(str[i])
+	{
+		if(str[i] == '\1')
+			return true;
+		i++;
+	}
+	return false;
+}
 char	**remove_quotes(char **arr)
 {
 	int		i;
@@ -78,6 +91,10 @@ char	**remove_quotes(char **arr)
 					indquote = !indquote;
 				}
 				j++;
+			}
+			if(i > 0 && has_placeholder(arr[i]) && sneaky_strcmp(arr[i - 1], "<<"))
+			{
+				arr[i][j + 1] = '\2';
 			}
 			remove_placeholder(arr[i]);
 		}

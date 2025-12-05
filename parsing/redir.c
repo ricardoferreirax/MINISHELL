@@ -14,6 +14,18 @@
 #include "../include/execution.h"
 #include "../include/parsing.h"
 
+static bool had_quotes(char *str)
+{
+	int i = 0;
+	if(!str)
+		return false;
+	while(str[i])
+		i++;
+	if(str[i + 1] == '\2')
+		return true;
+	return false;
+}
+
 static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 {
 	t_redir	*redir;
@@ -23,7 +35,13 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 		return (NULL);
 	redir->type = redir_type;
 	if (redir_type == REDIR_HEREDOC)
+	{
 		redir->delimiter = ft_strdup(arg);
+		if(had_quotes(arg))
+			redir->expansion = false;
+		else
+			redir->expansion= true;
+	}
 	else
 	{
 		if(been_expanded(arg))

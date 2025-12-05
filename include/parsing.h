@@ -36,7 +36,10 @@ bool good_syntax(char *str);
 int	count_words_ignore_quotes(char *str, char c);
 bool	been_expanded(char *str);
 void	remove_placeholder(char *s);
-
+int sneaky_strcmp(char *str, char *base);
+char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status);
+char	*insert_expanded(char *args, int j, char *expanded);
+char	*ft_strdup_with_ending(char *str);
 // expanser
 int	expanser(char **final, t_envyan *env, int status);
 

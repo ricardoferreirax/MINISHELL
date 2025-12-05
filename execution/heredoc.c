@@ -12,8 +12,11 @@
 
 #include "../include/execution.h"
 #include "../include/signals.h"
+#include "parsing.h"
+#include <string.h>
 
-// bool	is_limiter_quoted(char *s)  // delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
+// bool	is_limiter_quoted(char *s) 
+		// delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
 // {
 // 	int	i;
 
@@ -27,115 +30,159 @@
 // 	return (false);
 // }
 
-static int heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
+static int	dolar_pos(char *str)
 {
-    char *line;
-    (void)mini;
+	int	i;
 
-    while (1)
-    {
-        line = readline("> ");
-        if (!line)
-        {
-            warn_heredoc_eof(redir->delimiter);
-            break;
-        }
-        if (redir->delimiter && ft_strcmp(line, redir->delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        // if (redir->expansion)
-        // {
-        //     expanded_line = ;
-		// 	..................
-        // }
-        ft_putendl_fd(line, write_fd);
-        free(line);
-    }
-    return (0);
+	i = 0;
+	while (str && str[i] != '$')
+		i++;
+	return (i);
 }
 
-static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],t_cmd *cmd)
+static int	count_ma_money_babyyy(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '$')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
+{
+	char	*line;
+	int		i;
+	char	*expanded_line;
+	int		dolar_count;
+	char	*temp;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+		{
+			warn_heredoc_eof(redir->delimiter);
+			break ;
+		}
+		if (redir->delimiter && ft_strcmp(line, redir->delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		if (redir->expansion)
+		{
+			i = 0;
+			dolar_count = count_ma_money_babyyy(line);
+			ft_printf("%d dolar signs found \n", dolar_count);
+			while (i < dolar_count)
+			{
+				ft_printf("while has runned %d times\n", i);
+				int dolar_index = dolar_pos(line);
+				expanded_line = find_expanded(line + dolar_index,
+						mini->envyan, mini->last_status);
+				temp = insert_expanded(line, dolar_index, expanded_line);
+				ft_printf("temp: %s\n", temp);
+				free(line);
+				line = ft_strdup_with_ending(temp);
+				i++;
+			}
+		}
+		ft_putendl_fd(line, write_fd);
+		free(line);
+	}
+	return (0);
+}
+
+static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],
+		t_cmd *cmd)
 {
 	int	exit_code;
-	(void)mini;
 
-	close_fd_safe(&pipefd[0]);               // child não lê
+	(void)mini;
+	close_fd_safe(&pipefd[0]); // child não lê
 	minyanshell_signals(CHILD_EXEC);
 	signal(SIGQUIT, SIG_IGN);
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
 	close_fd_safe(&pipefd[1]);
-    if (cmd->in_fd != -1)// se já havia um in_fd, fecha o anterior
-    {
-        close_fd_safe(&cmd->in_fd);
-    }
+	if (cmd->in_fd != -1) // se já havia um in_fd, fecha o anterior
+	{
+		close_fd_safe(&cmd->in_fd);
+	}
 	minyanshell_child_cleanup_and_exit(mini, exit_code);
 }
 
-static int parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2], pid_t pid)
+static int	parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2],
+		pid_t pid)
 {
-    int exit_code;
+	int	exit_code;
 
-    close_fd_safe(&pipefd[1]);
-    exit_code = wait_for_single(pid);
-    if (exit_code == 130) // sigint
-    {
-        mini->last_status = 130;
-        close_fd_safe(&pipefd[0]);
-        return (1);
-    }
-    if (exit_code != 0)
-    {
-        close_fd_safe(&pipefd[0]);
-        return (1);
-    }
-    if (cmd->in_fd != -1)     // se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
-        close_fd_safe(&cmd->in_fd);
-    cmd->in_fd = pipefd[0];   // guarda o read end para usar como STDIN
-    return (0);
+	close_fd_safe(&pipefd[1]);
+	exit_code = wait_for_single(pid);
+	if (exit_code == 130) // sigint
+	{
+		mini->last_status = 130;
+		close_fd_safe(&pipefd[0]);
+		return (1);
+	}
+	if (exit_code != 0)
+	{
+		close_fd_safe(&pipefd[0]);
+		return (1);
+	}
+	if (cmd->in_fd != -1) // se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
+		close_fd_safe(&cmd->in_fd);
+	cmd->in_fd = pipefd[0]; // guarda o read end para usar como STDIN
+	return (0);
 }
 
-static int handle_single_heredoc(t_cmd *cmd, t_redir *redir, t_mini *mini)
+static int	handle_single_heredoc(t_cmd *cmd, t_redir *redir, t_mini *mini)
 {
-    int   pipefd[2];
-    pid_t pid;
+	int		pipefd[2];
+	pid_t	pid;
 
-    if (pipe(pipefd) == -1)
-        return (perror("MiNyanShell: pipe"), 1);
-    pid = fork();
-    if (pid == -1)
-    {
-        close_fd_safe(&pipefd[0]);
-        close_fd_safe(&pipefd[1]);
-        return (perror("MiNyanShell: fork"), 1);
-    }
-    if (pid == 0)
-        child_heredoc(redir, mini, pipefd,cmd);
-    else
-        return (parent_heredoc_control(cmd, mini, pipefd, pid));
-    return (0);
+	if (pipe(pipefd) == -1)
+		return (perror("MiNyanShell: pipe"), 1);
+	pid = fork();
+	if (pid == -1)
+	{
+		close_fd_safe(&pipefd[0]);
+		close_fd_safe(&pipefd[1]);
+		return (perror("MiNyanShell: fork"), 1);
+	}
+	if (pid == 0)
+		child_heredoc(redir, mini, pipefd, cmd);
+	else
+		return (parent_heredoc_control(cmd, mini, pipefd, pid));
+	return (0);
 }
 
-int process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
+int	process_all_heredocs(t_cmd *cmd_list, t_mini *mini)
 {
-    t_cmd   *cmd;
-    t_redir *redir;
+	t_cmd	*cmd;
+	t_redir	*redir;
 
-    cmd = cmd_list;
-    while (cmd)
-    {
-        redir = cmd->redirs;
-        while (redir)
-        {
-            if (redir->type == REDIR_HEREDOC)
-            {
-                if (handle_single_heredoc(cmd, redir, mini) != 0)
-                    return (1);
-            }
-            redir = redir->next;
-        }
-        cmd = cmd->next;
-    }
-    return (0);
+	cmd = cmd_list;
+	while (cmd)
+	{
+		redir = cmd->redirs;
+		while (redir)
+		{
+			if (redir->type == REDIR_HEREDOC)
+			{
+				if (handle_single_heredoc(cmd, redir, mini) != 0)
+					return (1);
+			}
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+	return (0);
 }
