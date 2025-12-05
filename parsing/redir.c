@@ -47,6 +47,10 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 		if(been_expanded(arg))
 			return(ft_printf("Ambiguous redirection , where should i put this \"%s\" nyan~ :3?\n", arg), NULL);
 		redir->file = ft_strdup(arg);
+		if(!redir->file)
+		{
+			return NULL;
+		}
 	}
 	return (redir);
 }
@@ -57,10 +61,10 @@ int	redir_append(t_cmd *cmd, t_redir_type redir_type, char *arg)
 	t_redir	*last;
 
 	if (!cmd || !arg)
-		return (1);
+		return (-1);
 	new_redir = redir_new(redir_type, arg);
 	if (!new_redir)
-		return (1);
+		return (-1);
 	if (!cmd->redirs)
 	{
 		cmd->redirs = new_redir;

@@ -129,6 +129,8 @@ char	**retokenize(char **tokens)
 		i++;
 	}
 	retokens = malloc(sizeof(char *) * (word_count + 1));
+	if(!retokens)
+		return NULL;
 	i = 0;
 	while (tokens[i])
 	{
@@ -152,6 +154,11 @@ char	**retokenize(char **tokens)
 		else
 		{
 			temp = split_ignore_quotes(tokens[i], ' ', 1);
+			if(!temp)
+			{
+				//free
+				return NULL;
+			}
 			k = 0;
 			while (temp[k])
 			{
@@ -191,23 +198,23 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		tokens = add_spaces(pipes[i]);
 		if (!tokens)
 			return(free_2d((void **)tokens), -1);
-		expanser(tokens, nyan->envyan, nyan->last_status);
-		print_arr(tokens);
+		if(expanser(tokens, nyan->envyan, nyan->last_status))
+			return(free_2d((void **)tokens), -1);
 		retokens = retokenize(tokens);
-		print_arr(retokens);
+		free_2d((void **)tokens);
+		if(!retokens)
+			return -1;
 		tokens = remove_quotes(retokens);
-		print_arr(tokens);
 		j = 0;
-		if (!retokens)
-			printf("you're stupid\n"), exit(-1);
 		while (tokens[j] != NULL)
 		{
-			if (!parse(curr, tokens, &j))
+			if (parse(curr, tokens, &j))
 			{
-				ft_printf("NYAAAAN, a fatal error has occureded but i won't tell what it is nyan~ :3\n");
-				return 1;
+				ft_printf("NYAAAAN, a parsing error has occureded but i won't tell what it is nyan~ :3\n");
+				return -1;
 			}
 		}
+		free_2d((void **)tokens);
 		curr = curr->next;
 		i++;
 	}

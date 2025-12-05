@@ -150,21 +150,17 @@ int	expanser(char **final, t_envyan *env, int status)
 		while (final[i] && final[i][k] != '\0')
 		{
 			if (final[i][k] == '\'' && !indquote)
-			{
-				// final[i][k] = '\1';
 				inquote = !inquote;
-			}
 			if (final[i][k] == '\"' && !inquote)
-			{
-				// final[i][k] = '\2';
 				indquote = !indquote;
-			}
 			if (final[i][k] == '$' && !inquote)
 			{
 				expanded = find_expanded(final[i] + k, env, status);
 				temp = insert_expanded(final[i], k, expanded);
+				free(expanded);
 				free(final[i]);
 				final[i] = ft_strdup_with_ending(temp);
+				free(temp);
 				if(!final)
 					return -1;
 			}

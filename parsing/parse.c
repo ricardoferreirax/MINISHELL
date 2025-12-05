@@ -67,39 +67,39 @@ int parse(t_cmd *cmd, char **tokens, int *i)
         while (tokens[*i] && !sneaky_is_redir(tokens[*i]))
         {
             if (add_arg(cmd, tokens[*i]) != 0)
-                return (0);
+                return (-1);
             (*i)++;
         }
-        return (1);
+        return (0);
     }
     if (tokens[*i] && sneaky_is_redir(tokens[*i]))
     {
         op = tokens[*i];
         (*i)++;
         if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
-            return (0);
+            return (-1);
         if (sneaky_strcmp(op, "<<"))
         {
             if (redir_append(cmd, REDIR_HEREDOC, tokens[*i]) != 0)
-                return (0);
+                return (-1);
         }
         else if (sneaky_strcmp(op, "<"))
         {
             if (redir_append(cmd, REDIR_IN, tokens[*i]) != 0)
-                return (0);
+                return (-1);
         }
         else if (sneaky_strcmp(op, ">>"))
         {
             if (redir_append(cmd, REDIR_APPEND, tokens[*i]) != 0)
-                return (0);
+                return (-1);
         }
         else if (sneaky_strcmp(op, ">"))
         {
             if (redir_append(cmd, REDIR_OUT, tokens[*i]) != 0)
-                return (0);
+                return (-1);
         }
         (*i)++;
-        return (1);
+        return (0);
     }
     return (0);
 }

@@ -81,17 +81,22 @@ static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 		{
 			i = 0;
 			dolar_count = count_ma_money_babyyy(line);
-			ft_printf("%d dolar signs found \n", dolar_count);
 			while (i < dolar_count)
 			{
-				ft_printf("while has runned %d times\n", i);
 				int dolar_index = dolar_pos(line);
 				expanded_line = find_expanded(line + dolar_index,
 						mini->envyan, mini->last_status);
+				if(!expanded_line)
+					return -1;
 				temp = insert_expanded(line, dolar_index, expanded_line);
-				ft_printf("temp: %s\n", temp);
+				free(expanded_line);
 				free(line);
+				if(!temp)
+					return -1;
 				line = ft_strdup_with_ending(temp);
+				free(temp);
+				if(!line)
+					return -1;
 				i++;
 			}
 		}

@@ -31,11 +31,11 @@ static int	add_spaces_size_count(char *str)
 			indquote = !indquote;
 		if (str[i] == '<' || str[i] == '>')
 		{
-			if ((!indquote && !indquote) && (str[i - 1] != ' ' || str[i
-					- 1] != '>' || str[i - 1] != '<'))
+			if ((!indquote && !indquote) && (i > 0 && (str[i - 1] != ' ' || str[i
+					- 1] != '>' || str[i - 1] != '<')))
 				size++;
-			if ((!indquote && !inquote) && (str[i + 1] != ' ' || str[i
-					+ 1] != '>' || str[i + 1] != '<'))
+			if ((!indquote && !inquote) &&  (i > 0 && (str[i + 1] != ' ' || str[i
+				+ 1] != '>' || str[i + 1] != '<')))
 				size++;
 		}
 		i++;
@@ -68,8 +68,8 @@ char	**add_spaces(char *pipe)
 			indquote = !indquote;
 		if (pipe[i] == '<' || pipe[i] == '>')
 		{
-			if ((!inquote && !indquote) && (pipe[i - 1] != ' ' && pipe[i
-					- 1] != '>' && pipe[i - 1] != '<'))
+			if ((!inquote && !indquote) && (i > 0 && (pipe[i - 1] != ' ' && pipe[i
+				- 1] != '>' && pipe[i - 1] != '<')))
 			{
 				dest[j + i] = ' ';
 				j++;
