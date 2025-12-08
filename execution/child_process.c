@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/17 14:54:05 by rmedeiro          #+#    #+#             */
 /*   Updated: 2025/11/02 12:16:03 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/19 08:48:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 
 static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 {
-    int status;
-    char **envyan_array;
+    int     status;
+    char  **envyan_array;
 
+    if (!cmd)
+        minyanshell_child_cleanup_and_exit(mini, 0);
     if (apply_redirs_in_child(cmd) != 0)
         minyanshell_child_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
@@ -41,7 +43,8 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
 
 static void first_child(t_cmd *cmd, t_pipeline *pp)
 {
-    if (cmd->next)
+    prepare_first(cmd, pp);
+    if (pp->need_next_stdout && cmd->next)
     {
         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
             error_exit("MiNyanShell: dup2 failed (pipe write)");
@@ -52,9 +55,13 @@ static void first_child(t_cmd *cmd, t_pipeline *pp)
 
 static void middle_child(t_cmd *cmd, t_pipeline *pp)
 {
-    if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-        error_exit("MiNyanShell: dup2 failed (pipe read)");
-    if (cmd->next)
+    prepare_middle(cmd, pp);
+    if (pp->need_prev_stdin)
+    {
+        if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+            error_exit("MiNyanShell: dup2 failed (pipe read)");
+    }
+    if (pp->need_next_stdout && cmd->next)
     {
         if (safe_dup2_and_close(pp->pipefd[1], STDOUT_FILENO) != 0)
             error_exit("MiNyanShell: dup2 failed (pipe write)");
@@ -65,8 +72,12 @@ static void middle_child(t_cmd *cmd, t_pipeline *pp)
 
 static void last_child(t_cmd *cmd, t_pipeline *pp)
 {
-    if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
-        error_exit("MiNyanShell: dup2 failed (pipe read)");
+    prepare_last(cmd, pp);
+    if (pp->need_prev_stdin)
+    {
+        if (safe_dup2_and_close(pp->prev_pipefd, STDIN_FILENO) != 0)
+            error_exit("MiNyanShell: dup2 failed (pipe read)");
+    }
     execute_child_cmd(cmd, pp->mini);
 }
 

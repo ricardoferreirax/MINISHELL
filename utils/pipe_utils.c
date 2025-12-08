@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:20:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/18 22:30:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,6 @@ int safe_dup2_and_close(int oldfd, int newfd)
     return (0);
 }
 
-void close_all_heredoc_fds(t_cmd *head)
-{
-    t_cmd *current;
-
-	current = head;
-    while (current)
-    {
-        if (current->in_fd != -1) 
-        { 
-            close(current->in_fd); 
-            current->in_fd = -1; 
-        }
-        current = current->next;
-    }
-}
-
 int reset_fds(int orig_stdin, int orig_stdout)
 {
     if (orig_stdin != -1) 
@@ -89,27 +73,6 @@ int reset_fds(int orig_stdin, int orig_stdout)
         close(orig_stdout);
     }
     return (0);
-}
-
-
-void close_heredoc(t_cmd *cmd)
-{
-    if (!cmd)
-        return ;
-    if (cmd->in_fd != -1)
-    {
-        close_fd_safe(&cmd->in_fd);
-        cmd->in_fd = -1;
-    }
-}
-
-void close_fd_safe(int *fd)
-{
-    if (fd && *fd != -1)
-    {
-        close(*fd);
-        *fd = -1;
-    }
 }
 
 int safe_fork(t_cmd *cmd, t_pipeline *pp)

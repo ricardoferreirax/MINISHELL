@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 19:23:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:20:07 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/19 08:18:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static int exec_builtin_no_redirs(t_cmd *cmd, t_mini *mini)
 {
     int status;
 
-    if (!cmd || !cmd->args || !cmd->args[0]) 
-	{
+    if (!cmd || !cmd->args || !cmd->args[0])
+    {
         close_heredoc(cmd);
         mini->last_status = 0;
         return (0);
@@ -31,7 +31,7 @@ static int exec_builtin_no_redirs(t_cmd *cmd, t_mini *mini)
     status = execute_builtin(cmd, mini);
     close_heredoc(cmd);
     mini->last_status = status;
-    return (0);
+    return (status);
 }
 
 static int exec_builtin_with_redirs(t_cmd *cmd, t_mini *mini)
@@ -45,8 +45,8 @@ static int exec_builtin_with_redirs(t_cmd *cmd, t_mini *mini)
     orig_stdout = dup(STDOUT_FILENO);
     if (orig_stdin == -1 || orig_stdout == -1)
         return (minyanshell_signals(PROMPT), perror("MiNyanShell: dup error"), 1);
-    if (apply_redirs_in_child(cmd) != 0) 
-	{
+    if (apply_redirs_in_child(cmd) != 0)
+    {
         reset_fds(orig_stdin, orig_stdout);
         close_heredoc(cmd);
         minyanshell_signals(PROMPT);
@@ -58,12 +58,13 @@ static int exec_builtin_with_redirs(t_cmd *cmd, t_mini *mini)
     close_heredoc(cmd);
     minyanshell_signals(PROMPT);
     mini->last_status = status;
-    return (0);
+    return (status);
 }
 
 int execute_single_cmd(t_cmd *cmd, t_mini *mini)
 {
-    if (!cmd || !cmd->args || !cmd->args[0]) {
+    if (!cmd || !cmd->args || !cmd->args[0]) 
+	{
         close_heredoc(cmd);
         mini->last_status = 0;
         return (0);

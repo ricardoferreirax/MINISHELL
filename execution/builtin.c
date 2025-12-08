@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 19:07:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:14:27 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/19 08:47:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,27 @@ int execute_builtin(t_cmd *cmd, t_mini *mini)
         status = ft_cd(mini, cmd->args);
     else if (ft_strcmp(cmd->args[0], "export") == 0)
         status = ft_export(cmd, mini);
-   else if (ft_strcmp(cmd->args[0], "unset") == 0)
+    else if (ft_strcmp(cmd->args[0], "unset") == 0)
         status = ft_unset(cmd, mini);
-    /*else if (ft_strcmp(cmd->args[0], "exit") == 0)
-        status = ft_exit(mini, cmd->args);*/
+    else if (ft_strcmp(cmd->args[0], "exit") == 0)
+        status = ft_exit(cmd, mini);
     else
         status = 1; // não era builtin
     mini->last_status = status;
     return (status);
+}
+
+int builtin_has_io(char *name)
+{
+    if (!name) 
+		return (0);
+    if (ft_strcmp(name, "echo") == 0) 
+		return (1);
+    if (ft_strcmp(name, "pwd")  == 0) 
+		return (1);
+    if (ft_strcmp(name, "env")  == 0) 
+		return (1);
+    if (ft_strcmp(name, "export")== 0) 
+		return (1);
+    return (0);
 }

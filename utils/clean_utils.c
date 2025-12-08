@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:51:23 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:22:21 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/10/18 23:13:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ void minyanshell_exit_cleanup(t_mini *mini)
     if (mini->envyan)
         free_envyan(&mini->envyan);
     rl_clear_history();
-	close(STDIN_FILENO);
-    close(STDOUT_FILENO);
-    close(STDERR_FILENO);
 }
 
 void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
@@ -43,8 +40,5 @@ void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
         if (mini->envyan)
             free_envyan(&mini->envyan);
     }
-	close(STDIN_FILENO);
-    close(STDOUT_FILENO);
-    close(STDERR_FILENO);
-    exit(status);
+    _exit(status);
 }
