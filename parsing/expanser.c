@@ -127,6 +127,7 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
+// TODO: fix invalid read for inexistant expansions, e.g. $noexpand
 int	expanser(char **final, t_envyan *env, int status)
 {
 	char	*temp;
