@@ -35,7 +35,6 @@ SRC_FILES = \
 	utils/errors.c \
 	utils/pipe_utils.c \
 	utils/close_utils.c \
-	utils/split_quotes.c \
 	utils/clean_utils.c \
 	builtin/ft_echo.c \
 	builtin/ft_pwd.c \
