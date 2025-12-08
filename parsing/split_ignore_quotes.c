@@ -12,7 +12,7 @@
 
 #include "../include/parsing.h"
 
-static int	count_words_ignore_quotes(char *str, char c)
+int	count_words_ignore_quotes(char *str, char c)
 {
 	bool	inquote;
 	bool	indquote;
@@ -45,7 +45,7 @@ static int	count_words_ignore_quotes(char *str, char c)
 	return (count);
 }
 
-static char	*word_copy_ignorequotes(char **s, char c)
+static char	*word_copy_ignorequotes(char **s, char c, int i)
 {
 	char	*dest;
 	int		counter;
@@ -66,14 +66,18 @@ static char	*word_copy_ignorequotes(char **s, char c)
 			indquote = !indquote;
 		(*s)++;
 	}
-	dest = malloc(sizeof(char) * (counter + 1));
+	dest = malloc(sizeof(char) * (counter + 2));
 	if (!dest)
 		return (NULL);
 	ft_strlcpy(dest, ((*s) - counter), counter + 1);
+	if(i == 1)
+		dest[counter + 1] = '\1';
+	else
+		dest[counter + 1] = '\0';
 	return (dest);
 }
 
-char	**split_ignore_quotes(char *str, char c)
+char	**split_ignore_quotes(char *str, char c, int k)
 {
 	int		i;
 	char	**arr;
@@ -86,7 +90,7 @@ char	**split_ignore_quotes(char *str, char c)
 		return (NULL);
 	while (i < wordnbr)
 	{
-		arr[i] = word_copy_ignorequotes(&str, c);
+		arr[i] = word_copy_ignorequotes(&str, c, k);
 		if (arr[i] == NULL)
 			return (free_2d((void **)arr), NULL);
 		i++;

@@ -46,3 +46,4 @@ void clean_envyan_array(char **envyan_array, int index)
 	}
 	free(envyan_array);
 }
+

@@ -6,14 +6,16 @@
 #    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/10/18 23:12:26 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/11/28 14:35:52 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = minishell
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g
+CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
+		-fno-omit-frame-pointer \
+		-g -fsanitize=undefined 
 INCS    = -Iinclude -Ilibft
 
 LIBFT   = libft/libft.a
@@ -45,15 +47,21 @@ SRC_FILES = \
 	builtin/export/export_array.c \
 	builtin/export/export_utils.c \
 	builtin/export/sort_export.c \
-	parsing/aux_funcs.c \
 	signals/signals.c \
+\
+	parsing/add_spaces.c \
+	parsing/aux_funcs.c \
+	parsing/expanser.c \
 	parsing/parse.c \
-	parsing/init_fill_mini.c \
+	parsing/fill_mini.c \
 	parsing/redir.c \
+	parsing/remove_quotes.c \
 	parsing/split_ignore_quotes.c \
 	parsing/validate_input.c \
 	parsing/utils.c \
 	parsing/fill_subcmd.c \
+	parsing/good_syntax.c \
+\
 	envyan/envyan_init.c \
 	envyan/envyan_array.c \
 	envyan/envyan_utils.c \

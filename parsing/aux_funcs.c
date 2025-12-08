@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 10:08:08 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/02 12:32:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:39:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ bool	forbidden_actions(char *str)
 		i++;
 	}
 	return (false);
+}
+
+int count_whitespaces(char *str)
+{
+	int i = 0;
+	while((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
+		i++;
+	return i;
 }
 
 char	*skip_whitespaces(char *str)

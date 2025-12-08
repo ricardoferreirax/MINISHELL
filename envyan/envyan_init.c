@@ -56,5 +56,7 @@ t_envyan *init_envyan(char **envp)
         }
         i++;
     }
+	// new_node = create_envyan_node("a", "> lol");
+	// add_envyan_node(&envyan_list, &last_node, new_node);
     return (envyan_list);
 }

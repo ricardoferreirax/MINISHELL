@@ -6,11 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/02 12:31:54 by pfreire-         ###   ########.fr       */
-=======
-/*   Updated: 2025/10/18 23:10:54 by rmedeiro         ###   ########.fr       */
->>>>>>> ricardo
+/*   Updated: 2025/11/28 14:23:54 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +27,7 @@ static void	process_line(t_mini *mini, char *input)
 {
 	char	**pipes;
 	int status;
+	int k = 0;
 
 
     if (!input || !mini)
@@ -47,15 +44,26 @@ static void	process_line(t_mini *mini, char *input)
         ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
         return ;
     }
+	if (!good_syntax(input))
+	{
+		ft_dprintf(2, "invalid Syntax nyan~\n");
+		return ;
+	}
     pipes = init_mini(mini, input);
     if (!pipes)
     {
         perror("init_mini");
         return ;
     }
-    fill_mini(mini, pipes);
+    if((k = fill_mini(mini, pipes)))
+	{
+		ft_printf("Fuuuuuuuck something broke here i hope it doesn't leak\n");
+	}
     free_2d((void **)pipes);
-    status = execute_pipeline(mini->head, mini);
+	if(k)
+		status = k;
+	else
+		status = execute_pipeline(mini->head, mini);
 	mini->last_status = status;
 }
 

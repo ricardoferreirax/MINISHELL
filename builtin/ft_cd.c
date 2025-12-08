@@ -17,10 +17,10 @@ static char *get_envyan(t_mini *mini, char *key)
 {
     t_envyan *node;
 
-    if (!mini || !key)
-        return NULL;
+	if (!mini || !key)
+		return NULL;
 
-    node = mini->envyan;
+node = mini->envyan;
     while (node)
     {
         if (node->key && strcmp(node->key, key) == 0)

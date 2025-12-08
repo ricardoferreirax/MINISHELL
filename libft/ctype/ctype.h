@@ -30,3 +30,4 @@ int	ft_tolower(int a);
 int	ft_toupper(int a);
 
 #endif
+

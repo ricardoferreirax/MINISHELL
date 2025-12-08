@@ -21,7 +21,6 @@
  * @param c Delimiter character.
  * @return Null-terminated array of substrings, or NULL on allocation failure.
  */
-
 char	**ft_split(char const *s, char c)
 {
 	char	**array;
