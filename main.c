@@ -59,7 +59,7 @@ static void	process_line(t_mini *mini, char *input)
 	{
 		ft_printf("Fuuuuuuuck something broke here i hope it doesn't leak\n");
 	}
-    free_2d((void **)pipes);
+	free_2d((void **)pipes);
 	if(k)
 		status = k;
 	else

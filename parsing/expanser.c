@@ -126,7 +126,6 @@ char	*insert_expanded(char *args, int j, char *expanded)
 	return (result);
 }
 
-// TODO: fix invalid read for inexistant expansions, e.g. $noexpand
 int	expanser(char **final, t_envyan *env, int status)
 {
 	char	*temp;
@@ -161,10 +160,11 @@ int	expanser(char **final, t_envyan *env, int status)
 				free(final[i]);
 				final[i] = ft_strdup_with_ending(temp);
 				free(temp);
-				if(!final)
+				if(!final[i])
 					return -1;
 			}
-			k++;
+			else
+				k++;
 		}
 		i++;
 	}

@@ -203,7 +203,7 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		retokens = retokenize(tokens);
 		free_2d((void **)tokens);
 		if(!retokens)
-			return -1;
+			return (-1);
 		tokens = remove_quotes(retokens);
 		j = 0;
 		while (tokens[j] != NULL)
