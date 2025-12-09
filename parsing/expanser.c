@@ -42,15 +42,15 @@ char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
 	i = 0;
 	if(!cmd_args)
 		return(ft_strdup(""));
-	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
-	if (!temp)
-		return(ft_strdup(""));
 	cmd_args++;
 	if(cmd_args[0] == '?')
 		return(ft_itoa(lst_status));
 	if(cmd_args[0] == '0')
 		return(ft_strdup("MiNyanShell nyan~ :3"));
 	if(ft_isdigit(cmd_args[0]))
+		return(ft_strdup(""));
+	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
+	if (!temp)
 		return(ft_strdup(""));
 	while (cmd_args[i] != '\0' && (ft_isalpha(cmd_args[i]) || (cmd_args[i] == '_')))
 	{

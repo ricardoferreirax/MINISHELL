@@ -192,6 +192,31 @@
       "-Ilibft",
       "-c",
       "-o",
+      "objs/execution/prepare_child.o",
+      "execution/prepare_child.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/execution/prepare_child.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/execution/prepare_child.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
       "objs/execution/child_process.o",
       "execution/child_process.c"
     ],
@@ -217,12 +242,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/execution/execute_cmds.o",
-      "execution/execute_cmds.c"
+      "objs/execution/external_cmds.o",
+      "execution/external_cmds.c"
     ],
     "directory": "/var/home/pedro/Code/42_MINISHELL",
-    "file": "/var/home/pedro/Code/42_MINISHELL/execution/execute_cmds.c",
-    "output": "/var/home/pedro/Code/42_MINISHELL/objs/execution/execute_cmds.o"
+    "file": "/var/home/pedro/Code/42_MINISHELL/execution/external_cmds.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/execution/external_cmds.o"
   },
   {
     "arguments": [
@@ -298,6 +323,31 @@
     "directory": "/var/home/pedro/Code/42_MINISHELL",
     "file": "/var/home/pedro/Code/42_MINISHELL/utils/pipe_utils.c",
     "output": "/var/home/pedro/Code/42_MINISHELL/objs/utils/pipe_utils.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/utils/close_utils.o",
+      "utils/close_utils.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/utils/close_utils.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/utils/close_utils.o"
   },
   {
     "arguments": [
@@ -448,6 +498,31 @@
     "directory": "/var/home/pedro/Code/42_MINISHELL",
     "file": "/var/home/pedro/Code/42_MINISHELL/builtin/ft_unset.c",
     "output": "/var/home/pedro/Code/42_MINISHELL/objs/builtin/ft_unset.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/builtin/ft_exit.o",
+      "builtin/ft_exit.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/builtin/ft_exit.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/builtin/ft_exit.o"
   },
   {
     "arguments": [
