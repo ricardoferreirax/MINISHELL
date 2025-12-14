@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 22:49:58 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/19 08:30:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:43:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,20 @@ static void prepare_external_or_exit(t_pipe_pos pos, t_cmd *cmd, t_pipeline *pp)
 
     resolve_status = is_external_resolved(cmd, pp->mini);
     if (resolve_status <= 0)
-    {
-        close_my_pipes(pos, pp);
-        if (resolve_status == 0)
-        {
-            cmd_not_found_msg(cmd->args[0]);
-            minyanshell_child_cleanup_and_exit(pp->mini, 127);
-        }
-        minyanshell_child_cleanup_and_exit(pp->mini, 1);
-    }
+	{
+    	close_my_pipes(pos, pp);
+    	if (resolve_status == NOT_FOUND)
+    	{
+        	cmd_not_found_msg(cmd->args[0]);
+        	minyanshell_child_cleanup_and_exit(pp->mini, 127);
+    	}
+    	if (resolve_status == EXT_NO_PERM)
+    	{
+        	perror(cmd->args[0]);
+        	minyanshell_child_cleanup_and_exit(pp->mini, 126);
+    	}
+    	minyanshell_child_cleanup_and_exit(pp->mini, 1);
+	}
     if (pos == FIRST)
     {
         if (cmd->next)

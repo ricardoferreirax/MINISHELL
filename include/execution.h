@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/19 08:26:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:44:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define  HAS_BINARY 1
 #define  NOT_FOUND 0
 #define EXT_ERROR -1
+#define EXT_NO_PERM -2
 
 typedef struct s_UwU	t_mini;
 typedef struct s_0w0	t_subcmd;
@@ -63,7 +64,7 @@ int						execute_external_cmd(t_cmd *cmd, t_mini *mini);
 int						execute_single_cmd(t_cmd *cmd, t_mini *mini);
 int						execute_redirs_without_cmd(t_cmd *cmd, t_mini *mini);
 void execute_external_in_child(t_cmd *cmd, char **envyan_array, t_mini *mini);
-char					*handle_cmd_path(char *cmd, char **envp);
+char *handle_cmd_path(char *cmd, char **envp, int *errcode);
 void					child_execute_cmd(t_cmd *cmd, t_pipeline *pp);
 int						execute_builtin(t_cmd *cmd, t_mini *mini);
 bool					is_builtin(char *cmd);

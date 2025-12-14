@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:20:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 15:03:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 #include "../include/signals.h"
 #include "parsing.h"
 #include <string.h>
-
-// bool	is_limiter_quoted(char *s) 
-		// delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i] != '\0')
-// 	{
-// 		if (s[i] == '"' || s[i] == '\'')
-// 			return (true);
-// 		i++;
-// 	}
-// 	return (false);
-// }
 
 static int	dolar_pos(char *str)
 {

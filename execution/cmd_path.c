@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:11:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 14:47:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:39:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,30 @@ static char	*ft_cmd_path(char *cmd, char **envp)
 
 static int check_cmd_access(char *cmd)
 {
-    if (access(cmd, F_OK) != 0) 
-	{
-        errno = ENOENT;
+    if (access(cmd, F_OK) != 0)
         return (127);
-    }
-    if (access(cmd, X_OK) != 0) 
-	{
-        errno = EACCES;
+    if (access(cmd, X_OK) != 0)
         return (126);
-    }
     return (0);
 }
 
-char	*handle_cmd_path(char *cmd, char **envp)
+char *handle_cmd_path(char *cmd, char **envp, int *errcode)
 {
-	char	*cmd_path;
-	int		code;
+    char *cmd_path;
 
-	if (!cmd)
-		return (NULL);	
-	if (ft_strchr(cmd, '/'))
-	{
-		code = check_cmd_access(cmd);
-		if (code != 0)
-			return (NULL);
-		return (ft_strdup(cmd));
-	}
-	cmd_path = ft_cmd_path(cmd, envp);
-	return (cmd_path);
+    if (!cmd)
+        return (NULL);
+    if (ft_strchr(cmd, '/'))
+    {
+        *errcode = check_cmd_access(cmd);
+        if (*errcode != 0)
+            return (NULL);
+        return (ft_strdup(cmd));
+    }
+    cmd_path = ft_cmd_path(cmd, envp);
+    if (!cmd_path)
+        *errcode = 127;
+    else
+        *errcode = 0;
+    return (cmd_path);
 }
