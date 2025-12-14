@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:50:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/28 14:39:54 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 20:27:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
 #include "../include/execution.h"
-
-
 
 void free_redirs(t_redir *redir)
 {

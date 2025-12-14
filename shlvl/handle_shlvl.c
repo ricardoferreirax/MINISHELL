@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_shlvl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:37:36 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 14:52:23 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 20:17:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ static int	update_shlvl_if_exists(t_envyan **env_list, char *tmp)
 	return (0);
 }
 
-t_envyan *process_shlvl(t_envyan **env_list, t_envyan **last, int shlvl)
+t_envyan *process_shlvl(t_envyan **env_list, t_envyan **current, int shlvl)
 {
     t_envyan *new_node;
-    char     *tmp;
+    char     *shlvl_str;
 
     if (!env_list)
         return (NULL);
-    shlvl = shlvl + 1;
+    shlvl += 1;
     if (shlvl < 0)
         shlvl = 0;
     if (shlvl > 999)
@@ -116,15 +116,15 @@ t_envyan *process_shlvl(t_envyan **env_list, t_envyan **last, int shlvl)
         ft_putendl_fd("Minyanshell: shell level (1000) too high, resetting to 1", 2);
         shlvl = 1;
     }
-    tmp = ft_itoa(shlvl);
-    if (!tmp)
+    shlvl_str = ft_itoa(shlvl);
+    if (!shlvl_str)
         return (*env_list);
-    if (update_shlvl_if_exists(env_list, tmp))
+    if (update_shlvl_if_exists(env_list, shlvl_str))
         return (*env_list);
-    new_node = create_envyan_node("SHLVL", tmp);
-    free(tmp);
+    new_node = create_envyan_node("SHLVL", shlvl_str);
+    free(shlvl_str);
     if (!new_node)
         return (*env_list);
-    add_envyan_node(env_list, last, new_node);
+    add_envyan_node(env_list, current, new_node);
     return (*env_list);
 }

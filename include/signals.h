@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 14:55:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:14:29 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 15:53:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,5 @@ t_mini *get_current_mini(void);
 void sigint_prompt_handler(int sig);
 void ignore_signal_handler(int sig);
 void minyanshell_signals(t_sigmode mode);
+void sigint_heredoc(int sig);
+void setup_heredoc_signals(void);
