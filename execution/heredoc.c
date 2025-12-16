@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 20:40:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 15:38:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,13 @@ static void child_heredoc(t_redir *redir, t_mini *mini,
 {
     int exit_code;
 
-    (void)mini;
     close_fd_safe(&pipefd[0]);
     setup_heredoc_signals();
     exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
     close_fd_safe(&pipefd[1]);
     if (cmd->in_fd != -1)
         close_fd_safe(&cmd->in_fd);
-    exit(exit_code);
+    minyanshell_child_cleanup_and_exit(mini, exit_code);
 }
 
 static int	parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2],
