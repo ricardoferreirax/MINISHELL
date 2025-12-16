@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:22:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 14:44:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void minyanshell_exit_cleanup(t_mini *mini);
 void cleanup_iteration(t_mini *mini);
 void free_cmd_list(t_cmd **head_ptr);
 void free_envyan(t_envyan **head);
-void minyanshell_child_cleanup_and_exit(t_mini *mini, int status);
+void minyanshell_cleanup_and_exit(t_mini *mini, int status);
 void close_my_pipes(t_pipe_pos role, t_pipeline *pp);
 int is_external_resolved(t_cmd *cmd, t_mini *mini);
 int builtin_has_io(char *name);

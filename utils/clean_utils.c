@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:51:23 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 20:14:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:11:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void minyanshell_exit_cleanup(t_mini *mini)
     rl_clear_history();
 }
 
-void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
+void minyanshell_cleanup_and_exit(t_mini *mini, int status)
 {
     if (mini)
     {

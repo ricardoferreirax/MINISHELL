@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:11:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 14:39:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:17:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static char	*ft_cmd_path(char *cmd, char **envp)
 	while (path_dirs[i])
 	{
 		fullpath = ft_join_dir_cmd(path_dirs[i], cmd);
-		if (fullpath && access(fullpath, F_OK | X_OK) == 0)
+		if (fullpath && access(fullpath, F_OK) == 0 && access(fullpath, X_OK) == 0)
 			return (ft_free_str(path_dirs), fullpath);
 		free(fullpath);
 		i++;

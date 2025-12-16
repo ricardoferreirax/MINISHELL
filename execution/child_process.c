@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Updated: 2025/11/02 12:16:03 by pfreire-         ###   ########.fr       */
-/*   Updated: 2025/10/19 08:48:47 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/11/02 12:16:03 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ static void execute_child_cmd(t_cmd *cmd, t_mini *mini)
     char  **envyan_array;
 
     if (!cmd)
-        minyanshell_child_cleanup_and_exit(mini, 0);
+        minyanshell_cleanup_and_exit(mini, 0);
     if (apply_redirs_in_child(cmd) != 0)
-        minyanshell_child_cleanup_and_exit(mini, 1);
+        minyanshell_cleanup_and_exit(mini, 1);
     if (!cmd->args || !cmd->args[0])
-        minyanshell_child_cleanup_and_exit(mini, 0);
+        minyanshell_cleanup_and_exit(mini, 0);
     if (cmd->args[0][0] == '\0')
     {
         cmd_not_found_msg(cmd->args[0]);
-        minyanshell_child_cleanup_and_exit(mini, 127);
+        minyanshell_cleanup_and_exit(mini, 127);
     }
     if (is_builtin(cmd->args[0]))
     {
         status = execute_builtin(cmd, mini);
-        minyanshell_child_cleanup_and_exit(mini, status);
+        minyanshell_cleanup_and_exit(mini, status);
     }
     envyan_array = envyan_to_array(mini->envyan);
     if (!envyan_array)
-        minyanshell_child_cleanup_and_exit(mini, 1);
+        minyanshell_cleanup_and_exit(mini, 1);
     execute_external_in_child(cmd, envyan_array, mini);
 }
 
