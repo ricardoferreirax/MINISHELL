@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:20:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 #include "../include/signals.h"
 #include "parsing.h"
 #include <string.h>
-
-// bool	is_limiter_quoted(char *s) 
-		// delimiter tem aspas ? (TRATAR ISTO COM EXPANSÃO DE VARIÁVEIS DEPOIS))
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i] != '\0')
-// 	{
-// 		if (s[i] == '"' || s[i] == '\'')
-// 			return (true);
-// 		i++;
-// 	}
-// 	return (false);
-// }
 
 static int	dolar_pos(char *str)
 {
@@ -106,22 +91,18 @@ static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 	return (0);
 }
 
-static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],
-		t_cmd *cmd)
+static void child_heredoc(t_redir *redir, t_mini *mini, 
+	int pipefd[2], t_cmd *cmd)
 {
-	int	exit_code;
+    int exit_code;
 
-	(void)mini;
-	close_fd_safe(&pipefd[0]); // child não lê
-	minyanshell_signals(CHILD_EXEC);
-	signal(SIGQUIT, SIG_IGN);
-	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
-	close_fd_safe(&pipefd[1]);
-	if (cmd->in_fd != -1) // se já havia um in_fd, fecha o anterior
-	{
-		close_fd_safe(&cmd->in_fd);
-	}
-	minyanshell_child_cleanup_and_exit(mini, exit_code);
+    close_fd_safe(&pipefd[0]);
+    setup_heredoc_signals();
+    exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
+    close_fd_safe(&pipefd[1]);
+    if (cmd->in_fd != -1)
+        close_fd_safe(&cmd->in_fd);
+    minyanshell_cleanup_and_exit(mini, exit_code);
 }
 
 static int	parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2],

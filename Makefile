@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/11/28 14:35:52 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/12/14 15:46:58 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_FILES = \
 	builtin/export/export_utils.c \
 	builtin/export/sort_export.c \
 	signals/signals.c \
+	signals/heredoc_signals.c \
 \
 	parsing/add_spaces.c \
 	parsing/aux_funcs.c \

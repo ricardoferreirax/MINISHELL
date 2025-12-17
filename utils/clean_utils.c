@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:51:23 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/18 23:13:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:11:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,14 @@ void cleanup_iteration(t_mini *mini)
 void minyanshell_exit_cleanup(t_mini *mini)
 {
     if (!mini)
-        return ;
-    if (mini->head)
-        free_cmd_list(&mini->head);
+        return;
+    free_cmd_list(&mini->head);
     if (mini->envyan)
         free_envyan(&mini->envyan);
     rl_clear_history();
 }
 
-void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
+void minyanshell_cleanup_and_exit(t_mini *mini, int status)
 {
     if (mini)
     {
@@ -40,5 +39,5 @@ void minyanshell_child_cleanup_and_exit(t_mini *mini, int status)
         if (mini->envyan)
             free_envyan(&mini->envyan);
     }
-    _exit(status);
+    exit(status);
 }

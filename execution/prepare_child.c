@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 22:49:58 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/19 08:30:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,20 @@ static void prepare_external_or_exit(t_pipe_pos pos, t_cmd *cmd, t_pipeline *pp)
 
     resolve_status = is_external_resolved(cmd, pp->mini);
     if (resolve_status <= 0)
-    {
-        close_my_pipes(pos, pp);
-        if (resolve_status == 0)
-        {
-            cmd_not_found_msg(cmd->args[0]);
-            minyanshell_child_cleanup_and_exit(pp->mini, 127);
-        }
-        minyanshell_child_cleanup_and_exit(pp->mini, 1);
-    }
+	{
+    	close_my_pipes(pos, pp);
+    	if (resolve_status == NOT_FOUND)
+    	{
+        	cmd_not_found_msg(cmd->args[0]);
+        	minyanshell_cleanup_and_exit(pp->mini, 127);
+    	}
+    	if (resolve_status == EXT_NO_PERM)
+    	{
+        	perror(cmd->args[0]);
+        	minyanshell_cleanup_and_exit(pp->mini, 126);
+    	}
+    	minyanshell_cleanup_and_exit(pp->mini, 1);
+	}
     if (pos == FIRST)
     {
         if (cmd->next)
@@ -49,7 +54,7 @@ void prepare_first(t_cmd *cmd, t_pipeline *pp)
     if (!cmd || !cmd->args || !cmd->args[0])
     {
         close_my_pipes(FIRST, pp);
-        minyanshell_child_cleanup_and_exit(pp->mini, 0);
+        minyanshell_cleanup_and_exit(pp->mini, 0);
     }
     if (is_builtin(cmd->args[0]))
     {
@@ -57,7 +62,7 @@ void prepare_first(t_cmd *cmd, t_pipeline *pp)
         {
             close_my_pipes(FIRST, pp);
             minyanshell_signals(CHILD_EXEC);
-            minyanshell_child_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
+            minyanshell_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
         }
         if (cmd->next)
             pp->need_next_stdout = 1;
@@ -76,7 +81,7 @@ void prepare_middle(t_cmd *cmd, t_pipeline *pp)
     if (!cmd || !cmd->args || !cmd->args[0])
     {
         close_my_pipes(MIDDLE, pp);
-        minyanshell_child_cleanup_and_exit(pp->mini, 0);
+        minyanshell_cleanup_and_exit(pp->mini, 0);
     }
     if (is_builtin(cmd->args[0]))
     {
@@ -84,7 +89,7 @@ void prepare_middle(t_cmd *cmd, t_pipeline *pp)
         {
             close_my_pipes(MIDDLE, pp);
             minyanshell_signals(CHILD_EXEC);
-            minyanshell_child_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
+            minyanshell_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
         }
         return ;
     }
@@ -99,7 +104,7 @@ void prepare_last(t_cmd *cmd, t_pipeline *pp)
     if (!cmd || !cmd->args || !cmd->args[0])
     {
         close_my_pipes(LAST, pp);
-        minyanshell_child_cleanup_and_exit(pp->mini, 0);
+        minyanshell_cleanup_and_exit(pp->mini, 0);
     }
     if (is_builtin(cmd->args[0]))
     {
@@ -107,7 +112,7 @@ void prepare_last(t_cmd *cmd, t_pipeline *pp)
         {
             close_my_pipes(LAST, pp);
             minyanshell_signals(CHILD_EXEC);
-            minyanshell_child_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
+            minyanshell_cleanup_and_exit(pp->mini, execute_builtin(cmd, pp->mini));
         }
         return ;
     }

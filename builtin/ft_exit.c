@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:48:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/17 03:15:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int exit_handle_args(t_cmd *cmd, t_mini *mini, int piped, int *exit_code)
     {
         ft_putendl_fd("MiNyanShell: exit: too many arguments", 2);
         if (piped)
-            minyanshell_child_cleanup_and_exit(mini, 1);
+            minyanshell_cleanup_and_exit(mini, 1);
         mini->last_status = 1;
         return (1);
     }
@@ -77,7 +77,7 @@ static int exit_handle_args(t_cmd *cmd, t_mini *mini, int piped, int *exit_code)
 static void perform_exit(t_mini *mini, int piped, int exit_code)
 {
     if (piped)
-        minyanshell_child_cleanup_and_exit(mini, exit_code);
+        minyanshell_cleanup_and_exit(mini, exit_code);
     minyanshell_exit_cleanup(mini);
     exit(exit_code);
 }

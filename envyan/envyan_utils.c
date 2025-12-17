@@ -3,30 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   envyan_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 00:29:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/15 14:48:15 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 20:08:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
-t_envyan	*create_envyan_node(char *key, char *value)
+t_envyan *create_envyan_node(char *key, char *value)
 {
-	t_envyan	*new_node;
+    t_envyan *new_node;
 
-	new_node = malloc(sizeof(t_envyan));
-	if (!new_node)
-		return (NULL);
-	new_node->key = ft_strdup(key);
-	if (value)
-		new_node->value = ft_strdup(value);
-	else
-		new_node->value = NULL;
-	new_node->next = NULL;
-	return (new_node);
+    if (!key)
+        return (NULL);
+    new_node = malloc(sizeof(t_envyan));
+    if (!new_node)
+        return (NULL);
+    new_node->key = ft_strdup(key);
+    if (!new_node->key)
+        return (free(new_node), NULL);
+    new_node->value = NULL;
+    if (value)
+    {
+        new_node->value = ft_strdup(value);
+        if (!new_node->value)
+            return (free(new_node->key), free(new_node), NULL);
+    }
+    new_node->next = NULL;
+    return (new_node);
 }
 
 char *envyan_get_value(t_envyan *head, char *key)

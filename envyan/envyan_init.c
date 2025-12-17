@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envyan_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:09:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/11/02 12:20:34 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/14 20:23:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,44 @@ static void	split_envyan_entry(char *entry, char **key, char **value)
 	}
 }
 
+// t_envyan *init_envyan(char **envp)
+// {
+//     t_envyan *envyan_list;
+//     t_envyan *last_node;
+//     t_envyan *new_node;
+//     char *key;
+//     char *value;
+//     int i;
+
+//     envyan_list = NULL;
+//     last_node = NULL;
+//     if (!envp)
+//         return (NULL);
+//     i = 0;
+//     while (envp[i])
+//     {
+//         if (ft_strncmp(envp[i], "SHLVL=", 6) != 0)
+//         {
+//             split_envyan_entry(envp[i], &key, &value);
+//             new_node = create_envyan_node(key, value);
+//             if (new_node)
+//                 add_envyan_node(&envyan_list, &last_node, new_node);
+//         }
+//         i++;
+//     }
+// 	// new_node = create_envyan_node("a", "> lol");
+// 	// add_envyan_node(&envyan_list, &last_node, new_node);
+//     return (envyan_list);
+// }
+
 t_envyan *init_envyan(char **envp)
 {
     t_envyan *envyan_list;
     t_envyan *last_node;
     t_envyan *new_node;
-    char *key;
-    char *value;
-    int i;
+    char     *key;
+    char     *value;
+    int       i;
 
     envyan_list = NULL;
     last_node = NULL;
@@ -56,7 +86,5 @@ t_envyan *init_envyan(char **envp)
         }
         i++;
     }
-	// new_node = create_envyan_node("a", "> lol");
-	// add_envyan_node(&envyan_list, &last_node, new_node);
     return (envyan_list);
 }
