@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "memory/memory.h"
 int		arr_size(void **arr);
 t_cmd	*cmd_new(void)
 {
@@ -45,7 +46,11 @@ char	**init_mini(t_mini *nyan, char *cmd)
 	{
 		curr = cmd_new();
 		if (!curr)
-			break ;
+		{
+			if(pipes)
+				free_2d((void **)pipes);
+			return(NULL) ;
+		}
 		if (!nyan->head)
 			nyan->head = curr;
 		if (prev)
@@ -93,6 +98,8 @@ char	**arr_join(char **s1, char **s2)
 
 	joined = malloc(sizeof(char *) - (arr_size((void **)s1)
 				* arr_size((void **)s2)));
+	if(!joined)
+		return NULL;
 	if (!s1)
 		return (s2);
 	i = 0;
@@ -156,7 +163,8 @@ char	**retokenize(char **tokens)
 			temp = split_ignore_quotes(tokens[i], ' ', 1);
 			if(!temp)
 			{
-				//free
+				if(tokens)
+					free_2d((void **) tokens);
 				return NULL;
 			}
 			k = 0;
@@ -165,6 +173,12 @@ char	**retokenize(char **tokens)
 				l = 0;
 				retokens[rtk_increment] = malloc(sizeof(char)
 						* (ft_strlen(temp[k]) + 2));
+				if(!retokens[rtk_increment])
+				{
+					free_2d((void **)temp);
+					free_2d((void **)retokens);
+					return NULL;
+				}
 				while (temp[k][l] != '\0')
 				{
 					retokens[rtk_increment][l] = temp[k][l];
