@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   external_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 22:25:55 by rmedeiro          #+#    #+#             */
 /*   Updated: 2025/10/19 08:26:00 by rmedeiro         ###   ########.fr       */
