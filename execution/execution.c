@@ -69,7 +69,9 @@ int	execute_pipeline(t_cmd *cmd_list, t_mini *mini)
 	int	pre_exec;
 	int	status;
 
-	if (!mini || !cmd_list)
+	if (!mini)
+    	return (0);
+	if (!cmd_list)
 	{
 		mini->last_status = 0;
 		return (0);
