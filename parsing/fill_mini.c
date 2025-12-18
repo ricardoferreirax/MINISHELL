@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 15:00:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:45:44 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "MiNyanShell.h"
 #include "memory/memory.h"
 
 int		arr_size(void **arr);
@@ -200,35 +201,45 @@ char	**retokenize(char **tokens)
 	return (retokens);
 }
 
+char **tokenizer(char *pipe, t_envyan *env, int status)
+{
+	char **tokens;
+	char **retokens;
+	tokens = add_spaces(pipe);
+	if(!tokens)
+		return(NULL);
+	if(expanser(tokens, env, status))
+		return (free_2d((void **) tokens), NULL);
+	retokens = retokenize(tokens);
+	free_2d((void **)tokens);
+	if(!retokens)
+		return NULL;
+	tokens = remove_quotes(retokens);
+	free_2d((void **)retokens);
+	return tokens;
+}
+
 int	fill_mini(t_mini *nyan, char **pipes)
 {
 	int		i;
 	t_cmd	*curr;
 	char	**tokens;
-	char	**retokens;
 	int		j;
 
 	curr = nyan->head;
 	i = 0;
 	while (pipes && pipes[i] && curr)
 	{
-		tokens = add_spaces(pipes[i]);
-		if (!tokens)
-			return (free_2d((void **)tokens), -1);
-		if (expanser(tokens, nyan->envyan, nyan->last_status))
-			return (free_2d((void **)tokens), -1);
-		retokens = retokenize(tokens);
-		free_2d((void **)tokens);
-		if (!retokens)
+		tokens = tokenizer(pipes[i], nyan->envyan, nyan->last_status);
+		if(!tokens)
 			return (-1);
-		tokens = remove_quotes(retokens);
 		j = 0;
 		while (tokens[j] != NULL)
 		{
 			if (parse(curr, tokens, &j))
 			{
-				ft_printf("NYAAAAN,
-					a parsing error has occureded but i won't tell what it is nyan~ :3\n");
+				ft_printf("NYAAAAN,a parsing error has occureded ");
+				ft_printf("but i won't tell what it is nyan~ :3\n");
 				return (-1);
 			}
 		}
