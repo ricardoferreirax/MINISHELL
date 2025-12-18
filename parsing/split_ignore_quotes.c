@@ -70,7 +70,7 @@ static char	*word_copy_ignorequotes(char **s, char c, int i)
 	if (!dest)
 		return (NULL);
 	ft_strlcpy(dest, ((*s) - counter), counter + 1);
-	if(i == 1)
+	if (i == 1)
 		dest[counter + 1] = '\1';
 	else
 		dest[counter + 1] = '\0';

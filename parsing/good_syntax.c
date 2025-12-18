@@ -52,12 +52,14 @@ bool	syntaxed_pipes(char *str)
 	return (true);
 }
 
-bool first_out(char *str)
+bool	first_out(char *str)
 {
-	int i = count_whitespaces(str);
-	if(str[i] == '>')
-		return false;
-	return true;
+	int	i;
+
+	i = count_whitespaces(str);
+	if (str[i] == '>')
+		return (false);
+	return (true);
 }
 
 bool	unknown_action(char *str)
@@ -69,7 +71,7 @@ bool	unknown_action(char *str)
 	i = 0;
 	inquote = false;
 	indquote = false;
-	if(!first_out(str))
+	if (!first_out(str))
 		return (ft_printf("Line Starts with redir out\n"), true);
 	while (str[i] != '\0')
 	{
@@ -87,7 +89,8 @@ bool	unknown_action(char *str)
 				i += count_whitespaces(str + i);
 				if (str[i] == '|' || str[i] == '<' || str[i] == '>'
 					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i - 1], i), true);
+					return (ft_dprintf(2, "unexpected token near
+							%c (coll:%d) nyan~\n", str[i - 1], i), true);
 			}
 			else if (str[i] == '<')
 			{
@@ -97,7 +100,8 @@ bool	unknown_action(char *str)
 				i += count_whitespaces(str + i);
 				if (str[i] == '|' || str[i] == '>' || str[i] == '<'
 					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i], i), true);
+					return (ft_dprintf(2, "unexpected token near
+							%c (coll:%d) nyan~\n", str[i], i), true);
 			}
 			else if (str[i] == '\\' || str[i] == ';')
 				return (true);
@@ -110,7 +114,7 @@ bool	unknown_action(char *str)
 bool	good_syntax(char *input)
 {
 	if (!syntaxed_pipes(input))
-		return ( false);
+		return (false);
 	if (unknown_action(input))
 		return (false);
 	return (true);

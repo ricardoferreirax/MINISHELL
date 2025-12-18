@@ -12,94 +12,95 @@
 
 #include "../include/parsing.h"
 
-//for this to return true str must be double '\0' terminated and also be equal to base
-//this allows for equal strings to be treated differently
-int sneaky_strcmp(char *str, char *base)
+// for this to return true str must be double '\0' terminated and also be equal to base
+// this allows for equal strings to be treated differently
+int	sneaky_strcmp(char *str, char *base)
 {
-	int i = 0;
-	while(base[i] != '\0' && str[i] != '\0' && (base[i] == str[i]))
+	int	i;
+
+	i = 0;
+	while (base[i] != '\0' && str[i] != '\0' && (base[i] == str[i]))
 		i++;
-	if(base[i] == '\0' && str[i] == '\0')
+	if (base[i] == '\0' && str[i] == '\0')
 	{
-		if(str[i + 1] == '\0')
-			return 1;
+		if (str[i + 1] == '\0')
+			return (1);
 	}
-	return 0;
+	return (0);
 }
 
-
-bool is_redir(char *str)
+bool	is_redir(char *str)
 {
-    if (!str)
-        return false;
-    if (ft_strcmp(str, "<"))
-        return true;
-    if (ft_strcmp(str, ">"))
-        return true;
-    if (ft_strcmp(str, ">>"))
-        return true;
-    if (ft_strcmp(str, "<<"))
-        return true;
-    return false;
+	if (!str)
+		return (false);
+	if (ft_strcmp(str, "<"))
+		return (true);
+	if (ft_strcmp(str, ">"))
+		return (true);
+	if (ft_strcmp(str, ">>"))
+		return (true);
+	if (ft_strcmp(str, "<<"))
+		return (true);
+	return (false);
 }
 
-bool sneaky_is_redir(char *str)
+bool	sneaky_is_redir(char *str)
 {
-    if (!str)
-        return false;
-    if (sneaky_strcmp(str, "<"))
-        return true;
-    if (sneaky_strcmp(str, ">"))
-        return true;
-    if (sneaky_strcmp(str, ">>"))
-        return true;
-    if (sneaky_strcmp(str, "<<"))
-        return true;
-    return false;
+	if (!str)
+		return (false);
+	if (sneaky_strcmp(str, "<"))
+		return (true);
+	if (sneaky_strcmp(str, ">"))
+		return (true);
+	if (sneaky_strcmp(str, ">>"))
+		return (true);
+	if (sneaky_strcmp(str, "<<"))
+		return (true);
+	return (false);
 }
 
-int parse(t_cmd *cmd, char **tokens, int *i)
+int	parse(t_cmd *cmd, char **tokens, int *i)
 {
-    char *op;
+	char	*op;
 
-    if (tokens[*i] && !sneaky_is_redir(tokens[*i]))
-    {
-        while (tokens[*i] && !sneaky_is_redir(tokens[*i]))
-        {
-            if (add_arg(cmd, tokens[*i]) != 0)
-                return (-1);
-            (*i)++;
-        }
-        return (0);
-    }
-    if (tokens[*i] && sneaky_is_redir(tokens[*i]))
-    {
-        op = tokens[*i];
-        (*i)++;
-        if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
-            return (-1);
-        if (sneaky_strcmp(op, "<<"))
-        {
-            if (redir_append(cmd, REDIR_HEREDOC, tokens[*i]) != 0)
-                return (-1);
-        }
-        else if (sneaky_strcmp(op, "<"))
-        {
-            if (redir_append(cmd, REDIR_IN, tokens[*i]) != 0)
-                return (-1);
-        }
-        else if (sneaky_strcmp(op, ">>"))
-        {
-            if (redir_append(cmd, REDIR_APPEND, tokens[*i]) != 0)
-                return (-1);
-        }
-        else if (sneaky_strcmp(op, ">"))
-        {
-            if (redir_append(cmd, REDIR_OUT, tokens[*i]) != 0)
-                return (-1);
-        }
-        (*i)++;
-        return (0);
-    }
-    return (0);
+	if (tokens[*i] && !sneaky_is_redir(tokens[*i]))
+	{
+		while (tokens[*i] && !sneaky_is_redir(tokens[*i]))
+		{
+			if (add_arg(cmd, tokens[*i]) != 0)
+				return (-1);
+			(*i)++;
+		}
+		return (0);
+	}
+	if (tokens[*i] && sneaky_is_redir(tokens[*i]))
+	{
+		op = tokens[*i];
+		(*i)++;
+		if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
+			return (-1);
+		if (sneaky_strcmp(op, "<<"))
+		{
+			if (redir_append(cmd, REDIR_HEREDOC, tokens[*i]) != 0)
+				return (-1);
+		}
+		else if (sneaky_strcmp(op, "<"))
+		{
+			if (redir_append(cmd, REDIR_IN, tokens[*i]) != 0)
+				return (-1);
+		}
+		else if (sneaky_strcmp(op, ">>"))
+		{
+			if (redir_append(cmd, REDIR_APPEND, tokens[*i]) != 0)
+				return (-1);
+		}
+		else if (sneaky_strcmp(op, ">"))
+		{
+			if (redir_append(cmd, REDIR_OUT, tokens[*i]) != 0)
+				return (-1);
+		}
+		(*i)++;
+		return (0);
+	}
+	return (0);
 }

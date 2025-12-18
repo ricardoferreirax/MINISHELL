@@ -12,35 +12,35 @@
 
 #include "../include/parsing.h"
 
-int add_arg(t_cmd *subcmd, const char *token)
+int	add_arg(t_cmd *subcmd, const char *token)
 {
-    int   count;
-    int   i;
-    char **new_arg;
+	int		count;
+	int		i;
+	char	**new_arg;
 
-    if (!subcmd || !token)
-        return (-1);
-    count = 0;
-    if (subcmd->args)
-        while (subcmd->args[count])
-            count++;
-    new_arg = (char **)malloc((count + 2) * sizeof(char *));
-    if (!new_arg)
-        return (-1);
-    i = 0;
-    while (i < count)
-    {
-        new_arg[i] = subcmd->args[i];
-        i++;
-    }
-    new_arg[count] = ft_strdup(token);
-    if (!new_arg[count])
-    {
-        free(new_arg);
-        return (-1);
-    }
-    new_arg[count + 1] = NULL;
-    free(subcmd->args);
-    subcmd->args = new_arg;
-    return (0);
+	if (!subcmd || !token)
+		return (-1);
+	count = 0;
+	if (subcmd->args)
+		while (subcmd->args[count])
+			count++;
+	new_arg = (char **)malloc((count + 2) * sizeof(char *));
+	if (!new_arg)
+		return (-1);
+	i = 0;
+	while (i < count)
+	{
+		new_arg[i] = subcmd->args[i];
+		i++;
+	}
+	new_arg[count] = ft_strdup(token);
+	if (!new_arg[count])
+	{
+		free(new_arg);
+		return (-1);
+	}
+	new_arg[count + 1] = NULL;
+	free(subcmd->args);
+	subcmd->args = new_arg;
+	return (0);
 }

@@ -12,6 +12,7 @@
 
 #include "../include/parsing.h"
 #include "memory/memory.h"
+
 int		arr_size(void **arr);
 t_cmd	*cmd_new(void)
 {
@@ -47,9 +48,9 @@ char	**init_mini(t_mini *nyan, char *cmd)
 		curr = cmd_new();
 		if (!curr)
 		{
-			if(pipes)
+			if (pipes)
 				free_2d((void **)pipes);
-			return(NULL) ;
+			return (NULL);
 		}
 		if (!nyan->head)
 			nyan->head = curr;
@@ -98,8 +99,8 @@ char	**arr_join(char **s1, char **s2)
 
 	joined = malloc(sizeof(char *) - (arr_size((void **)s1)
 				* arr_size((void **)s2)));
-	if(!joined)
-		return NULL;
+	if (!joined)
+		return (NULL);
 	if (!s1)
 		return (s2);
 	i = 0;
@@ -130,16 +131,16 @@ char	**retokenize(char **tokens)
 	word_count = 0;
 	rtk_increment = 0;
 	i = 0;
-	if(!tokens)
-		return NULL;
+	if (!tokens)
+		return (NULL);
 	while (tokens[i])
 	{
 		word_count += count_words_ignore_quotes(tokens[i], ' ');
 		i++;
 	}
 	retokens = malloc(sizeof(char *) * (word_count + 1));
-	if(!retokens)
-		return NULL;
+	if (!retokens)
+		return (NULL);
 	i = 0;
 	while (tokens[i])
 	{
@@ -154,7 +155,7 @@ char	**retokenize(char **tokens)
 				k++;
 			}
 			retokens[rtk_increment][k] = '\0';
-			if(is_redir(tokens[i]) && been_expanded(tokens[i]))
+			if (is_redir(tokens[i]) && been_expanded(tokens[i]))
 				retokens[rtk_increment][k + 1] = '\2';
 			else
 				retokens[rtk_increment][k + 1] = '\0';
@@ -163,11 +164,11 @@ char	**retokenize(char **tokens)
 		else
 		{
 			temp = split_ignore_quotes(tokens[i], ' ', 1);
-			if(!temp)
+			if (!temp)
 			{
-				if(tokens)
-					free_2d((void **) tokens);
-				return NULL;
+				if (tokens)
+					free_2d((void **)tokens);
+				return (NULL);
 			}
 			k = 0;
 			while (temp[k])
@@ -175,11 +176,11 @@ char	**retokenize(char **tokens)
 				l = 0;
 				retokens[rtk_increment] = malloc(sizeof(char)
 						* (ft_strlen(temp[k]) + 2));
-				if(!retokens[rtk_increment])
+				if (!retokens[rtk_increment])
 				{
 					free_2d((void **)temp);
 					free_2d((void **)retokens);
-					return NULL;
+					return (NULL);
 				}
 				while (temp[k][l] != '\0')
 				{
@@ -199,7 +200,6 @@ char	**retokenize(char **tokens)
 	return (retokens);
 }
 
-
 int	fill_mini(t_mini *nyan, char **pipes)
 {
 	int		i;
@@ -214,12 +214,12 @@ int	fill_mini(t_mini *nyan, char **pipes)
 	{
 		tokens = add_spaces(pipes[i]);
 		if (!tokens)
-			return(free_2d((void **)tokens), -1);
-		if(expanser(tokens, nyan->envyan, nyan->last_status))
-			return(free_2d((void **)tokens), -1);
+			return (free_2d((void **)tokens), -1);
+		if (expanser(tokens, nyan->envyan, nyan->last_status))
+			return (free_2d((void **)tokens), -1);
 		retokens = retokenize(tokens);
 		free_2d((void **)tokens);
-		if(!retokens)
+		if (!retokens)
 			return (-1);
 		tokens = remove_quotes(retokens);
 		j = 0;
@@ -227,8 +227,9 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		{
 			if (parse(curr, tokens, &j))
 			{
-				ft_printf("NYAAAAN, a parsing error has occureded but i won't tell what it is nyan~ :3\n");
-				return -1;
+				ft_printf("NYAAAAN,
+					a parsing error has occureded but i won't tell what it is nyan~ :3\n");
+				return (-1);
 			}
 		}
 		free_2d((void **)tokens);
@@ -238,4 +239,3 @@ int	fill_mini(t_mini *nyan, char **pipes)
 	curr = nyan->head;
 	return (0);
 }
-

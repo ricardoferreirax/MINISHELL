@@ -44,24 +44,26 @@ void	remove_placeholder(char *s)
 	*write++ = '\0';
 	if (*(read + 1) == '\0')
 		*write = '\0';
-	else if(*(read + 1) == '\2')
+	else if (*(read + 1) == '\2')
 		*write = '\2';
 	else
 		*write = '\1';
 }
 
-bool has_placeholder(char *str)
+bool	has_placeholder(char *str)
 {
-	int i = 0;
-	if(!str)
-		return false;
-	while(str[i])
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (false);
+	while (str[i])
 	{
-		if(str[i] == '\1')
-			return true;
+		if (str[i] == '\1')
+			return (true);
 		i++;
 	}
-	return false;
+	return (false);
 }
 char	**remove_quotes(char **arr)
 {
@@ -92,7 +94,8 @@ char	**remove_quotes(char **arr)
 				}
 				j++;
 			}
-			if(i > 0 && has_placeholder(arr[i]) && sneaky_strcmp(arr[i - 1], "<<"))
+			if (i > 0 && has_placeholder(arr[i]) && sneaky_strcmp(arr[i - 1],
+					"<<"))
 			{
 				arr[i][j + 1] = '\2';
 			}
@@ -102,5 +105,3 @@ char	**remove_quotes(char **arr)
 	}
 	return (arr);
 }
-
-

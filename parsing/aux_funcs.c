@@ -39,12 +39,14 @@ bool	forbidden_actions(char *str)
 	return (false);
 }
 
-int count_whitespaces(char *str)
+int	count_whitespaces(char *str)
 {
-	int i = 0;
-	while((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
+	int	i;
+
+	i = 0;
+	while ((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
 		i++;
-	return i;
+	return (i);
 }
 
 char	*skip_whitespaces(char *str)
@@ -55,4 +57,3 @@ char	*skip_whitespaces(char *str)
 		str++;
 	return (str);
 }
-

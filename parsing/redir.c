@@ -14,47 +14,50 @@
 #include "../include/execution.h"
 #include "../include/parsing.h"
 
-static bool had_quotes(char *str)
+static bool	had_quotes(char *str)
 {
-	int i = 0;
-	if(!str)
-		return false;
-	while(str[i])
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (false);
+	while (str[i])
 		i++;
-	if(str[i + 1] == '\2')
-		return true;
-	return false;
+	if (str[i + 1] == '\2')
+		return (true);
+	return (false);
 }
 
-static t_redir *redir_new(t_redir_type redir_type, char *arg)
+static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 {
-    t_redir *redir;
+	t_redir	*redir;
 
-    if (!arg)
-        return (NULL);
-    redir = (t_redir *)calloc(1, sizeof(*redir));
-    if (!redir)
-        return (NULL);
-    redir->type = redir_type;
-    redir->next = NULL;
-    if (redir_type == REDIR_HEREDOC)
-    {
-        redir->delimiter = ft_strdup(arg);
-        if (!redir->delimiter)
-            return (free(redir), NULL);
-        redir->expansion = !had_quotes(arg);
-        return (redir);
-    }
-    if (been_expanded(arg))
-    {
-        ft_printf("Ambiguous redirection , where should i put this \"%s\" nyan~ :3?\n", arg);
-        free(redir);
-        return (NULL);
-    }
-    redir->file = ft_strdup(arg);
-    if (!redir->file)
-        return (free(redir), NULL);
-    return (redir);
+	if (!arg)
+		return (NULL);
+	redir = (t_redir *)calloc(1, sizeof(*redir));
+	if (!redir)
+		return (NULL);
+	redir->type = redir_type;
+	redir->next = NULL;
+	if (redir_type == REDIR_HEREDOC)
+	{
+		redir->delimiter = ft_strdup(arg);
+		if (!redir->delimiter)
+			return (free(redir), NULL);
+		redir->expansion = !had_quotes(arg);
+		return (redir);
+	}
+	if (been_expanded(arg))
+	{
+		ft_printf("Ambiguous redirection ,
+			where should i put this \"%s\" nyan~ :3?\n", arg);
+		free(redir);
+		return (NULL);
+	}
+	redir->file = ft_strdup(arg);
+	if (!redir->file)
+		return (free(redir), NULL);
+	return (redir);
 }
 
 int	redir_append(t_cmd *cmd, t_redir_type redir_type, char *arg)
