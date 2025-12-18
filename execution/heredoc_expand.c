@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:45:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/18 12:46:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:39:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	expand_one_dollar(char **line, t_mini *mini)
 	return (0);
 }
 
-static int	expand_heredoc_line(char **line, t_redir *redir, t_mini *mini)
+int	expand_heredoc_line(char **line, t_redir *redir, t_mini *mini)
 {
 	int	i;
 	int	dolar_count;

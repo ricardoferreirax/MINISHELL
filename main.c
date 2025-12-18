@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 20:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/18 11:38:24 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:51:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,8 @@ int	main(int ac, char **av, char **envp)
 			ft_dprintf(2, "MiNyanShell: Invalid argument\n");
 		return (1);
 	}
-	if (print_MiNyanShell())
-		return (ft_printf("Missing critical MiNyanShell.txt file,
-				refusing to continue\n"), -1);
+	/* if (print_MiNyanShell())
+		return (ft_printf("Missing critical refusing to continue\n"), -1); */
 	init_shell(&mini, envp);
 	command_loop(&mini);
 	minyanshell_exit_cleanup(&mini);

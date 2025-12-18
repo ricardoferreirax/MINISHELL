@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   good_syntax.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:58:11 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/04 14:10:19 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:45:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ bool	unknown_action(char *str)
 				i += count_whitespaces(str + i);
 				if (str[i] == '|' || str[i] == '<' || str[i] == '>'
 					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near
-							%c (coll:%d) nyan~\n", str[i - 1], i), true);
+					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i - 1], i), true);
 			}
 			else if (str[i] == '<')
 			{
@@ -100,8 +99,7 @@ bool	unknown_action(char *str)
 				i += count_whitespaces(str + i);
 				if (str[i] == '|' || str[i] == '>' || str[i] == '<'
 					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near
-							%c (coll:%d) nyan~\n", str[i], i), true);
+					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i], i), true);
 			}
 			else if (str[i] == '\\' || str[i] == ';')
 				return (true);

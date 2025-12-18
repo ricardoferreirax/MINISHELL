@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/18 12:46:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:55:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],
 		t_cmd *cmd)
 {
-
 	int	exit_code;
-	
+
 	close_fd_safe(&pipefd[0]);
 	setup_heredoc_signals();
 	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);

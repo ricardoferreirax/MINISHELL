@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:48:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 20:27:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:45:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 	}
 	if (been_expanded(arg))
 	{
-		ft_printf("Ambiguous redirection ,
-			where should i put this \"%s\" nyan~ :3?\n", arg);
+		ft_printf("Ambiguous redirection, where should i put this \"%s\"?\n", arg);
 		free(redir);
 		return (NULL);
 	}

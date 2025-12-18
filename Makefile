@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/18 11:38:52 by pfreire-         ###   ########.fr        #
+#    Updated: 2025/12/18 13:39:23 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_FILES = \
 	execution/redirection.c \
 	execution/multiple_cmds.c \
 	execution/heredoc.c \
+	execution/heredoc_expand.c \
 	execution/builtin.c \
 	execution/cmd_path.c \
 	execution/prepare_child.c \
