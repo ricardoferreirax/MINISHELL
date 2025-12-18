@@ -6,34 +6,33 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 20:18:41 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/14 20:29:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:25:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/MiNyanShell.h"
 #include "../include/envyan.h"
 
-void free_envyan(t_envyan **env)
+void	free_envyan(t_envyan **env)
 {
-    t_envyan *cur;
-    t_envyan *next;
+	t_envyan	*cur;
+	t_envyan	*next;
 
-    if (!env || !*env)
-        return;
-    cur = *env;
-    while (cur)
-    {
-        next = cur->next;
-        free(cur->key);
-        free(cur->value);
-        free(cur);
-        cur = next;
-    }
-    *env = NULL;
+	if (!env || !*env)
+		return ;
+	cur = *env;
+	while (cur)
+	{
+		next = cur->next;
+		free(cur->key);
+		free(cur->value);
+		free(cur);
+		cur = next;
+	}
+	*env = NULL;
 }
 
-
-void clean_envyan_array(char **envyan_array, int index)
+void	clean_envyan_array(char **envyan_array, int index)
 {
 	int	i;
 
@@ -45,4 +44,3 @@ void clean_envyan_array(char **envyan_array, int index)
 	}
 	free(envyan_array);
 }
-

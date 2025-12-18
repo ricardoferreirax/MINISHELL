@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envyan_to_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 23:37:12 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/08 16:42:22 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:25:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static char	*create_envyan_array_entry(char *key, char *value)
 	return (entry);
 }
 
-static int	process_envyan_entry_to_array(t_envyan *current, char **env_array, int index)
+static int	process_envyan_entry_to_array(t_envyan *current, char **env_array,
+		int index)
 {
 	if (current->value == NULL)
 		return (index);
@@ -62,8 +63,8 @@ char	**envyan_to_array(t_envyan *envyan)
 {
 	int			count;
 	t_envyan	*current;
-	char	**env_array;
-	int		i;
+	char		**env_array;
+	int			i;
 
 	count = count_envyan_entries(envyan);
 	env_array = malloc(sizeof(char *) * (count + 1));
