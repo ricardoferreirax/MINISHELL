@@ -130,6 +130,8 @@ char	**retokenize(char **tokens)
 	word_count = 0;
 	rtk_increment = 0;
 	i = 0;
+	if(!tokens)
+		return NULL;
 	while (tokens[i])
 	{
 		word_count += count_words_ignore_quotes(tokens[i], ' ');

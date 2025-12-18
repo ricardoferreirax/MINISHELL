@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 15:19:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/12/04 10:09:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 11:37:18 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ typedef struct s_UwU
 // base structs end
 
 t_mini					parser(char *cmd, char **env);
+int print_MiNyanShell(void);
 
 #endif

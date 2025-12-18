@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/14 15:46:58 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/12/18 11:38:52 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBFT   = libft/libft.a
 
 SRC_FILES = \
 	main.c \
+	print_MiNyanShell.c \
 	execution/execution.c \
 	execution/redirection.c \
 	execution/multiple_cmds.c \

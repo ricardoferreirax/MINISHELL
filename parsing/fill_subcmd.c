@@ -19,7 +19,7 @@ int add_arg(t_cmd *subcmd, const char *token)
     char **new_arg;
 
     if (!subcmd || !token)
-        return (1);
+        return (-1);
     count = 0;
     if (subcmd->args)
         while (subcmd->args[count])
