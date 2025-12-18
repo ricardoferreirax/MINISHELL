@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/16 16:12:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 11:55:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 		line = readline("> ");
 		if (!line)
 		{
+			if (isatty(STDIN_FILENO) == 0)
+				return (130);
 			warn_heredoc_eof(redir->delimiter);
-			break ;
+			return (0);
 		}
 		if (redir->delimiter && ft_strcmp(line, redir->delimiter) == 0)
 		{
@@ -112,20 +114,20 @@ static int	parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2],
 
 	close_fd_safe(&pipefd[1]);
 	exit_code = wait_for_single(pid);
-	if (exit_code == 130) // sigint
+	if (exit_code == 130)
 	{
 		mini->last_status = 130;
 		close_fd_safe(&pipefd[0]);
-		return (1);
+		return (130);
 	}
 	if (exit_code != 0)
 	{
 		close_fd_safe(&pipefd[0]);
 		return (1);
 	}
-	if (cmd->in_fd != -1) // se já havia um in_fd (ex. múltiplos heredocs), fecha o anterior
+	if (cmd->in_fd != -1)
 		close_fd_safe(&cmd->in_fd);
-	cmd->in_fd = pipefd[0]; // guarda o read end para usar como STDIN
+	cmd->in_fd = pipefd[0];
 	return (0);
 }
 

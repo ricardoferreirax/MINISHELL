@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:11:42 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/10/18 22:30:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 11:54:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int wait_for_single(pid_t pid)
         if (waitpid(pid, &status, 0) == -1)
         {
             if (errno == EINTR)
-                continue;     // tentou de novo se foi interrompido por sinal
+                continue;
             perror("MiNyanShell: waitpid");
             return (1);
         }
-        break; // sai do loop se waitpid teve sucesso
+        break;
     }
     if (WIFEXITED(status))   
         return (WEXITSTATUS(status));
