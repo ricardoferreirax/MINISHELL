@@ -21,48 +21,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	process_line(t_mini *mini, char *input)
+static int	process_line(t_mini *mini, char *input)
 {
 	char	**pipes;
 	int		status;
-	int		k;
 
-	k = 0;
 	if (!input || !mini)
-		return ;
+		return -1;
 	if (*input)
 		add_history(input);
 	if (!no_unclosed_quotes(input))
-	{
-		ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n");
-		return ;
-	}
+		return(ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n"), -1);
 	if (!no_forbidden_actions(input))
-	{
-		ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
-		return ;
-	}
+		return(ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n"), -1);
 	if (!good_syntax(input))
-	{
-		ft_dprintf(2, "invalid Syntax nyan~\n");
-		return ;
-	}
+		return(ft_dprintf(2, "invalid Syntax nyan~\n"), -1);
 	pipes = init_mini(mini, input);
 	if (!pipes)
-	{
-		perror("init_mini");
-		return ;
-	}
-	if ((k = fill_mini(mini, pipes)))
-	{
-		ft_printf("Fuuuuuuuck something broke here i hope it doesn't leak\n");
-	}
+		return(perror("init_mini"), -1);
+	status = fill_mini(mini, pipes);
 	free_2d((void **)pipes);
-	if (k)
-		status = k;
-	else
+	if (!status)
 		status = execute_pipeline(mini->head, mini);
 	mini->last_status = status;
+	return(0);
 }
 
 static void	command_loop(t_mini *mini)
@@ -72,7 +54,6 @@ static void	command_loop(t_mini *mini)
 	while (1)
 	{
 		input = readline("MiNyanShell> ");
-		// the strcmp bellow is for testing only, must be removed
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
 			printf("\nexit\n");
@@ -124,8 +105,8 @@ int	main(int ac, char **av, char **envp)
 			ft_dprintf(2, "MiNyanShell: Invalid argument\n");
 		return (1);
 	}
-	/* if (print_MiNyanShell())
-		return (ft_printf("Missing critical refusing to continue\n"), -1); */
+	if (print_MiNyanShell())
+		return (ft_printf("Missing critical refusing to continue\n"), -1);
 	init_shell(&mini, envp);
 	command_loop(&mini);
 	minyanshell_exit_cleanup(&mini);
