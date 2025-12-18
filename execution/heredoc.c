@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:33:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/18 11:55:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:46:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,9 @@
 #include "parsing.h"
 #include <string.h>
 
-static int	dolar_pos(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i] != '$')
-		i++;
-	return (i);
-}
-
-static int	count_ma_money_babyyy(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '$')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 {
 	char	*line;
-	int		i;
-	char	*expanded_line;
-	int		dolar_count;
-	char	*temp;
 
 	while (1)
 	{
@@ -64,47 +34,27 @@ static int	heredoc_read_loop(t_redir *redir, t_mini *mini, int write_fd)
 			free(line);
 			break ;
 		}
-		if (redir->expansion)
-		{
-			i = 0;
-			dolar_count = count_ma_money_babyyy(line);
-			while (i < dolar_count)
-			{
-				int dolar_index = dolar_pos(line);
-				expanded_line = find_expanded(line + dolar_index,
-						mini->envyan, mini->last_status);
-				if(!expanded_line)
-					return -1;
-				temp = insert_expanded(line, dolar_index, expanded_line);
-				free(expanded_line);
-				free(line);
-				if(!temp)
-					return -1;
-				line = ft_strdup_with_ending(temp);
-				free(temp);
-				if(!line)
-					return -1;
-				i++;
-			}
-		}
+		if (expand_heredoc_line(&line, redir, mini) != 0)
+			return (-1);
 		ft_putendl_fd(line, write_fd);
 		free(line);
 	}
 	return (0);
 }
 
-static void child_heredoc(t_redir *redir, t_mini *mini, 
-	int pipefd[2], t_cmd *cmd)
+static void	child_heredoc(t_redir *redir, t_mini *mini, int pipefd[2],
+		t_cmd *cmd)
 {
-    int exit_code;
 
-    close_fd_safe(&pipefd[0]);
-    setup_heredoc_signals();
-    exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
-    close_fd_safe(&pipefd[1]);
-    if (cmd->in_fd != -1)
-        close_fd_safe(&cmd->in_fd);
-    minyanshell_cleanup_and_exit(mini, exit_code);
+	int	exit_code;
+	
+	close_fd_safe(&pipefd[0]);
+	setup_heredoc_signals();
+	exit_code = heredoc_read_loop(redir, mini, pipefd[1]);
+	close_fd_safe(&pipefd[1]);
+	if (cmd->in_fd != -1)
+		close_fd_safe(&cmd->in_fd);
+	minyanshell_cleanup_and_exit(mini, exit_code);
 }
 
 static int	parent_heredoc_control(t_cmd *cmd, t_mini *mini, int pipefd[2],
