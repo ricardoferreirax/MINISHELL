@@ -29,5 +29,5 @@ void	*ft_memset(void *a, int c, size_t i);
 void	free_2d(void **arr);
 void	free_3d(void ***arr);
 int		arr_size(void **arr);
-#endif
 
+#endif

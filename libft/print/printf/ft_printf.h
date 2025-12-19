@@ -27,4 +27,3 @@ void	ft_putlstr(char *str, int *n);
 void	ft_putlunbr(unsigned int nb, int *n);
 
 #endif
-
