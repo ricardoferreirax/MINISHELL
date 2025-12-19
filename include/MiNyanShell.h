@@ -66,6 +66,6 @@ typedef struct s_UwU
 	int					last_status;
 }						t_mini;
 
-int						print_MiNyanShell(void);
+int						print_minyanshell(void);
 
 #endif

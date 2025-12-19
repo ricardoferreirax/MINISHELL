@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/18 13:39:23 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/12/19 17:42:12 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC_FILES = \
 	parsing/add_spaces.c \
 	parsing/aux_funcs.c \
 	parsing/expanser.c \
+	parsing/expander_helpers.c \
 	parsing/parse.c \
 	parsing/fill_mini.c \
 	parsing/redir.c \

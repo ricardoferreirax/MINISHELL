@@ -6,12 +6,14 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:21:04 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/28 14:35:52 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/19 17:42:34 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
+#include "MiNyanShell.h"
 #include "ctype/ctype.h"
+#include "memory/memory.h"
 #include "strings/ft_strings.h"
 
 char	*ft_strdup_with_ending(char *str, int c)
@@ -31,113 +33,40 @@ char	*ft_strdup_with_ending(char *str, int c)
 		i++;
 	}
 	dup[i] = '\0';
-	dup[i + 1] = (char) c;
+	dup[i + 1] = (char)c;
 	return (dup);
 }
 
-char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status)
+static void	helper_helper(char **final, t_envyan *env, int status)
 {
+	int		k;
+	char	*expanded;
 	char	*temp;
-	char	*result;
-	int		i;
 
-	i = 0;
-	if (!cmd_args)
-		return (ft_strdup(""));
-	cmd_args++;
-	if (cmd_args[0] == '?')
-		return (ft_itoa(lst_status));
-	if (cmd_args[0] == '0')
-		return (ft_strdup("MiNyanShell nyan~ :3"));
-	if (ft_isdigit(cmd_args[0]))
-		return (ft_strdup(""));
-	temp = malloc(sizeof(char) * ft_strlen(cmd_args) + 1);
-	if (!temp)
-		return (NULL);
-	while (cmd_args[i] != '\0' && (ft_isalpha(cmd_args[i])
-			|| (cmd_args[i] == '_')))
-	{
-		temp[i] = cmd_args[i];
-		i++;
-	}
-	temp[i] = '\0';
-	result = NULL;
-	while (envyan)
-	{
-		if (ft_strcmp(temp, envyan->key) == 0)
-		{
-			if (result)
-				free(result);
-			result = ft_strdup(envyan->value);
-			break ;
-		}
-		envyan = envyan->next;
-	}
-	free(temp);
-	if (!result)
-		return (NULL);
-	return (result);
-}
-
-char	*insert_expanded(char *args, int j, char *expanded)
-{
-	size_t	i;
-	int		skip_len;
-	char	*result;
-	size_t	k;
-	size_t	e;
-
-	i = 0;
-	skip_len = 1;
-	if (!expanded)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(args) + ft_strlen(expanded) + 3));
-	if (!result)
-		return (NULL);
-	while (args[j + skip_len] != '\0' && (ft_isalpha(args[j + skip_len])
-			|| args[j + skip_len] == '_'))
-		skip_len++;
-	if ((skip_len == 1 && ((args[j + skip_len] == '?' || ft_isdigit(args[j
-						+ skip_len])))))
-		skip_len++;
 	k = 0;
-	while (k < (size_t)j)
+	while (*final && (*final)[k] != '\0')
 	{
-		result[i] = args[k];
-		i++;
+		if ((*final)[k] == '$')
+		{
+			expanded = find_expanded(*final + k, env, status);
+			temp = insert_expanded(*final, k, expanded);
+			if (expanded)
+				free(expanded);
+			free(*final);
+			(*final) = ft_strdup_with_ending(temp, 2);
+			if (temp)
+				free(temp);
+			return ;
+		}
 		k++;
 	}
-	e = 0;
-	while (e < ft_strlen(expanded))
-	{
-		result[i] = expanded[e];
-		i++;
-		e++;
-	}
-	k += skip_len;
-	while (k < ft_strlen(args))
-	{
-		result[i] = args[k];
-		i++;
-		k++;
-	}
-	result[i] = '\0';
-	result[i + 1] = '\0';
-	return (result);
 }
 
 int	expanser(char **final, t_envyan *env, int status)
 {
-	char	*temp;
-	char	*expanded;
-	int		i;
-	bool	inquote;
-	bool	indquote;
-	int		k;
+	int	i;
 
 	i = 0;
-	inquote = false;
-	indquote = false;
 	if (!final)
 		return (-1);
 	while (final[i])
@@ -147,28 +76,8 @@ int	expanser(char **final, t_envyan *env, int status)
 			i++;
 			continue ;
 		}
-		k = 0;
-		while (final[i] && final[i][k] != '\0')
-		{
-			update_quote_state(final[i][k], &inquote, &indquote);
-			if (final[i][k] == '$' && !inquote)
-			{
-				expanded = find_expanded(final[i] + k, env, status);
-				temp = insert_expanded(final[i], k, expanded);
-				if (expanded)
-					free(expanded);
-				free(final[i]);
-				final[i] = ft_strdup_with_ending(temp, 2);
-				if (temp)
-					free(temp);
-				if (!final[i])
-					return (-1);
-			}
-			else
-				k++;
-		}
+		helper_helper(&final[i], env, status);
 		i++;
 	}
 	return (0);
 }
-

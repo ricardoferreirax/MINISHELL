@@ -12,32 +12,32 @@
 
 #include "../include/execution.h"
 
-void cleanup_iteration(t_mini *mini)
+void	cleanup_iteration(t_mini *mini)
 {
-    if (!mini)
-        return ;
-    if (mini->head)
-        free_cmd_list(&mini->head);
+	if (!mini)
+		return ;
+	if (mini->head)
+		free_cmd_list(&mini->head);
 }
 
-void minyanshell_exit_cleanup(t_mini *mini)
+void	minyanshell_exit_cleanup(t_mini *mini)
 {
-    if (!mini)
-        return;
-    free_cmd_list(&mini->head);
-    if (mini->envyan)
-        free_envyan(&mini->envyan);
-    rl_clear_history();
+	if (!mini)
+		return ;
+	free_cmd_list(&mini->head);
+	if (mini->envyan)
+		free_envyan(&mini->envyan);
+	rl_clear_history();
 }
 
-void minyanshell_cleanup_and_exit(t_mini *mini, int status)
+void	minyanshell_cleanup_and_exit(t_mini *mini, int status)
 {
-    if (mini)
-    {
-        if (mini->head)
-            free_cmd_list(&mini->head);
-        if (mini->envyan)
-            free_envyan(&mini->envyan);
-    }
-    exit(status);
+	if (mini)
+	{
+		if (mini->head)
+			free_cmd_list(&mini->head);
+		if (mini->envyan)
+			free_envyan(&mini->envyan);
+	}
+	exit(status);
 }
