@@ -28,6 +28,12 @@ static bool	had_quotes(char *str)
 	return (false);
 }
 
+static void	ambigous_redir(char *arg)
+{
+	ft_printf("Ambiguous redirection,");
+	ft_printf(" where should i put this \"%s\"?\n", arg);
+}
+
 static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 {
 	t_redir	*redir;
@@ -48,12 +54,7 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 		return (redir);
 	}
 	if (been_expanded(arg))
-	{
-		ft_printf("Ambiguous redirection,");
-		ft_printf(" where should i put this \"%s\"?\n", arg);
-		free(redir);
-		return (NULL);
-	}
+		return (free(redir), ambigous_redir(arg), NULL);
 	redir->file = ft_strdup(arg);
 	if (!redir->file)
 		return (free(redir), NULL);
