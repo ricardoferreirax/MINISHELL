@@ -12,6 +12,12 @@
 
 #include "../include/parsing.h"
 
+static void	unexpected(char *str, int i)
+{
+	ft_printf("unexpected token near %c", str[i]);
+	ft_printf("(coll: %d) nyan~\n", i);
+}
+
 bool	syntaxed_pipes(char *str)
 {
 	int		i;
@@ -29,20 +35,10 @@ bool	syntaxed_pipes(char *str)
 			i++;
 			i += count_whitespaces(str + i);
 			if (str[i] == '|' || str[i] == '\0')
-				return (ft_printf("unexpected token near %c (coll: %d) nyan~\n",str[i], i), false);
+				return (unexpected(str, i), false);
 		}
 		i++;
 	}
-	return (true);
-}
-
-bool	first_out(char *str)
-{
-	int	i;
-
-	i = count_whitespaces(str);
-	if (str[i] == '>')
-		return (false);
 	return (true);
 }
 
