@@ -21,30 +21,36 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static void	unsupported_ops(void)
+{
+	ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n");
+}
+
 static int	process_line(t_mini *mini, char *input)
 {
 	char	**pipes;
 	int		status;
 
 	if (!input || !mini)
-		return -1;
+		return (-1);
 	if (*input)
 		add_history(input);
 	if (!no_unclosed_quotes(input))
-		return(ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n"), -1);
+		return (ft_dprintf(2, "MiNyanShell: syntax error: unclosed quotes\n"),
+			-1);
 	if (!no_forbidden_actions(input))
-		return(ft_dprintf(2, "MiNyanShell: unsupported operator (&&, ||, *)\n"), -1);
+		return (unsupported_ops(), -1);
 	if (!good_syntax(input))
-		return(ft_dprintf(2, "invalid Syntax nyan~\n"), -1);
+		return (ft_dprintf(2, "invalid Syntax nyan~\n"), -1);
 	pipes = init_mini(mini, input);
 	if (!pipes)
-		return(perror("init_mini"), -1);
+		return (perror("init_mini"), -1);
 	status = fill_mini(mini, pipes);
 	free_2d((void **)pipes);
 	if (!status)
 		status = execute_pipeline(mini->head, mini);
 	mini->last_status = status;
-	return(0);
+	return (0);
 }
 
 static void	command_loop(t_mini *mini)
@@ -83,16 +89,6 @@ static void	init_shell(t_mini *mini, char **envp)
 	minyanshell_signals(PROMPT);
 }
 
-void	print_env(t_envyan *env)
-{
-	while (env)
-	{
-		ft_printf("Key: %s\n", env->key);
-		ft_printf("Value : %s\n", env->value);
-		env = env->next;
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_mini	mini;
@@ -105,7 +101,7 @@ int	main(int ac, char **av, char **envp)
 			ft_dprintf(2, "MiNyanShell: Invalid argument\n");
 		return (1);
 	}
-	if (print_MiNyanShell())
+	if (print_minyanshell())
 		return (ft_printf("Missing critical refusing to continue\n"), -1);
 	init_shell(&mini, envp);
 	command_loop(&mini);
