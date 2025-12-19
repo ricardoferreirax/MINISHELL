@@ -65,6 +65,21 @@ bool	has_placeholder(char *str)
 	}
 	return (false);
 }
+
+static void	helper(char *c, bool *inquote, bool *indquote)
+{
+	if (*c == '\'' && !(*indquote))
+	{
+		*c = '\1';
+		*inquote = !(*inquote);
+	}
+	else if (*c == '\"' && !(*inquote))
+	{
+		*c = '\1';
+		*indquote = !(*indquote);
+	}
+}
+
 char	**remove_quotes(char **arr)
 {
 	int		i;
@@ -72,8 +87,8 @@ char	**remove_quotes(char **arr)
 	bool	inquote;
 	bool	indquote;
 
-	i = 0;
-	while (arr[i])
+	i = -1;
+	while (arr[++i])
 	{
 		if (!been_expanded(arr[i]))
 		{
@@ -82,26 +97,14 @@ char	**remove_quotes(char **arr)
 			indquote = false;
 			while (arr[i][j] != '\0')
 			{
-				if (arr[i][j] == '\'' && !indquote)
-				{
-					arr[i][j] = '\1';
-					inquote = !inquote;
-				}
-				if (arr[i][j] == '\"' && !inquote)
-				{
-					arr[i][j] = '\1';
-					indquote = !indquote;
-				}
+				helper(&arr[i][j], &inquote, &indquote);
 				j++;
 			}
 			if (i > 0 && has_placeholder(arr[i]) && sneaky_strcmp(arr[i - 1],
 					"<<"))
-			{
 				arr[i][j + 1] = '\2';
-			}
 			remove_placeholder(arr[i]);
 		}
-		i++;
 	}
 	return (arr);
 }
