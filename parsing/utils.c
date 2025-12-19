@@ -13,6 +13,14 @@
 #include "../include/execution.h"
 #include "../include/parsing.h"
 
+void	update_quote_state(char c, bool *inquote, bool *indquote)
+{
+	if (c == '\'' && !(*indquote))
+		*inquote = !(*inquote);
+	else if (c == '\"' && !(*inquote))
+		*indquote = !(*indquote);
+}
+
 void	free_redirs(t_redir *redir)
 {
 	t_redir	*next;

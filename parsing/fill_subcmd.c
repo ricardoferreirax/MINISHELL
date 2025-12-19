@@ -27,18 +27,12 @@ int	add_arg(t_cmd *subcmd, const char *token)
 	new_arg = (char **)malloc((count + 2) * sizeof(char *));
 	if (!new_arg)
 		return (-1);
-	i = 0;
-	while (i < count)
-	{
+	i = -1;
+	while (++i < count)
 		new_arg[i] = subcmd->args[i];
-		i++;
-	}
 	new_arg[count] = ft_strdup(token);
 	if (!new_arg[count])
-	{
-		free(new_arg);
-		return (-1);
-	}
+		return (free(new_arg), -1);
 	new_arg[count + 1] = NULL;
 	free(subcmd->args);
 	subcmd->args = new_arg;

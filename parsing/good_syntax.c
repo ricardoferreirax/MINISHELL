@@ -71,8 +71,6 @@ bool	unknown_action(char *str)
 	i = 0;
 	inquote = false;
 	indquote = false;
-	if (!first_out(str))
-		return (ft_printf("Line Starts with redir out\n"), true);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' && !indquote)

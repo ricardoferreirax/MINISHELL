@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:25:38 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/11/28 14:27:37 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/18 20:41:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ static int	add_spaces_size_count(char *str)
 	bool	inquote;
 	bool	indquote;
 
-	i = 0;
+	i = -1;
 	size = 0;
 	inquote = false;
 	indquote = false;
-	while (str[i] != '\0')
+	while (str[++i] != '\0')
 	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
+		update_quote_state(str[i], &inquote, &indquote);
 		if (str[i] == '<' || str[i] == '>')
 		{
 			if ((!indquote && !indquote) && (i > 0 && (str[i - 1] != ' '
@@ -38,34 +35,25 @@ static int	add_spaces_size_count(char *str)
 						+ 1] != '>' || str[i + 1] != '<')))
 				size++;
 		}
-		i++;
 		size++;
 	}
 	return (size);
 }
 
-char	**add_spaces(char *pipe)
+static void	helper(char *pipe, char *dest)
 {
 	int		i;
-	char	*dest;
-	bool	indquote;
-	bool	inquote;
-	char	**final;
 	int		j;
+	bool	inquote;
+	bool	indquote;
 
 	i = 0;
-	indquote = false;
-	inquote = false;
 	j = 0;
-	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 2);
-	if (!dest)
-		return (NULL);
+	inquote = false;
+	indquote = false;
 	while (pipe[i])
 	{
-		if (pipe[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (pipe[i] == '\"' && !inquote)
-			indquote = !indquote;
+		update_quote_state(pipe[i], &inquote, &indquote);
 		if (pipe[i] == '<' || pipe[i] == '>')
 		{
 			if ((!inquote && !indquote) && (i > 0 && (pipe[i - 1] != ' '
@@ -89,6 +77,17 @@ char	**add_spaces(char *pipe)
 	}
 	dest[i + j] = '\0';
 	dest[i + j + 1] = '\0';
+}
+
+char	**add_spaces(char *pipe)
+{
+	char	*dest;
+	char	**final;
+
+	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 2);
+	if (!dest)
+		return (NULL);
+	helper(pipe, dest);
 	final = split_ignore_quotes(dest, ' ', 0);
 	free(dest);
 	return (final);

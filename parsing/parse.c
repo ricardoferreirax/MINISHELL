@@ -12,8 +12,6 @@
 
 #include "../include/parsing.h"
 
-// for this to return true str must be double '\0' terminated and also be equal to base
-// this allows for equal strings to be treated differently
 int	sneaky_strcmp(char *str, char *base)
 {
 	int	i;

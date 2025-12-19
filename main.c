@@ -56,7 +56,7 @@ static void	command_loop(t_mini *mini)
 		input = readline("MiNyanShell> ");
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
-			printf("\nexit\n");
+			printf("exit\n");
 			break ;
 		}
 		if (input[0] != '\0')

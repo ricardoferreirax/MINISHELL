@@ -49,7 +49,8 @@ static t_redir	*redir_new(t_redir_type redir_type, char *arg)
 	}
 	if (been_expanded(arg))
 	{
-		ft_printf("Ambiguous redirection, where should i put this \"%s\"?\n", arg);
+		ft_printf("Ambiguous redirection,");
+		ft_printf(" where should i put this \"%s\"?\n", arg);
 		free(redir);
 		return (NULL);
 	}

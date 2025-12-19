@@ -59,10 +59,12 @@ SRC_FILES = \
 	parsing/redir.c \
 	parsing/remove_quotes.c \
 	parsing/split_ignore_quotes.c \
+	parsing/tokenizer.c \
 	parsing/validate_input.c \
 	parsing/utils.c \
 	parsing/fill_subcmd.c \
 	parsing/good_syntax.c \
+	parsing/init_mini.c \
 \
 	envyan/envyan_init.c \
 	envyan/envyan_array.c \

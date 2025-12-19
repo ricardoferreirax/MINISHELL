@@ -57,7 +57,7 @@ static int	expand_one_dollar(char **line, t_mini *mini)
 	free(*line);
 	if (!temp)
 		return (-1);
-	*line = ft_strdup_with_ending(temp);
+	*line = ft_strdup_with_ending(temp, 2);
 	free(temp);
 	if (!*line)
 		return (-1);
