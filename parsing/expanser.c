@@ -12,8 +12,6 @@
 
 #include "../include/parsing.h"
 #include "MiNyanShell.h"
-#include "ctype/ctype.h"
-#include "memory/memory.h"
 #include "strings/ft_strings.h"
 
 char	*ft_strdup_with_ending(char *str, int c)
@@ -42,11 +40,15 @@ static void	helper_helper(char **final, t_envyan *env, int status)
 	int		k;
 	char	*expanded;
 	char	*temp;
+	bool	quotes[2];
 
 	k = 0;
+	quotes[0] = false;
+	quotes[1] = false;
 	while (*final && (*final)[k] != '\0')
 	{
-		if ((*final)[k] == '$')
+		update_quote_state((*final)[k], &quotes[0], &quotes[1]);
+		if ((*final)[k] == '$' && !quotes[0])
 		{
 			expanded = find_expanded(*final + k, env, status);
 			temp = insert_expanded(*final, k, expanded);
@@ -56,7 +58,7 @@ static void	helper_helper(char **final, t_envyan *env, int status)
 			(*final) = ft_strdup_with_ending(temp, 2);
 			if (temp)
 				free(temp);
-			return ;
+			continue ;
 		}
 		k++;
 	}
