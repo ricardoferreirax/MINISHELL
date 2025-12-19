@@ -167,6 +167,31 @@
       "-Ilibft",
       "-c",
       "-o",
+      "objs/execution/heredoc_expand.o",
+      "execution/heredoc_expand.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/execution/heredoc_expand.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/execution/heredoc_expand.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
       "objs/execution/builtin.o",
       "execution/builtin.c"
     ],
@@ -917,6 +942,31 @@
       "-Ilibft",
       "-c",
       "-o",
+      "objs/parsing/tokenizer.o",
+      "parsing/tokenizer.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/parsing/tokenizer.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/parsing/tokenizer.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
       "objs/parsing/validate_input.o",
       "parsing/validate_input.c"
     ],
@@ -998,6 +1048,31 @@
     "directory": "/var/home/pedro/Code/42_MINISHELL",
     "file": "/var/home/pedro/Code/42_MINISHELL/parsing/good_syntax.c",
     "output": "/var/home/pedro/Code/42_MINISHELL/objs/parsing/good_syntax.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/parsing/init_mini.o",
+      "parsing/init_mini.c"
+    ],
+    "directory": "/var/home/pedro/Code/42_MINISHELL",
+    "file": "/var/home/pedro/Code/42_MINISHELL/parsing/init_mini.c",
+    "output": "/var/home/pedro/Code/42_MINISHELL/objs/parsing/init_mini.o"
   },
   {
     "arguments": [

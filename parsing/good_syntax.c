@@ -12,16 +12,6 @@
 
 #include "../include/parsing.h"
 
-bool	first_pipe(char *str)
-{
-	int	i;
-
-	i = count_whitespaces(str);
-	if (str[i] == '|')
-		return (false);
-	return (true);
-}
-
 bool	syntaxed_pipes(char *str)
 {
 	int		i;
@@ -31,14 +21,9 @@ bool	syntaxed_pipes(char *str)
 	i = 0;
 	inquote = false;
 	indquote = false;
-	if (!first_pipe(str))
-		return (false);
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
+		update_quote_state(str[i], &inquote, &indquote);
 		if ((!inquote && !indquote) && str[i] == '|')
 		{
 			i++;
@@ -61,6 +46,33 @@ bool	first_out(char *str)
 	return (true);
 }
 
+static int	helper(char *str, int i)
+{
+	if (str[i] == '>')
+	{
+		i++;
+		if (str[i] == '>')
+			i++;
+		i += count_whitespaces(str + i);
+		if (str[i] == '|' || str[i] == '<' || str[i] == '>' || str[i] == '\0')
+			return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n",
+					str[i - 1], i), 1);
+	}
+	else if (str[i] == '<')
+	{
+		i++;
+		if (str[i] == '<')
+			i++;
+		i += count_whitespaces(str + i);
+		if (str[i] == '|' || str[i] == '>' || str[i] == '<' || str[i] == '\0')
+			return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n",
+					str[i], i), 1);
+	}
+	else if (str[i] == '\\' || str[i] == ';')
+		return (1);
+	return (0);
+}
+
 bool	unknown_action(char *str)
 {
 	int		i;
@@ -70,8 +82,6 @@ bool	unknown_action(char *str)
 	i = 0;
 	inquote = false;
 	indquote = false;
-	if (!first_out(str))
-		return (ft_printf("Line Starts with redir out\n"), true);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' && !indquote)
@@ -80,27 +90,7 @@ bool	unknown_action(char *str)
 			indquote = !indquote;
 		if (!indquote && !inquote)
 		{
-			if (str[i] == '>')
-			{
-				i++;
-				if (str[i] == '>')
-					i++;
-				i += count_whitespaces(str + i);
-				if (str[i] == '|' || str[i] == '<' || str[i] == '>'
-					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i - 1], i), true);
-			}
-			else if (str[i] == '<')
-			{
-				i++;
-				if (str[i] == '<')
-					i++;
-				i += count_whitespaces(str + i);
-				if (str[i] == '|' || str[i] == '>' || str[i] == '<'
-					|| str[i] == '\0')
-					return (ft_dprintf(2, "unexpected token near %c (coll:%d) nyan~\n", str[i], i), true);
-			}
-			else if (str[i] == '\\' || str[i] == ';')
+			if (helper(str, i))
 				return (true);
 		}
 		i++;

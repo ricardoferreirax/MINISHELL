@@ -67,6 +67,6 @@ typedef struct s_UwU
 	int					in_pipeline;
 }						t_mini;
 
-int						print_MiNyanShell(void);
+int						print_minyanshell(void);
 
 #endif

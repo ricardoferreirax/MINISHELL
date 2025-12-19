@@ -38,7 +38,7 @@ void	remove_placeholder(char *s);
 int		sneaky_strcmp(char *str, char *base);
 char	*find_expanded(char *cmd_args, t_envyan *envyan, int lst_status);
 char	*insert_expanded(char *args, int j, char *expanded);
-char	*ft_strdup_with_ending(char *str);
+char	*ft_strdup_with_ending(char *str, int c);
 // expanser
 int		expanser(char **final, t_envyan *env, int status);
 
@@ -47,4 +47,9 @@ char	**add_spaces(char *pipe);
 
 // remove quotes
 char	**remove_quotes(char **arr);
+//
+void	update_quote_state(char c, bool *inquote, bool *indquote);
+
+char	**retokenize(char **tokens);
+char	**tokenizer(char *pipe, t_envyan *env, int status);
 #endif

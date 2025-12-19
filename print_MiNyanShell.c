@@ -12,50 +12,43 @@
 
 #include "include/MiNyanShell.h"
 
-void print_chararr(char **arr)
+void	print_chararr(char **arr)
 {
-	int i = 0;
-	if(!arr)
-		return;
-	while(arr[i])
+	int	i;
+
+	i = 0;
+	while (arr[i])
 	{
 		ft_printf("%s", arr[i]);
 		i++;
 	}
 }
 
-int print_MiNyanShell(void)
+int	print_minyanshell(void)
 {
-	char **arr = malloc(sizeof(char *) * 24 + 1);
-	int fd = open("MiNyanShell.txt", O_RDONLY);
-	if(fd < 0)
-		return -1;
-	int i = 0;
-	char *line;
-	while(i < 24)
+	char	**arr;
+	int		fd;
+	int		i;
+	char	*line;
+
+	fd = open("MiNyanShell.txt", O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	arr = ft_calloc(sizeof(char *), 24 + 1);
+	if (!arr)
+		return (close(fd), -1);
+	i = 0;
+	while (i < 24)
 	{
 		line = get_next_line(fd);
-		if(!line)
-		{
-			if(arr)
-				free_2d((void **)arr);
-			return -1;
-		}
+		if (!line)
+			return (close(fd), -1);
 		arr[i] = ft_strdup(line);
 		free(line);
-		if(!arr[i])
-		{
-			arr[i] = NULL;
-			if(arr)
-				free_2d((void **)arr);
-			return -1;
-		}
+		if (!arr[i])
+			return (close(fd), -1);
 		i++;
-		arr[i] = NULL;
 	}
 	arr[i] = NULL;
-	print_chararr(arr);
-	if(arr)
-		free_2d((void**)arr);
-	return 0;
+	return (print_chararr(arr), close(fd), free_2d((void **)arr), 0);
 }

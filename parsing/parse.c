@@ -12,8 +12,6 @@
 
 #include "../include/parsing.h"
 
-// for this to return true str must be double '\0' terminated and also be equal to base
-// this allows for equal strings to be treated differently
 int	sneaky_strcmp(char *str, char *base)
 {
 	int	i;
@@ -59,11 +57,30 @@ bool	sneaky_is_redir(char *str)
 	return (false);
 }
 
+static int	helper(t_cmd *cmd, char *op, char *tokens)
+{
+	if (sneaky_strcmp(op, "<<") && (redir_append(cmd, REDIR_HEREDOC,
+				tokens) != 0))
+		return (-1);
+	else if (sneaky_strcmp(op, "<") && (redir_append(cmd, REDIR_IN,
+				tokens) != 0))
+		return (-1);
+	else if (sneaky_strcmp(op, ">>") && (redir_append(cmd, REDIR_APPEND,
+				tokens) != 0))
+		return (-1);
+	else if (sneaky_strcmp(op, ">") && (redir_append(cmd, REDIR_OUT,
+				tokens) != 0))
+		return (-1);
+	return (0);
+}
+
 int	parse(t_cmd *cmd, char **tokens, int *i)
 {
 	char	*op;
 
-	if (tokens[*i] && !sneaky_is_redir(tokens[*i]))
+	if (!tokens[*i])
+		return (0);
+	if (!sneaky_is_redir(tokens[*i]))
 	{
 		while (tokens[*i] && !sneaky_is_redir(tokens[*i]))
 		{
@@ -73,34 +90,11 @@ int	parse(t_cmd *cmd, char **tokens, int *i)
 		}
 		return (0);
 	}
-	if (tokens[*i] && sneaky_is_redir(tokens[*i]))
-	{
-		op = tokens[*i];
-		(*i)++;
-		if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
-			return (-1);
-		if (sneaky_strcmp(op, "<<"))
-		{
-			if (redir_append(cmd, REDIR_HEREDOC, tokens[*i]) != 0)
-				return (-1);
-		}
-		else if (sneaky_strcmp(op, "<"))
-		{
-			if (redir_append(cmd, REDIR_IN, tokens[*i]) != 0)
-				return (-1);
-		}
-		else if (sneaky_strcmp(op, ">>"))
-		{
-			if (redir_append(cmd, REDIR_APPEND, tokens[*i]) != 0)
-				return (-1);
-		}
-		else if (sneaky_strcmp(op, ">"))
-		{
-			if (redir_append(cmd, REDIR_OUT, tokens[*i]) != 0)
-				return (-1);
-		}
-		(*i)++;
-		return (0);
-	}
+	op = tokens[(*i)++];
+	if (!tokens[*i] || sneaky_is_redir(tokens[*i]))
+		return (-1);
+	if (helper(cmd, op, tokens[*i]))
+		return (-1);
+	(*i)++;
 	return (0);
 }
