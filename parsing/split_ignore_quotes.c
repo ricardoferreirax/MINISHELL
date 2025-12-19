@@ -20,19 +20,16 @@ int	count_words_ignore_quotes(char *str, char c)
 	int		count;
 	int		inword;
 
-	i = 0;
+	i = -1;
 	inword = false;
 	count = 0;
 	inquote = false;
 	indquote = false;
 	if (str == NULL)
 		return (0);
-	while (str[i] != '\0')
+	while (str[++i] != '\0')
 	{
-		if (str[i] == '\'' && !indquote)
-			inquote = !inquote;
-		if (str[i] == '\"' && !inquote)
-			indquote = !indquote;
+		update_quote_state(str[i], &inquote, &indquote);
 		if (str[i] == c && (!inquote && !indquote))
 			inword = false;
 		else if (!inword)
@@ -40,7 +37,6 @@ int	count_words_ignore_quotes(char *str, char c)
 			inword = true;
 			count++;
 		}
-		i++;
 	}
 	return (count);
 }
@@ -60,10 +56,7 @@ static char	*word_copy_ignorequotes(char **s, char c, int i)
 	while ((((**s != c) || inquote || indquote) && (**s != '\0')))
 	{
 		counter++;
-		if ((**s) == '\'' && !indquote)
-			inquote = !inquote;
-		else if ((**s) == '\"' && !inquote)
-			indquote = !indquote;
+		update_quote_state(**s, &inquote, &indquote);
 		(*s)++;
 	}
 	dest = malloc(sizeof(char) * (counter + 2));
