@@ -30,12 +30,10 @@ static int	number_of_cmds(t_cmd *cmd_list)
 	return (num_cmds);
 }
 
-static int	execute_cmds(t_cmd *cmd_list, t_mini *mini)
+static int	execute_cmds(t_cmd *cmd_list, t_mini *mini, int num_cmds)
 {
-	int	num_cmds;
 	int	status;
 
-	num_cmds = number_of_cmds(cmd_list);
 	if (num_cmds == 0)
 		return (0);
 	if (num_cmds == 1)
@@ -97,7 +95,7 @@ int	execute_pipeline(t_cmd *cmd_list, t_mini *mini)
 	pre_exec = prepare_pipeline_execution(cmd_list, mini);
 	if (pre_exec != CONTINUE)
 		return (pre_exec);
-	status = execute_cmds(cmd_list, mini);
+	status = execute_cmds(cmd_list, mini, num_cmds);
 	close_all_heredoc_fds(cmd_list);
 	minyanshell_signals(PROMPT);
 	mini->last_status = status;
