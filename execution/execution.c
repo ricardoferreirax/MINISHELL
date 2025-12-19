@@ -64,18 +64,10 @@ static int	pre_execution(t_cmd *head, t_mini *mini)
 	return (CONTINUE);
 }
 
-int	execute_pipeline(t_cmd *cmd_list, t_mini *mini)
+static int	prepare_pipeline_execution(t_cmd *cmd_list, t_mini *mini)
 {
 	int	pre_exec;
-	int	status;
 
-	if (!mini)
-    	return (0);
-	if (!cmd_list)
-	{
-		mini->last_status = 0;
-		return (0);
-	}
 	minyanshell_signals(PARENT_WAIT);
 	pre_exec = pre_execution(cmd_list, mini);
 	if (pre_exec != CONTINUE)
@@ -83,8 +75,28 @@ int	execute_pipeline(t_cmd *cmd_list, t_mini *mini)
 		close_all_heredoc_fds(cmd_list);
 		minyanshell_signals(PROMPT);
 		mini->last_status = pre_exec;
-		return (pre_exec);
 	}
+	return (pre_exec);
+}
+
+int	execute_pipeline(t_cmd *cmd_list, t_mini *mini)
+{
+	int	status;
+	int	num_cmds;
+	int	pre_exec;
+
+	if (!mini)
+		return (0);
+	if (!cmd_list)
+	{
+		mini->last_status = 0;
+		return (0);
+	}
+	num_cmds = number_of_cmds(cmd_list);
+	mini->in_pipeline = (num_cmds > 1);
+	pre_exec = prepare_pipeline_execution(cmd_list, mini);
+	if (pre_exec != CONTINUE)
+		return (pre_exec);
 	status = execute_cmds(cmd_list, mini);
 	close_all_heredoc_fds(cmd_list);
 	minyanshell_signals(PROMPT);
