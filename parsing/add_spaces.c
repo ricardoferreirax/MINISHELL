@@ -32,7 +32,7 @@ static int	add_spaces_size_count(char *str)
 						|| str[i - 1] != '>' || str[i - 1] != '<')))
 				size++;
 			if ((!indquote && !inquote) && (i > 0 && (str[i + 1] != ' ' || str[i
-						+ 1] != '>' || str[i + 1] != '<')))
+							+ 1] != '>' || str[i + 1] != '<')))
 				size++;
 		}
 		size++;
@@ -40,43 +40,33 @@ static int	add_spaces_size_count(char *str)
 	return (size);
 }
 
-static void	helper(char *pipe, char *dest)
+static void	helper(char *p, char *dest)
 {
-	int		i;
-	int		j;
-	bool	inquote;
-	bool	indquote;
+	int		i[2];
+	bool	q[2];
 
-	i = 0;
-	j = 0;
-	inquote = false;
-	indquote = false;
-	while (pipe[i])
+	i[0] = 0;
+	i[1] = 0;
+	q[0] = false;
+	q[1] = false;
+	while (p[i[0]])
 	{
-		update_quote_state(pipe[i], &inquote, &indquote);
-		if (pipe[i] == '<' || pipe[i] == '>')
+		update_quote_state(p[i[0]], &q[0], &q[1]);
+		if (p[i[0]] == '<' || p[i[0]] == '>')
 		{
-			if ((!inquote && !indquote) && (i > 0 && (pipe[i - 1] != ' '
-						&& pipe[i - 1] != '>' && pipe[i - 1] != '<')))
-			{
-				dest[j + i] = ' ';
-				j++;
-			}
-			dest[j + i] = pipe[i];
-			i++;
-			if ((!inquote && !indquote) && (pipe[i] != ' ' && pipe[i] != '>'
-					&& pipe[i] != '<'))
-			{
-				dest[j + i] = ' ';
-				j++;
-			}
+			if ((!q[0] && !q[1]) && (i[0] > 0 && (p[i[0] - 1] != ' ' && p[i[0]
+							- 1] != '>' && p[i[0] - 1] != '<')))
+				dest[i[1]++ + i[0]] = ' ';
+			dest[i[1] + i[0]] = p[i[0]];
+			i[0]++;
+			if ((!q[0] && !q[1]) && (p[i[0]] != ' ' && p[i[0]] != '>'
+					&& p[i[0]] != '<'))
+				dest[i[1]++ + i[0]] = ' ';
 			continue ;
 		}
-		dest[i + j] = pipe[i];
-		i++;
+		dest[i[0] + i[1]] = p[i[0]];
+		i[0]++;
 	}
-	dest[i + j] = '\0';
-	dest[i + j + 1] = '\0';
 }
 
 char	**add_spaces(char *pipe)
@@ -84,7 +74,7 @@ char	**add_spaces(char *pipe)
 	char	*dest;
 	char	**final;
 
-	dest = malloc(sizeof(char) * add_spaces_size_count(pipe) + 2);
+	dest = ft_calloc(sizeof(char), add_spaces_size_count(pipe) + 2);
 	if (!dest)
 		return (NULL);
 	helper(pipe, dest);
