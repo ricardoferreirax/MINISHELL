@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 23:29:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/18 12:45:44 by pfreire-         ###   ########.fr       */
+/*   Updated: 2025/12/19 17:48:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,8 +238,7 @@ int	fill_mini(t_mini *nyan, char **pipes)
 		{
 			if (parse(curr, tokens, &j))
 			{
-				ft_printf("NYAAAAN,a parsing error has occureded ");
-				ft_printf("but i won't tell what it is nyan~ :3\n");
+				ft_printf("A parsing error has occureded !\n");
 				return (-1);
 			}
 		}

@@ -13,15 +13,6 @@
 #include "../include/MiNyanShell.h"
 #include "../include/execution.h"
 
-static int	is_piped(t_cmd *cmd)
-{
-	if (cmd == NULL)
-		return (0);
-	if (cmd->next != NULL)
-		return (1);
-	return (0);
-}
-
 int	is_arg_valid(char *arg)
 {
 	int	i;
@@ -87,7 +78,7 @@ int	ft_exit(t_cmd *cmd, t_mini *mini)
 
 	if (!cmd || !cmd->args)
 		return (1);
-	piped = is_piped(cmd);
+	piped = mini->in_pipeline;
 	if (!piped)
 		ft_putendl_fd("exit", STDOUT_FILENO);
 	status = exit_handle_args(cmd, mini, piped, &exit_code);

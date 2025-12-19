@@ -1,43 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_utils.c                                      :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/15 13:51:23 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/12/16 16:11:22 by rmedeiro         ###   ########.fr       */
+/*   Created: 2025/12/19 06:31:02 by rmedeiro          #+#    #+#             */
+/*   Updated: 2025/12/19 06:32:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/execution.h"
 
-void	cleanup_iteration(t_mini *mini)
+void	free_args(char **args)
 {
-	if (!mini)
-		return ;
-	if (mini->head)
-		free_cmd_list(&mini->head);
-}
+	int	i;
 
-void	minyanshell_exit_cleanup(t_mini *mini)
-{
-	if (!mini)
+	if (!args)
 		return ;
-	free_cmd_list(&mini->head);
-	if (mini->envyan)
-		free_envyan(&mini->envyan);
-	rl_clear_history();
-}
-
-void	minyanshell_cleanup_and_exit(t_mini *mini, int status)
-{
-	if (mini)
+	i = 0;
+	while (args[i])
 	{
-		if (mini->head)
-			free_cmd_list(&mini->head);
-		if (mini->envyan)
-			free_envyan(&mini->envyan);
+		free(args[i]);
+		i++;
 	}
-	exit(status);
+	free(args);
+}
+
+void	ft_free_str(char **str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+	free(str);
+}
+
+void	free_str_array(char **arr)
+{
+	size_t	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
