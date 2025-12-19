@@ -24,7 +24,7 @@ void	print_chararr(char **arr)
 	}
 }
 
-int	print_MiNyanShell(void)
+int	print_minyanshell(void)
 {
 	char	**arr;
 	int		fd;
@@ -34,34 +34,21 @@ int	print_MiNyanShell(void)
 	fd = open("MiNyanShell.txt", O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	arr = calloc(sizeof(char *), 24 + 1);
-	if(!arr)
-		return(close(fd), -1);
+	arr = ft_calloc(sizeof(char *), 24 + 1);
+	if (!arr)
+		return (close(fd), -1);
 	i = 0;
 	while (i < 24)
 	{
 		line = get_next_line(fd);
 		if (!line)
-		{
-			if (arr)
-				free_2d((void **)arr);
 			return (close(fd), -1);
-		}
 		arr[i] = ft_strdup(line);
 		free(line);
 		if (!arr[i])
-		{
-			arr[i] = NULL;
-			if (arr)
-				free_2d((void **)arr);
 			return (close(fd), -1);
-		}
 		i++;
-		arr[i] = NULL;
 	}
-	print_chararr(arr);
-	close(fd);
-	if (arr)
-		free_2d((void **)arr);
-	return (0);
+	arr[i] = NULL;
+	return (print_chararr(arr), close(fd), free_2d((void **)arr), 0);
 }
