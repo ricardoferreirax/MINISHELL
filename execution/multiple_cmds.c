@@ -32,13 +32,13 @@ static void	wait_for_children(t_mini *mini, pid_t last_pid)
 		pid = wait(&status);
 		if (pid == -1)
 		{
-			if (errno == EINTR)
-				continue ;
-			else
+			if (errno != EINTR)
 				break ;
 		}
-		if (pid == last_pid)
+		else if (pid == last_pid)
+		{
 			mini->last_status = extract_exit_code(status);
+		}
 	}
 }
 
