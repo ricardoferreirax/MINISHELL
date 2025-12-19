@@ -64,6 +64,7 @@ typedef struct s_UwU
 	t_cmd				*head;
 	t_envyan			*envyan;
 	int					last_status;
+	int					in_pipeline;
 }						t_mini;
 
 int						print_MiNyanShell(void);
