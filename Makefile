@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/18 13:39:23 by rmedeiro         ###   ########.fr        #
+#    Updated: 2025/12/19 06:33:29 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES = \
 	utils/pipe_utils.c \
 	utils/close_utils.c \
 	utils/clean_utils.c \
+	utils/free_utils.c \
 	builtin/ft_echo.c \
 	builtin/ft_pwd.c \
 	builtin/ft_env.c \
