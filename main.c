@@ -101,8 +101,8 @@ int	main(int ac, char **av, char **envp)
 		ft_dprintf(2, "What do you expect me to do? ╮(╯_╰)╭o");
 		return (-1);
 	}
-	if (print_minyanshell())
-		return (ft_printf("Missing critical refusing to continue\n"), -1);
+	if (hash_file("MiNyanShell.txt") != 4096230629 || print_minyanshell())
+		return (ft_printf("Missing critical file, refusing to continue\n"), -1);
 	init_shell(&mini, envp);
 	command_loop(&mini);
 	minyanshell_exit_cleanup(&mini);

@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "include/MiNyanShell.h"
+#include <stdint.h>
+#include <sys/types.h>
 
 void	print_chararr(char **arr)
 {
@@ -24,6 +26,31 @@ void	print_chararr(char **arr)
 	}
 }
 
+uint32_t hash_file(const char *path)
+{
+	int fd;
+	ssize_t read_bytes;
+	unsigned char buf[256];
+	uint32_t hash = 2166136261u;
+	ssize_t i;
+
+	fd = open(path, O_RDONLY);
+	if(fd < 0)
+		return 0;
+	while((read_bytes = read(fd, buf, sizeof(buf))) > 0)
+	{
+		i = 0;
+		while(i < read_bytes)
+		{
+			hash ^= buf[i];
+			hash *= 166777619u;
+			i++;
+		}
+	}
+	close(fd);
+	return hash;
+}
+
 int	print_minyanshell(void)
 {
 	char	**arr;
@@ -33,7 +60,7 @@ int	print_minyanshell(void)
 
 	fd = open("MiNyanShell.txt", O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return ( -1);
 	arr = ft_calloc(sizeof(char *), 24 + 1);
 	if (!arr)
 		return (close(fd), -1);

@@ -68,5 +68,6 @@ typedef struct s_UwU
 }						t_mini;
 
 int						print_minyanshell(void);
+uint32_t				hash_file(const char *path);
 
 #endif
