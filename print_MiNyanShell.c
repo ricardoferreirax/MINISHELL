@@ -26,29 +26,32 @@ void	print_chararr(char **arr)
 	}
 }
 
-uint32_t hash_file(const char *path)
+uint32_t	hash_file(const char *path)
 {
-	int fd;
-	ssize_t read_bytes;
-	unsigned char buf[256];
-	uint32_t hash = 2166136261u;
-	ssize_t i;
+	int				fd;
+	ssize_t			read_bytes;
+	unsigned char	buf[256];
+	uint32_t		hash;
+	ssize_t			i;
 
+	hash = 2166136261u;
 	fd = open(path, O_RDONLY);
-	if(fd < 0)
-		return 0;
-	while((read_bytes = read(fd, buf, sizeof(buf))) > 0)
+	if (fd < 0)
+		return (0);
+	read_bytes = read(fd, buf, sizeof(buf));
+	while (read_bytes > 0)
 	{
 		i = 0;
-		while(i < read_bytes)
+		while (i < read_bytes)
 		{
 			hash ^= buf[i];
 			hash *= 166777619u;
 			i++;
 		}
+		read_bytes = read(fd, buf, sizeof(buf));
 	}
 	close(fd);
-	return hash;
+	return (hash);
 }
 
 int	print_minyanshell(void)
@@ -60,7 +63,7 @@ int	print_minyanshell(void)
 
 	fd = open("MiNyanShell.txt", O_RDONLY);
 	if (fd < 0)
-		return ( -1);
+		return (-1);
 	arr = ft_calloc(sizeof(char *), 24 + 1);
 	if (!arr)
 		return (close(fd), -1);
